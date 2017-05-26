@@ -15,6 +15,7 @@ public class UserInfoController {
 	
 	@RequestMapping("/registPage")
 	public String registPage(){
+		System.out.println("------------");
 		return"/regist";
 	}
 }
