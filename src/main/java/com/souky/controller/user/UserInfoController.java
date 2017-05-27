@@ -2,6 +2,7 @@ package com.souky.controller.user;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -14,8 +15,9 @@ public class UserInfoController {
 	}
 	
 	@RequestMapping("/registPage")
-	public String registPage(){
-		System.out.println("------------");
+	public String registPage(Model model){
+		model.addAttribute("testfreemarker", "testfreemarker");
+		
 		return"/regist";
 	}
 }

@@ -29,15 +29,15 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF/view" />
+		<property name="prefix" value="/WEB-INF/view/ftl" />
 		<property name="suffix" value=".ftl" />
 	</bean>
-	
+	-->
 	<!-- 设置freeMarker的配置文件路径 -->
 	<bean id="freemarkerConfiguration"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -74,8 +74,8 @@
 			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
 		<property name="contentType" value="text/html; charset=utf-8" />
 		<property name="cache" value="true" />
-		<property name="suffix" value=".html" />
-		<property name="order" value="0" />
+		<property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
 		<property name="exposeRequestAttributes" value="true" />
 		<property name="exposeSessionAttributes" value="true" />
 		<property name="exposeSpringMacroHelpers" value="true" />
