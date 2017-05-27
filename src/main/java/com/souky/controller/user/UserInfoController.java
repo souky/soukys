@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserInfoController {
 	private static final Logger LOGGER = Logger.getLogger(UserInfoController.class);
 	
-	@RequestMapping("/showInfo")
+	@RequestMapping("/showInfo.html")
 	public String showUserInfo(){
 		return"";
 	}
