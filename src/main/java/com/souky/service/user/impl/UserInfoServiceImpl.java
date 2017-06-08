@@ -15,27 +15,22 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@Autowired
 	private UserInfoDao userInfoDao;
 	
-	@Override
 	public List<UserInfo> findAll() {
 		return userInfoDao.findAll();
 	}
 
-	@Override
 	public int save(UserInfo entity) {
 		return userInfoDao.save(entity);
 	}
 
-	@Override
 	public void update(UserInfo entity) {
 		userInfoDao.update(entity);
 	}
 
-	@Override
 	public void delete(UserInfo entity) {
 		userInfoDao.delete(entity);
 	}
 
-	@Override
 	public UserInfo queryById(int id) {
 		return userInfoDao.queryById(id);
 	}
