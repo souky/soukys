@@ -9,7 +9,7 @@
     <meta name="author" content="Souky" />
     <meta name="copyright" content="Souky" />
     <meta name="keywords" content="Souky"/>
-    <link rel="stylesheet" href="resources/css/base.css">
+    <link rel="stylesheet" href="/resources/css/base.css">
 <style type="text/css">
 #indexMain{width: 1200px;margin: auto;}
 #indexMain .topPart{background: #f40;width: 100%;height: 200px;line-height: 200px;font-size: 30px;color: #fff;}
