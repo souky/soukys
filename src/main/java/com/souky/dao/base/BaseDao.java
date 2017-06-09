@@ -8,10 +8,11 @@ public interface BaseDao<T> {
 	
 	int save(T entity);
 	
-	void delete(T entity);
+	int delete(T entity);
 	
-	void update(T entity);
+	int update(T entity);
 	
-	T queryById(int id);
+	@SuppressWarnings("rawtypes")
+	List queryById(int id);
 	
 }
