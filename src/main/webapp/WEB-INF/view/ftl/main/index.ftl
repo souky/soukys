@@ -11,7 +11,7 @@
 <meta name="keywords"  content="" />
 <link rel="shortcut icon" href="resources/favicon.ico"/>
 <link rel="bookmark" href="resources/favicon.ico"/>
-<link rel="stylesheet" href="resources/css/base.css">
+<link rel="stylesheet" href="resources/common/css/base.css">
 <link rel="stylesheet" href="resources/css/homeJ.css">
 </head>
 

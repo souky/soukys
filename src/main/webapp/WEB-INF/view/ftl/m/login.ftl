@@ -11,24 +11,36 @@
     <meta name="keywords" content="Souky"/>
     <link rel="shortcut icon" href="resources/favicon.ico"/>
 	<link rel="bookmark" href="resources/favicon.ico"/>
-    <link rel="stylesheet" href="resources/css/base.css?${(v_souky)!}">
+    <link rel="stylesheet" href="resources/css/common/base.css?${(v_souky)!}">
+    <link rel="stylesheet" href="resources/css/common/souky.css?${(v_souky)!}">
 <style type="text/css">
-
 
 </style>
 </head>
-<body>
+<body class="wm YH">
+	<nav class="clearfix">
+		
+		<div class="titleNav">
+			后台登录
+			<div class="navLeft">
+				<img class="leftArrow" />
+			</div>
+			<div class="navRight">
+				<img class="refresh"/>
+			</div>
+		</div>
+	</nav>
+	<div id="loginM">
+		
+	</div>
 	
-	<form id="loginForm">
-        <input type="text" name="loginName">
-        <input type="text" name="passWord">   
-    </form>
-    <input type="button" value="fuck" onclick="loginIn()" />
 </body>
 
 
 <script type="text/javascript" src="resources/js/zepto.min.js"></script>
+<script type="text/javascript" src="resources/js/common/souky.js?${(v_souky)!}"></script>
 <script>
+
 function loginIn(){
 	var data = $("#loginForm").serialize();	
 	$.ajax({
@@ -55,6 +67,12 @@ function loginIn(){
 			alert("网络错误");
 		}
 	})
+	
+	//<form id="loginForm">
+    //    <input type="text" name="loginName">
+    //    <input type="text" name="passWord">   
+    //</form>
+    //<input type="button" value="fuck" onclick="loginIn()" />
 }
 
 </script>

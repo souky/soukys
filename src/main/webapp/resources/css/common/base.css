@@ -14,11 +14,8 @@ em,i,u{font-style:normal}
 .clear,.clr{display:block;overflow:hidden;clear:both;height:0;line-height:0;font-size:0}
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .clearfix{*zoom:1}.dorpdown{position:relative}
-.dorpdown-layer{display:none;position:absolute}
-.dorpdown:hover .dorpdown-layer,.hover .dorpdown-layer{display:block}
-.cw-icon{position:relative;cursor:default;zoom:1}
-.cw-icon .i,.cw-icon i{display:block;position:absolute;overflow:hidden}
 .w{max-width:1200px;margin:0 auto;}
+.wm{max-width:650px;margin:auto;}
 .mt{margin-top: 10px;}
 body{font:12px/150% Arial,Verdana,"\5b8b\4f53";color:#666;background:#fff}
 a{color:#666;text-decoration:none}
