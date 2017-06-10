@@ -18,7 +18,7 @@
 </style>
 </head>
 <body>
-	
+	${(loginUser.login_name)!}
 </body>
 
 

@@ -11,13 +11,14 @@
     <meta name="keywords" content="Souky"/>
     <link rel="shortcut icon" href="resources/favicon.ico"/>
 	<link rel="bookmark" href="resources/favicon.ico"/>
-    <link rel="stylesheet" href="resources/css/base.css">
+    <link rel="stylesheet" href="resources/css/base.css?${(v_souky)!}">
 <style type="text/css">
 
 
 </style>
 </head>
 <body>
+	
 	<form id="loginForm">
         <input type="text" name="loginName">
         <input type="text" name="passWord">   
@@ -31,14 +32,27 @@
 function loginIn(){
 	var data = $("#loginForm").serialize();	
 	$.ajax({
-		url:'loginIn.html',
+		url:'loginIn',
 		data:data,
 		type:'post',
+		dataType:'json',
 		success:function(res){
-			console.log(res);
+			var code = res.code;
+			if(code=="1000"){
+				var location = window.location.href;
+				var locations = location.split("/")[(location.split("/").length-1)];
+				if(locations=="login"){
+					window.location.href = "index";
+				}else{
+					window.location.href=window.location.href;
+				}
+				
+			}else{
+				alert(res.message);
+			}
 		},
 		error:function(res){
-			console.log(res);
+			alert("网络错误");
 		}
 	})
 }
