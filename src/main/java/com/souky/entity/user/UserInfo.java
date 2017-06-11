@@ -14,21 +14,31 @@ public class UserInfo implements Serializable{
 	private String realname;
 	private String nickname;
 	private String address;
-	private Jurisdiction jurisdiction;
+	private String jurisdictionName;
+	private String identification;
+	private String jurisdictionId;
 	
-	
-	public UserInfo(String id,String loginName,String passWord,String tel,String realname,String nickname,String address){
-		this.id = id;
-		this.loginName = loginName;
-		this.passWord = passWord;
-		this.tel = tel;
-		this.realname = realname;
-		this.nickname = nickname;
-		this.address = address;
-	}
 	
 	public String getId() {
 		return id;
+	}
+	public String getJurisdictionName() {
+		return jurisdictionName;
+	}
+	public void setJurisdictionName(String jurisdictionName) {
+		this.jurisdictionName = jurisdictionName;
+	}
+	public String getIdentification() {
+		return identification;
+	}
+	public void setIdentification(String identification) {
+		this.identification = identification;
+	}
+	public String getJurisdictionId() {
+		return jurisdictionId;
+	}
+	public void setJurisdictionId(String jurisdictionId) {
+		this.jurisdictionId = jurisdictionId;
 	}
 	public void setId(String id) {
 		this.id = id;
@@ -70,14 +80,6 @@ public class UserInfo implements Serializable{
 		this.address = address;
 	}
 
-	public Jurisdiction getJurisdiction() {
-		return jurisdiction;
-	}
-
-	public void setJurisdiction(Jurisdiction jurisdiction) {
-		this.jurisdiction = jurisdiction;
-	}
-	
 	
 
 	

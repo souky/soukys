@@ -1,7 +1,6 @@
 package com.souky.controller.user;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +43,6 @@ public class UserInfoController {
 		return "/m/login";
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/loginIn",method=RequestMethod.POST)
 	@ResponseBody
 	public JsonResult loginIn(HttpServletRequest request){
@@ -54,13 +52,12 @@ public class UserInfoController {
 		String passWord = request.getParameter("passWord");
 		String passWordTrue = MD5Util.MD5(passWord);
 		List<UserInfo> list = userInfoService.queryByLoginName(loginName);
-		System.out.println(list);
 		//登陆验证
 		if(list!=null && list.size()>0){
-			Map map = (Map) list.get(0);
-			String passwrod = (String) map.get("pass_word");
+			UserInfo userInfo = (UserInfo) list.get(0);
+			String passwrod = userInfo.getPassWord();
 			if(passWordTrue.equals(passwrod)){
-				request.getSession().setAttribute("loginUser", map);
+				request.getSession().setAttribute("loginUser", userInfo);
 				JsonResult.setCode(JsonRsultCode.codeSuccess);
 			}else{
 				JsonResult.setCode(JsonRsultCode.codeError);
