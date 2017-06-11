@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.souky.common.utils.JsonResult;
 import com.souky.common.utils.JsonRsultCode;
 import com.souky.common.utils.MD5Util;
+import com.souky.entity.user.UserInfo;
 import com.souky.service.user.UserInfoService;
 
 
@@ -52,7 +53,8 @@ public class UserInfoController {
 		String loginName = request.getParameter("loginName");
 		String passWord = request.getParameter("passWord");
 		String passWordTrue = MD5Util.MD5(passWord);
-		List<Object> list = userInfoService.queryByLoginName(loginName);
+		List<UserInfo> list = userInfoService.queryByLoginName(loginName);
+		System.out.println(list);
 		//登陆验证
 		if(list!=null && list.size()>0){
 			Map map = (Map) list.get(0);

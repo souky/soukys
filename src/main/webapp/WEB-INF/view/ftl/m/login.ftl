@@ -19,7 +19,6 @@
 </head>
 <body class="wm YH">
 	<nav class="clearfix">
-		
 		<div class="titleNav">
 			后台登录
 			<div class="navLeft">
@@ -30,8 +29,12 @@
 			</div>
 		</div>
 	</nav>
-	<div id="loginM">
-		
+	<div id="loginM" class="afterNav">
+		<form id="loginForm">
+	        <input type="text" name="loginName">
+	        <input type="text" name="passWord">   
+	    </form>
+	    <input type="button" value="fuck" onclick="loginIn()" />
 	</div>
 	
 </body>
@@ -68,11 +71,6 @@ function loginIn(){
 		}
 	})
 	
-	//<form id="loginForm">
-    //    <input type="text" name="loginName">
-    //    <input type="text" name="passWord">   
-    //</form>
-    //<input type="button" value="fuck" onclick="loginIn()" />
 }
 
 </script>

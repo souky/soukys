@@ -31,12 +31,12 @@ public class UserInfoService {
 
 
 	@SuppressWarnings("unchecked")
-	public List<Object> queryById(int id) {
+	public List<UserInfo> queryById(int id) {
 		return userInfoDao.queryById(id);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Object> queryByLoginName(String loginName) {
+	public List<UserInfo> queryByLoginName(String loginName) {
 		return userInfoDao.queryByLoginName(loginName);
 	}
 }

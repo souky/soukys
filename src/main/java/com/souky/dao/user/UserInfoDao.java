@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -67,6 +68,9 @@ public class UserInfoDao implements BaseDao<UserInfo>{
 				+ "where u.login_name=?";
 		List list = new ArrayList();
 		list.add(loginName);
-		return jdbcTemplate.queryForList(sql,list.toArray());
+		List<UserInfo> lists = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(UserInfo.class), list.toArray());
+		System.out.println(lists);
+		return lists;
+		//return jdbcTemplate.queryForList(sql,list.toArray());
 	}
 }
