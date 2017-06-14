@@ -14,10 +14,11 @@
     <link rel="stylesheet" href="resources/css/common/base.css?${(v_souky)!}">
     <link rel="stylesheet" href="resources/css/common/souky.css?${(v_souky)!}">
 <style type="text/css">
-#loginM{height:100%;width:100%;background:rgba(0,0,0,0.82);}
-#loginM .soukyForm{margin-top:150px;color:#fff;}
+#loginM{width:100%;background:rgba(0,0,0,0.82);}
+#loginM .soukyForm{margin-top:10px;color:#fff;}
 #loginM .soukyForm input{background:rgba(0,0,0,0);color:#fff;}
 #loginM .soukyForm .btn{border-color:#fff;color:#fff;}
+#loginM .logoM{margin:20px auto;width:150px;}
 </style>
 </head>
 <body class="wm YH">
@@ -33,6 +34,9 @@
 		</div>
 	</nav>
 	<div id="loginM" class="afterNav">
+		<div class="logoM">
+			<img src="resources/img/logo.png" width="100%"/>
+		</div>
 		<form class="soukyForm">
 			<div class="textInput">
 				<label>用户名:</label>

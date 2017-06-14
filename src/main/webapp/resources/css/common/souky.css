@@ -140,6 +140,7 @@ nav .navRight{
 	top:0;
 	left:0;
 	z-index:999;
+	display:none;
 }
 #S_Loading .loading{
 	width:180px;
