@@ -13,6 +13,7 @@ public class UserInfoService {
 	@Autowired
 	private UserInfoDao userInfoDao;
 	
+	@SuppressWarnings("unchecked")
 	public List<UserInfo> findAll() {
 		return userInfoDao.findAll();
 	}
@@ -35,8 +36,4 @@ public class UserInfoService {
 		return userInfoDao.queryById(id);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<UserInfo> queryByLoginName(String loginName) {
-		return userInfoDao.queryByLoginName(loginName);
-	}
 }

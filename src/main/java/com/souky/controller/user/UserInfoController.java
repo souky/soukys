@@ -16,7 +16,9 @@ import com.souky.common.utils.JsonResult;
 import com.souky.common.utils.JsonRsultCode;
 import com.souky.common.utils.MD5Util;
 import com.souky.entity.user.UserInfo;
+import com.souky.entity.user.UserLogin;
 import com.souky.service.user.UserInfoService;
+import com.souky.service.user.UserLoginService;
 
 
 @Controller
@@ -25,6 +27,8 @@ public class UserInfoController {
 	
 	@Autowired
 	private UserInfoService userInfoService;
+	@Autowired
+	private UserLoginService userLoginService;
 	
 	@RequestMapping("/showInfo")
 	public String showUserInfo(){
@@ -51,13 +55,14 @@ public class UserInfoController {
 		String loginName = request.getParameter("loginName");
 		String passWord = request.getParameter("passWord");
 		String passWordTrue = MD5Util.MD5(passWord);
-		List<UserInfo> list = userInfoService.queryByLoginName(loginName);
+		List<UserLogin> list = userLoginService.queryByLoginName(loginName);
 		//登陆验证
 		if(list!=null && list.size()>0){
-			UserInfo userInfo = (UserInfo) list.get(0);
-			String passwrod = userInfo.getPassWord();
+			UserLogin userLogin = (UserLogin) list.get(0);
+			String passwrod = userLogin.getPassWord();
 			if(passWordTrue.equals(passwrod)){
-				request.getSession().setAttribute("loginUser", userInfo);
+				userLogin.setPassWord("");
+				request.getSession().setAttribute("loginUser", userLogin);
 				JsonResult.setCode(JsonRsultCode.codeSuccess);
 			}else{
 				JsonResult.setCode(JsonRsultCode.codeError);

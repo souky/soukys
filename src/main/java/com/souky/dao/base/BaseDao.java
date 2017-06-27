@@ -12,7 +12,6 @@ public interface BaseDao<T> {
 	
 	int update(T entity);
 	
-	@SuppressWarnings("rawtypes")
-	List queryById(int id);
+	List<T> queryById(int id);
 	
 }

@@ -60,16 +60,4 @@ public class UserInfoDao implements BaseDao<UserInfo>{
 		list = jdbcTemplate.queryForList(sql, list);
 		return list;
 	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List queryByLoginName(String loginName) {
-		String sql = "select u.*,j.name jurisdictionName,j.identification identification  "
-				+ ",j.id jurisdictionId from user_info u left join jurisdiction j on u.jurisdiction_id = j.id "
-				+ "where u.login_name=?";
-		List list = new ArrayList();
-		list.add(loginName);
-		List<UserInfo> lists = jdbcTemplate.query(sql, new BeanPropertyRowMapper(UserInfo.class), list.toArray());
-		System.out.println(lists);
-		return lists;
-	}
 }

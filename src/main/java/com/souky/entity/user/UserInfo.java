@@ -5,61 +5,21 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable{
 
-	private static final long serialVersionUID = -6006612981025466477L;
-
+	private static final long serialVersionUID = 2080231183851270164L;
+	
 	private String id;
-	private String loginName;
-	private String passWord;
-	private String tel;
 	private String realname;
-	private String nickname;
-	private String address;
-	private String jurisdictionName;
-	private String identification;
-	private String jurisdictionId;
+	private String telephone;
+	private String email;
+	private String wx_open_id;
+	private String status;
 	
 	
 	public String getId() {
 		return id;
 	}
-	public String getJurisdictionName() {
-		return jurisdictionName;
-	}
-	public void setJurisdictionName(String jurisdictionName) {
-		this.jurisdictionName = jurisdictionName;
-	}
-	public String getIdentification() {
-		return identification;
-	}
-	public void setIdentification(String identification) {
-		this.identification = identification;
-	}
-	public String getJurisdictionId() {
-		return jurisdictionId;
-	}
-	public void setJurisdictionId(String jurisdictionId) {
-		this.jurisdictionId = jurisdictionId;
-	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getLoginName() {
-		return loginName;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-	public String getPassWord() {
-		return passWord;
-	}
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
-	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
 	}
 	public String getRealname() {
 		return realname;
@@ -67,20 +27,29 @@ public class UserInfo implements Serializable{
 	public void setRealname(String realname) {
 		this.realname = realname;
 	}
-	public String getNickname() {
-		return nickname;
+	public String getTelephone() {
+		return telephone;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
-	public String getAddress() {
-		return address;
+	public String getEmail() {
+		return email;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	
-
+	public String getWx_open_id() {
+		return wx_open_id;
+	}
+	public void setWx_open_id(String wx_open_id) {
+		this.wx_open_id = wx_open_id;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 }
