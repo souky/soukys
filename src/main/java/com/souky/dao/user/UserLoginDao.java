@@ -3,20 +3,14 @@ package com.souky.dao.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.souky.dao.base.BaseDao;
-import com.souky.entity.user.UserInfo;
 import com.souky.entity.user.UserLogin;
 
 @Repository
-public class UserLoginDao implements BaseDao<UserLogin>{
-
-	@Autowired
-	JdbcTemplate jdbcTemplate;
+public class UserLoginDao extends BaseDao<UserLogin>{
 
 	public List<UserLogin> findAll() {
 		// TODO Auto-generated method stub
@@ -46,7 +40,7 @@ public class UserLoginDao implements BaseDao<UserLogin>{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<UserLogin> queryByLoginName(String loginName) {
 		String sql = "select u.*,j.jurisdiction_name jurisdictionName,j.identification identification  "
-				+ " from user_info u left join jurisdiction j on u.jurisdiction_id = j.id "
+				+ " from user_login u left join jurisdiction j on u.jurisdiction_id = j.id "
 				+ "where u.login_name=?";
 		List<String> list = new ArrayList<String>();
 		list.add(loginName);

@@ -2,16 +2,34 @@ package com.souky.dao.base;
 
 import java.util.List;
 
-public interface BaseDao<T> {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class  BaseDao<T> {
 	
-	List<T> findAll();
+	public List<T> findAll(){
+		return null;
+	};
 	
-	int save(T entity);
+	public int save(T entity){
+		return 0;
+	};
 	
-	int delete(T entity);
+	public int delete(T entity){
+		return 0;
+	};
 	
-	int update(T entity);
+	public int update(T entity){
+		return 0;
+	};
 	
-	List<T> queryById(int id);
+	public List<T> queryById(int id){
+		return null;
+	};
+	
+	@Autowired
+	public JdbcTemplate jdbcTemplate;
 	
 }

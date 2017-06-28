@@ -64,6 +64,7 @@ public class UserInfoController {
 				userLogin.setPassWord("");
 				request.getSession().setAttribute("loginUser", userLogin);
 				JsonResult.setCode(JsonRsultCode.codeSuccess);
+				JsonResult.setMessage("登陆成功");
 			}else{
 				JsonResult.setCode(JsonRsultCode.codeError);
 				JsonResult.setMessage("密码错误");

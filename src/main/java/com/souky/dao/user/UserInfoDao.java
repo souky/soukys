@@ -4,19 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.souky.dao.base.BaseDao;
 import com.souky.entity.user.UserInfo;
 
 @Repository
-public class UserInfoDao implements BaseDao<UserInfo>{
+public class UserInfoDao extends BaseDao<UserInfo>{
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List findAll() {
