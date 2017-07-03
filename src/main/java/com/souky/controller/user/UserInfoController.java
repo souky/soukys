@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.souky.common.utils.JsonResult;
 import com.souky.common.utils.JsonRsultCode;
 import com.souky.common.utils.MD5Util;
-import com.souky.entity.user.UserInfo;
 import com.souky.entity.user.UserLogin;
-import com.souky.service.user.UserInfoService;
 import com.souky.service.user.UserLoginService;
 
 
@@ -25,8 +23,6 @@ import com.souky.service.user.UserLoginService;
 public class UserInfoController {
 	private static final Logger LOGGER = Logger.getLogger(UserInfoController.class);
 	
-	@Autowired
-	private UserInfoService userInfoService;
 	@Autowired
 	private UserLoginService userLoginService;
 	
