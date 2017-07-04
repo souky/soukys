@@ -18,7 +18,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 		if ("POST".equalsIgnoreCase(request.getMethod())) { 
 			return true;
         }  
-		request.getSession().setAttribute("v_souky", new Date().getTime());
+		request.getSession().setAttribute("v_souky", "?v="+new Date().getTime());
 		UserInfo userInfo = (UserInfo)request.getSession().getAttribute("loginUser");
 		if(userInfo==null){
 			response.sendRedirect("/login");

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8" />
-<title>双环塔</title>
+<title>soukys</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="renderer" content="webkit">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -11,8 +11,8 @@
 <meta name="keywords"  content="" />
 <link rel="shortcut icon" href="resources/favicon.ico"/>
 <link rel="bookmark" href="resources/favicon.ico"/>
-<link rel="stylesheet" href="resources/common/css/base.css">
-<link rel="stylesheet" href="resources/css/homeJ.css">
+<link rel="stylesheet" href="resources/css/common/base.css${(v_souky)!}">
+<link rel="stylesheet" href="resources/css/homeJ.css${(v_souky)!}">
 </head>
 
 <body style="position:relative;">
@@ -131,7 +131,7 @@
 				 </div>
 			</div>
 			<div class="lowInfo ac">
-				<a href="http://www.miitbeian.gov.cn/" style="color:#000;">豫ICP备16018952号</a>
+				<a target="_blank" href="http://www.miitbeian.gov.cn/" style="color:#000;">豫ICP备17026020号</a>
 			</div>
 		</div>
 		<!-- 尾部部分 end -->
@@ -141,5 +141,5 @@
 	
 	
 <script type="text/javascript" src="resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/homeJ.js"></script>
+<script type="text/javascript" src="resources/js/homeJ.js${(v_souky)!}"></script>
 </html>

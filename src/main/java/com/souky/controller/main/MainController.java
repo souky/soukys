@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
 	
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String index(HttpServletRequest request){
 		
-		return "/m/index";
+		return "/main/index";
 	}
 }
