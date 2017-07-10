@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-    <title></title>
+    <title>用户注册</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -18,13 +18,24 @@
 
 </style>
 </head>
-<body>
-	
+<body class="wm YH">
+	<nav class="clearfix">
+		<div class="titleNav">
+			用户注册
+			<div class="navLeft">
+				<img class="leftArrow" />
+			</div>
+			<div class="navRight" onclick="refresh()">
+				<img class="refresh"/>
+			</div>
+		</div>
+	</nav>
 </body>
 
 
 <script type="text/javascript" src="resources/js/jquery.min.js"></script>
 <script>
-</script>
 
+
+</script>
 </html>

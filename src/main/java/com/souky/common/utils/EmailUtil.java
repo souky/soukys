@@ -1,5 +1,7 @@
 package com.souky.common.utils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -11,6 +13,19 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import com.sun.xml.internal.ws.resources.HttpserverMessages;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.Version;
 
 /**
  * 
@@ -23,14 +38,16 @@ public class EmailUtil {
     private static String VALUE_SMTP = "smtp.mxhichina.com";
     // 服务器验证
     private static String KEY_PROPS = "mail.smtp.auth";
-    private static boolean VALUE_PROPS = true;
     // 发件人用户名、密码
-    private static String SEND_USER = "verification@soukys.com‍‍";
-    private static String SEND_UNAME = "verification";
+    private static String SEND_USER = "yanzheng@soukys";
+    private static String COM = ".com";
     private static String SEND_PWD = "Sjn268450";
     // 建立会话
     private static MimeMessage message;
     private static Session s;
+    
+    @Autowired
+    private FreeMarkerConfigurer freeMarkerConfigurer;
 
     public EmailUtil() {
     }
@@ -51,11 +68,13 @@ public class EmailUtil {
             props.put(KEY_PROPS, "true");
             s =  Session.getDefaultInstance(props, new Authenticator(){
                   protected PasswordAuthentication getPasswordAuthentication() {
-                      return new PasswordAuthentication(SEND_USER, SEND_PWD);
+                      return new PasswordAuthentication(SEND_USER+COM, SEND_PWD);
                   }});
+            s.setDebug(true);
             message = new MimeMessage(s);
             // 发件人
-            InternetAddress from = new InternetAddress("verification@soukys.com");
+           // InternetAddress from = new InternetAddress("verification@soukys.com");
+            InternetAddress from = new InternetAddress(SEND_USER+COM);
             message.setFrom(from);
             // 收件人
             InternetAddress to = new InternetAddress(receiveUser.trim());
@@ -68,9 +87,9 @@ public class EmailUtil {
             message.saveChanges();
             Transport transport = s.getTransport("smtp");
             // smtp验证，就是你用来发邮件的邮箱用户名密码
-            transport.connect(VALUE_SMTP, SEND_USER, SEND_PWD);
+            transport.connect(VALUE_SMTP, SEND_USER+COM, SEND_PWD);
             // 发送
-            transport.sendMessage(message, message.getAllRecipients());
+    		transport.sendMessage(message, message.getAllRecipients());
             transport.close();
             return true;
         } catch (AddressException e) {
@@ -83,7 +102,31 @@ public class EmailUtil {
         }
     }
     
+    /**
+     * 获取模板邮件 有可能返回null
+     * */
+    public static String getEmailModel(Model model,String templateType,HttpServletRequest request) {
+    	Version incompatibleImprovements = new Version("2.3.23");
+    	Configuration conf = new Configuration(incompatibleImprovements);
+    	//conf.setServletContextForTemplateLoading(request.getContextPath(), "/WEB-INF/view/ftl/template");
+    	conf.setClassForTemplateLoading(EmailUtil.class, "");
+    	String text = null;
+        try {
+        	//conf.setDirectoryForTemplateLoading(new File("/souky/src/main/webapp/WEB-INF/view/ftl/template"));
+        	Template template = conf.getTemplate(templateType+".ftl");
+			text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TemplateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return text;
+    }
+    
     public static void main(String[] args) {
+    	
     	EmailUtil.doSendHtmlEmail("测试邮件","<font style='color:red;font-size:28px;'>啦啦啦啦啦</font>","136069803@qq.com");
 	}
 
