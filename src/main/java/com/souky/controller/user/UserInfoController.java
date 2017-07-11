@@ -1,6 +1,9 @@
 package com.souky.controller.user;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +20,7 @@ import com.souky.common.utils.EmailUtil;
 import com.souky.common.utils.JsonResult;
 import com.souky.common.utils.JsonRsultCode;
 import com.souky.common.utils.MD5Util;
+import com.souky.common.utils.RandomUtils;
 import com.souky.entity.common.EmailMessage;
 import com.souky.entity.user.UserLogin;
 import com.souky.service.user.UserLoginService;
@@ -62,6 +66,13 @@ public class UserInfoController {
 		model.addAttribute("message", emailMessage);
 		String html = EmailUtil.getEmailModel(model, "mail",request);
 		jsonResult.setSuccess(true);
+		try {
+			html = URLEncoder.encode(html, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//String html = RandomUtils.random(4);
 		EmailUtil.doSendHtmlEmail("注册验证码", html,"136069803@qq.com");
 		return jsonResult;
 	}

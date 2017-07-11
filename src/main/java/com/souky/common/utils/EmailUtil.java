@@ -39,7 +39,7 @@ public class EmailUtil {
     // 服务器验证
     private static String KEY_PROPS = "mail.smtp.auth";
     // 发件人用户名、密码
-    private static String SEND_USER = "yanzheng@soukys";
+    private static String SEND_USER = "verification@soukys";
     private static String COM = ".com";
     private static String SEND_PWD = "Sjn268450";
     // 建立会话
