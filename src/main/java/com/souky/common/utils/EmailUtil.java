@@ -14,11 +14,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -44,8 +41,6 @@ public class EmailUtil {
     private static MimeMessage message;
     private static Session s;
     
-    @Autowired
-    private FreeMarkerConfigurer freeMarkerConfigurer;
 
     public EmailUtil() {
     }
@@ -106,6 +101,7 @@ public class EmailUtil {
     	Version incompatibleImprovements = new Version("2.3.23");
     	Configuration conf = new Configuration(incompatibleImprovements);
     	conf.setClassForTemplateLoading(EmailUtil.class, "");
+    	conf.setDefaultEncoding("utf-8");
     	String text = null;
         try {
         	Template template = conf.getTemplate(templateType+".ftl");

@@ -1,5 +1,7 @@
 package com.souky.common.utils;
 
+import java.lang.StringBuffer;
+
 public class RandomUtils {
 
 	/*
