@@ -66,12 +66,6 @@ public class UserInfoController {
 		model.addAttribute("message", emailMessage);
 		String html = EmailUtil.getEmailModel(model, "mail",request);
 		jsonResult.setSuccess(true);
-		try {
-			html = URLEncoder.encode(html, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		//String html = RandomUtils.random(4);
 		EmailUtil.doSendHtmlEmail("注册验证码", html,"136069803@qq.com");
 		return jsonResult;
