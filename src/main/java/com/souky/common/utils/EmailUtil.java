@@ -1,6 +1,5 @@
 package com.souky.common.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -20,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -73,7 +71,6 @@ public class EmailUtil {
             s.setDebug(true);
             message = new MimeMessage(s);
             // 发件人
-           // InternetAddress from = new InternetAddress("verification@soukys.com");
             InternetAddress from = new InternetAddress(SEND_USER+COM);
             message.setFrom(from);
             // 收件人
@@ -108,11 +105,9 @@ public class EmailUtil {
     public static String getEmailModel(Model model,String templateType,HttpServletRequest request) {
     	Version incompatibleImprovements = new Version("2.3.23");
     	Configuration conf = new Configuration(incompatibleImprovements);
-    	//conf.setServletContextForTemplateLoading(request.getContextPath(), "/WEB-INF/view/ftl/template");
     	conf.setClassForTemplateLoading(EmailUtil.class, "");
     	String text = null;
         try {
-        	//conf.setDirectoryForTemplateLoading(new File("/souky/src/main/webapp/WEB-INF/view/ftl/template"));
         	Template template = conf.getTemplate(templateType+".ftl");
 			text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 		} catch (IOException e) {
