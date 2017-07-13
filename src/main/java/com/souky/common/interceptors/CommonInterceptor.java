@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.souky.entity.user.UserInfo;
 
 public class CommonInterceptor extends HandlerInterceptorAdapter{
 
@@ -19,12 +18,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 			return true;
         }  
 		request.getSession().setAttribute("v_souky", "?v="+new Date().getTime());
-		UserInfo userInfo = (UserInfo)request.getSession().getAttribute("loginUser");
-		if(userInfo==null){
-			response.sendRedirect("/login");
-			//request.getRequestDispatcher("/login").forward(request, response); 
-			return false;
-		}
 		
 		return true;
 	}
