@@ -3,6 +3,7 @@ package com.jy.moudles.login.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,17 @@ public class LoginController {
 	@ResponseBody
 	public AsyncResponseData.ResultData logout(HttpServletRequest request,HttpServletResponse response) {
 		request.getSession().removeAttribute("user");
+		return AsyncResponseData.getSuccess();
+	}
+	
+	
+	@RequestMapping(value = "/Wxlogin")
+	@ResponseBody
+	public AsyncResponseData.ResultData Wxlogin(String code) {
+		if(StringUtils.isBlank(code)) {
+			return AsyncResponseData.getSuccess().asParamError("code is null");
+		}
+		
 		return AsyncResponseData.getSuccess();
 	}
 	
