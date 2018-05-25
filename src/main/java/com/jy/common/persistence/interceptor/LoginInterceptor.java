@@ -16,9 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jy.common.utils.auth.AuthBuilder;
 import com.jy.common.utils.auth.AuthUser;
-import com.jy.moudles.main.service.MenuService;
-import com.jy.moudles.organization.entity.Organization;
-import com.jy.moudles.organization.service.OrganizationService;
 import com.jy.moudles.user.entity.User;
 import com.jy.moudles.user.service.UserService;
 @SuppressWarnings("unused")
@@ -29,11 +26,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 	 */
 	private final static String[] IGNORE_URI = {"/loginHtml","/login"};
 	
-	private static final ThreadLocal<AuthUser> SESSION_VARS = new ThreadLocal<AuthUser>();
-	
-	private static final ThreadLocal<User> SESSION_USER = new ThreadLocal<User>();
-	
-	private static final ThreadLocal<UserInfo> SESSION_USER_INFO = new ThreadLocal<UserInfo>();
 
 	private static WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 
@@ -57,8 +49,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 			Object obj) throws Exception {
 		boolean flag = false;
 		boolean urlFlag = false;
-//		urlFlag = true;
 		String url = request.getRequestURL().toString();
+		
+		// 跨域拦截
+        String ref = request.getHeader("Origin");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Origin", ref);
 
 		for (String s : IGNORE_URI) {
 			if (url.contains(s)) {
@@ -75,99 +71,15 @@ public class LoginInterceptor implements HandlerInterceptor {
 				if(user != null){
 					flag = true;
 					urlFlag = true;
-					SESSION_USER.set(user);
-					Map<String, Object> filter = new HashMap<String, Object>();
-					filter.put("parentId", user.getOrgId());
-					OrganizationService organizationService = context.getBean(OrganizationService.class);
-					List<Organization> orgList = organizationService.queryOrganizationsFilter(filter);
-					if(orgList != null && orgList.size() > 0){
-						session.setAttribute("isUpperOrg", true);
-						session.setMaxInactiveInterval(-1);
-					}
 				}
 			}
-			//登录信息由cookie转session 时间:2017-11-27 16:41:36
-			/*AuthUser authUser = AuthBuilder.getUser(request, "JY_ANTI_CHEAT");
-			if (authUser.isAuth()){
-				flag = true;
-				urlFlag = true;
-				SESSION_VARS.set(authUser);
-				UserService userService = context.getBean(UserService.class);
-				User user = userService.getUserById(authUser.getId());
-				if(user != null){
-					Map<String, Object> filter = new HashMap<String, Object>();
-					filter.put("parentId", user.getOrgId());
-					OrganizationService organizationService = context.getBean(OrganizationService.class);
-					List<Organization> orgList = organizationService.queryOrganizationsFilter(filter);
-					if(orgList != null && orgList.size() > 0){
-						HttpSession session = request.getSession();
-						session.setAttribute("isUpperOrg", true);
-						session.setMaxInactiveInterval(-1);
-					}
-				}
-			}*/
 		}
 		if (!flag || !urlFlag) {
-			//AuthBuilder.clearCookie(response);
-			SESSION_USER.remove();
-			response.sendRedirect(request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort()+ request.getContextPath() + "/loginHtml");
+			// TODO
+			String returns ="{'code':'20000','message':'no login'}";
+			response.getOutputStream().write(returns.getBytes());
 		}
 		return (flag && urlFlag);
 	}
-	
-	/**
-     * 获取当前登录用户
-     * @return
-     */
-	public static User getCurrentUser(){
-        return SESSION_USER.get();
-    }
-    /*public static AuthUser getCurrentUser(){
-        return SESSION_VARS.get();
-    }*/
-    
-
-	public static UserInfo getCurrentUserInfo(){
-    	 return SESSION_USER_INFO.get();
-    }
-    
-    /**
-     * 用户其他信息
-     * 
-     * @author
-     *
-     */
-    public class UserInfo {
-    	
-    	private List<String> menus;
-    	
-    	private List<String> orgIds;
-    	
-    	private List<String> urls;
-
-		public List<String> getMenus() {
-			return menus;
-		}
-
-		public void setMenus(List<String> menus) {
-			this.menus = menus;
-		}
-
-		public List<String> getOrgIds() {
-			return orgIds;
-		}
-
-		public void setOrgIds(List<String> orgIds) {
-			this.orgIds = orgIds;
-		}
-
-		public List<String> getUrls() {
-			return urls;
-		}
-
-		public void setUrls(List<String> urls) {
-			this.urls = urls;
-		}
-    }
 	
 }

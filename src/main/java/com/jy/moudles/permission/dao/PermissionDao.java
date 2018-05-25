@@ -3,51 +3,58 @@ package com.jy.moudles.permission.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.jy.common.persistence.annotation.MyBatisDao;
 import com.jy.moudles.permission.entity.Permission;
+import com.jy.common.persistence.annotation.MyBatisDao;
 
 /** 
- * permisson数据接口
- * 创建人：1
- * 创建时间：2017-06-05
+ * Permission数据接口
+ * 创建人：Administrator
+ * 创建时间：2018-05-24
  */
 @MyBatisDao
 public interface PermissionDao {
 
 	/**
-	 * 根据ID获取permisson对象
+	 * 新增Permission对象
+	 *
+	 * @param Permission
+	 */
+	public void insertPermission(Permission Permission);
+	
+	/**
+	 * 更新Permission对象
+	 *
+	 * @param Permission
+	 */
+	public void updatePermission(Permission Permission);
+	
+	/**
+	 * 根据ID获取Permission对象
 	 *
 	 * @param id
 	 */
-	public Permission getPermissonById(String id);
+	public Permission getPermissionById(String id);
 	
 	/**
-	 * 根据过滤条件获取permisson列表对象
+	 * 根据过滤条件获取Permission列表对象
 	 *
 	 * @param filter
 	 */
-	public List<Permission> queryPermissonsFilter(Map<String, Object> filter);
+	public List<Permission> queryPermissionsFilter(Map<String, Object> filter);
 	
 	/**
-	 * 根据角色ID获取角色所有的用户权限
-	 * @param roleId
-	 * @return
+	 * 根据Id删除Permission列表对象
+	 *
+	 * @param id
 	 */
-	public List<Permission> queryRolePermissonsByRoleId(String roleId);
+	public void deletePermissionById(String id);
 	
 	/**
-	 * 新增角色权限关系表
-	 * 
-	 * @param list
+	 * 根据Id集合批量删除Permission列表对象
+	 *
+	 * @param ids
 	 */
-	public void batchInsertRolePermissionRelation(List<Map<String, Object>> list);
-	
-	/**
-	 * 根据角色Id删除角色权限表
-	 * 
-	 * @param roleId
-	 */
-	public void deleteRolePermissionRelationByRoleId(String roleId);
+	public void deletePermissions(List<String> ids);
 	
 }
 

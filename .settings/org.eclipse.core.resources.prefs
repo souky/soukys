@@ -1,10 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
-encoding//src/main/webapp/WEB-INF/views/error/400.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/main/mainPage.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/page/page.jsp=UTF-8
-encoding//src/main/webapp/static/common/css/test-box.css=UTF-8
 encoding//src/main/webapp/static/jy/css/common/jry-Plug-in.css=UTF-8
 encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

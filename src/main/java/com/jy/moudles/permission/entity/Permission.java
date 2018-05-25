@@ -8,47 +8,33 @@ public class Permission extends BaseEntity{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7050570252903134199L;
+	private static final long serialVersionUID = -6577192441203848075L;
 
 	/**
-	 * bsid
+	 * 上级id
 	 */
-	private String bsid;
+	private String pId;
 	
 	/**
 	 * 权限名称
 	 */
-	private String permissionName;
-	
-	/**
-	 * 父ID
-	 */
-	private String parentId;
+	private String pName;
 	
 	
-	public String getBsid() {
-		return bsid;
+	public String getPId() {
+		return pId;
 	}
 
-	public void setBsid(String bsid) {
-		this.bsid = bsid;
+	public void setPId(String pId) {
+		this.pId = pId;
 	}
-
-	public String getPermissionName() {
-		return permissionName;
-	}
-
-	public void setPermissionName(String permissionName) {
-		this.permissionName = permissionName;
-	}
-
 	
-	public String getParentId() {
-		return parentId;
+	public String getPName() {
+		return pName;
 	}
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
+	public void setPName(String pName) {
+		this.pName = pName;
 	}
 	
 }

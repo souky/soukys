@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.targetInfo.dao.TargetInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.targetInfo.entity.TargetInfo">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="message" property="message" jdbcType="VARCHAR"/>
+		<result column="start_time" property="startTime" jdbcType="DATETIME"/>
+		<result column="end_time" property="endTime" jdbcType="DATETIME"/>
+		<result column="rate_progress" property="rateProgress" jdbcType="TINYINT"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, user_id, message, start_time, end_time, rate_progress, status, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <insert id="insertTargetInfo">
+        INSERT INTO TARGET_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="message != null">message,</if>
+			<if test="startTime != null">start_time,</if>
+			<if test="endTime != null">end_time,</if>
+			<if test="rateProgress != null">rate_progress,</if>
+			<if test="status != null">status,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="message != null">#{message},</if>
+			<if test="startTime != null">#{startTime},</if>
+			<if test="endTime != null">#{endTime},</if>
+			<if test="rateProgress != null">#{rateProgress},</if>
+			<if test="status != null">#{status},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateTargetInfo">
+        update TARGET_INFO
+        <set>
+			<if test="userId != null and '' != userId">
+				user_id = #{userId},
+			</if>
+			<if test="message != null and '' != message">
+				message = #{message},
+			</if>
+			<if test="startTime != null and '' != startTime">
+				start_time = #{startTime},
+			</if>
+			<if test="endTime != null and '' != endTime">
+				end_time = #{endTime},
+			</if>
+			<if test="rateProgress != null and '' != rateProgress">
+				rate_progress = #{rateProgress},
+			</if>
+			<if test="status != null and '' != status">
+				status = #{status},
+			</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getTargetInfoById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `TARGET_INFO`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryTargetInfosFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `TARGET_INFO`
+        WHERE 1 = 1
+			<if test="userId != null and '' != userId">
+				AND user_id = #{userId}
+			</if>
+			<if test="message != null and '' != message">
+				AND message = #{message}
+			</if>
+			<if test="startTime != null and '' != startTime">
+				AND start_time = #{startTime}
+			</if>
+			<if test="endTime != null and '' != endTime">
+				AND end_time = #{endTime}
+			</if>
+			<if test="rateProgress != null and '' != rateProgress">
+				AND rate_progress = #{rateProgress}
+			</if>
+			<if test="status != null and '' != status">
+				AND status = #{status}
+			</if>
+    </select>
+    
+    <delete id="deleteTargetInfoById" parameterType="java.lang.String">
+        delete from `TARGET_INFO`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteTargetInfos" parameterType="java.lang.String">
+        delete from `TARGET_INFO`
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

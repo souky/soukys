@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jy.moudles.permission.dao.PermissionDao">
+<mapper namespace="com.jy.moudles.punchClock.dao.PunchClockDao">
 
-	<resultMap id="BaseResultMap" type="com.jy.moudles.permission.entity.Permission">
+	<resultMap id="BaseResultMap" type="com.jy.moudles.punchClock.entity.PunchClock">
         <id column="id" property="id" jdbcType="VARCHAR"/>
-		<result column="p_id" property="pId" jdbcType="VARCHAR"/>
-		<result column="p_name" property="pName" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+		<result column="punch_info" property="punchInfo" jdbcType="VARCHAR"/>
+		<result column="img_base" property="imgBase" jdbcType="VARCHAR"/>
+		<result column="time_info" property="timeInfo" jdbcType="VARCHAR"/>
 		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
@@ -13,15 +16,18 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, p_id, p_name, create_user, create_date, update_user, update_date
+        id, user_id, org_id, punch_info, img_base, time_info, create_user, create_date, update_user, update_date
     </sql>
     
-    <insert id="insertPermission">
-        INSERT INTO PERMISSION
+    <insert id="insertPunchClock">
+        INSERT INTO PUNCH_CLOCK
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-			<if test="pId != null">p_id,</if>
-			<if test="pName != null">p_name,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="punchInfo != null">punch_info,</if>
+			<if test="imgBase != null">img_base,</if>
+			<if test="timeInfo != null">time_info,</if>
             <if test="createUser != null">create_user,</if>
             <if test="createDate != null">create_date,</if>
             <if test="updateUser != null">update_user,</if>
@@ -29,8 +35,11 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=VARCHAR},</if>
-			<if test="pId != null">#{pId},</if>
-			<if test="pName != null">#{pName},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="orgId != null">#{orgId},</if>
+			<if test="punchInfo != null">#{punchInfo},</if>
+			<if test="imgBase != null">#{imgBase},</if>
+			<if test="timeInfo != null">#{timeInfo},</if>
             <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
             <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
             <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
@@ -38,14 +47,23 @@
         </trim>
     </insert>
     
-    <update id="updatePermission">
-        update PERMISSION
+    <update id="updatePunchClock">
+        update PUNCH_CLOCK
         <set>
-			<if test="pId != null and '' != pId">
-				p_id = #{pId},
+			<if test="userId != null and '' != userId">
+				user_id = #{userId},
 			</if>
-			<if test="pName != null and '' != pName">
-				p_name = #{pName},
+			<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+			</if>
+			<if test="punchInfo != null and '' != punchInfo">
+				punch_info = #{punchInfo},
+			</if>
+			<if test="imgBase != null and '' != imgBase">
+				img_base = #{imgBase},
+			</if>
+			<if test="timeInfo != null and '' != timeInfo">
+				time_info = #{timeInfo},
 			</if>
             <if test="createUser != null and ''!=createUser">
                 create_user = #{createUser,jdbcType=VARCHAR},
@@ -69,33 +87,42 @@
         </where>
     </update>
     
-    <select id="getPermissionById" resultMap="BaseResultMap">
+    <select id="getPunchClockById" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from `PERMISSION`
+        from `PUNCH_CLOCK`
         WHERE id = #{id}
     </select>
     
-    <select id="queryPermissionsFilter" resultMap="BaseResultMap">
+    <select id="queryPunchClocksFilter" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from `PERMISSION`
+        from `PUNCH_CLOCK`
         WHERE 1 = 1
-			<if test="pId != null and '' != pId">
-				AND p_id = #{pId}
+			<if test="userId != null and '' != userId">
+				AND user_id = #{userId}
 			</if>
-			<if test="pName != null and '' != pName">
-				AND p_name = #{pName}
+			<if test="orgId != null and '' != orgId">
+				AND org_id = #{orgId}
+			</if>
+			<if test="punchInfo != null and '' != punchInfo">
+				AND punch_info = #{punchInfo}
+			</if>
+			<if test="imgBase != null and '' != imgBase">
+				AND img_base = #{imgBase}
+			</if>
+			<if test="timeInfo != null and '' != timeInfo">
+				AND time_info = #{timeInfo}
 			</if>
     </select>
     
-    <delete id="deletePermissionById" parameterType="java.lang.String">
-        delete from `PERMISSION`
+    <delete id="deletePunchClockById" parameterType="java.lang.String">
+        delete from `PUNCH_CLOCK`
         where id = #{id}
     </delete>
     
-    <delete id="deletePermissions" parameterType="java.lang.String">
-        delete from `PERMISSION`
+    <delete id="deletePunchClocks" parameterType="java.lang.String">
+        delete from `PUNCH_CLOCK`
         where id IN 
         <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
              #{id}

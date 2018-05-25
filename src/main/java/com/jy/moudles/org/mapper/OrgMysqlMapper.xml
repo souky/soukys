@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jy.moudles.permission.dao.PermissionDao">
+<mapper namespace="com.jy.moudles.org.dao.OrgDao">
 
-	<resultMap id="BaseResultMap" type="com.jy.moudles.permission.entity.Permission">
+	<resultMap id="BaseResultMap" type="com.jy.moudles.org.entity.Org">
         <id column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="p_id" property="pId" jdbcType="VARCHAR"/>
-		<result column="p_name" property="pName" jdbcType="VARCHAR"/>
+		<result column="org_name" property="orgName" jdbcType="VARCHAR"/>
 		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
@@ -13,15 +13,15 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, p_id, p_name, create_user, create_date, update_user, update_date
+        id, p_id, org_name, create_user, create_date, update_user, update_date
     </sql>
     
-    <insert id="insertPermission">
-        INSERT INTO PERMISSION
+    <insert id="insertOrg">
+        INSERT INTO ORG
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
 			<if test="pId != null">p_id,</if>
-			<if test="pName != null">p_name,</if>
+			<if test="orgName != null">org_name,</if>
             <if test="createUser != null">create_user,</if>
             <if test="createDate != null">create_date,</if>
             <if test="updateUser != null">update_user,</if>
@@ -30,7 +30,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id,jdbcType=VARCHAR},</if>
 			<if test="pId != null">#{pId},</if>
-			<if test="pName != null">#{pName},</if>
+			<if test="orgName != null">#{orgName},</if>
             <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
             <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
             <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
@@ -38,14 +38,14 @@
         </trim>
     </insert>
     
-    <update id="updatePermission">
-        update PERMISSION
+    <update id="updateOrg">
+        update ORG
         <set>
 			<if test="pId != null and '' != pId">
 				p_id = #{pId},
 			</if>
-			<if test="pName != null and '' != pName">
-				p_name = #{pName},
+			<if test="orgName != null and '' != orgName">
+				org_name = #{orgName},
 			</if>
             <if test="createUser != null and ''!=createUser">
                 create_user = #{createUser,jdbcType=VARCHAR},
@@ -69,33 +69,33 @@
         </where>
     </update>
     
-    <select id="getPermissionById" resultMap="BaseResultMap">
+    <select id="getOrgById" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from `PERMISSION`
+        from `ORG`
         WHERE id = #{id}
     </select>
     
-    <select id="queryPermissionsFilter" resultMap="BaseResultMap">
+    <select id="queryOrgsFilter" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from `PERMISSION`
+        from `ORG`
         WHERE 1 = 1
 			<if test="pId != null and '' != pId">
 				AND p_id = #{pId}
 			</if>
-			<if test="pName != null and '' != pName">
-				AND p_name = #{pName}
+			<if test="orgName != null and '' != orgName">
+				AND org_name = #{orgName}
 			</if>
     </select>
     
-    <delete id="deletePermissionById" parameterType="java.lang.String">
-        delete from `PERMISSION`
+    <delete id="deleteOrgById" parameterType="java.lang.String">
+        delete from `ORG`
         where id = #{id}
     </delete>
     
-    <delete id="deletePermissions" parameterType="java.lang.String">
-        delete from `PERMISSION`
+    <delete id="deleteOrgs" parameterType="java.lang.String">
+        delete from `ORG`
         where id IN 
         <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
              #{id}
