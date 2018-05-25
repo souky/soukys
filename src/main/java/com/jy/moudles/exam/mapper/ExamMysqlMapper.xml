@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.exam.dao.ExamDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.exam.entity.Exam">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="exam_name" property="examName" />
+		<result column="exam_no" property="examNo" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="status" property="status" />
+		<result column="exam_type_id" property="examTypeId" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<association property="organization" javaType="com.jy.moudles.organization.entity.Organization">
+			<id column="organization_id" property="id" jdbcType="VARCHAR" />
+			<result column="name" property="name" jdbcType="VARCHAR" />
+		</association>
+		<collection property="examSubList" ofType="com.jy.moudles.exam.entity.ExamSub"  javaType="list">
+			<id column="examSub_id" property="id" jdbcType="VARCHAR"/>
+			<result column="no" property="no" />
+			<result column="examSub_name" property="name" />
+			<result column="examSub_start_time" property="startTime" />
+			<result column="examSub_end_time" property="endTime" />
+			<result column="exam_plan_id" property="examPlanId" />
+		</collection>
+	</resultMap>
+	
+	<!--<resultMap type="com.jy.moudles.exam.entity.Exam" id="subExamResultMap">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="exam_name" property="examName" />
+		<result column="exam_no" property="examNo" />
+		<collection property="examSubList" ofType="com.jy.moudles.exam.entity.ExamSub"  javaType="list">
+            <id column="id" property="id" jdbcType="VARCHAR"/>
+			<result column="no" property="no" />
+			<result column="name" property="name" />
+        </collection>
+	</resultMap>-->
+    
+    <sql id="Base_Column_List">
+        id, exam_name, exam_no, start_time, end_time, status, exam_type_id, org_id, create_user, create_date, update_user, update_date, remark  
+    </sql>
+    
+    <!-- 查询考试结束时间小于当前时间,并且考试状态为启用的 -->
+    <select id="queryExpiredExamsfilter" resultMap="BaseResultMap">
+    	select * from jy_exam_plan_tab where 1 = 1 
+	   	<if test="status != null and '' != status">
+			AND ep.status = #{status}
+		</if>
+		<if test="currentTime != null and '' != currentTime">
+			and end_time &lt;= #{currentTime}
+		</if>
+    </select>
+    
+    <!-- 查询当前正在考试的场次 -->
+    <select id="queryCurrentExam" resultMap="BaseResultMap">
+    	SELECT e.*,es.id AS examSub_id,es.no,es.name AS examSub_name,
+				es.start_time AS examSub_start_time,es.end_time AS examSub_end_time,es.exam_plan_id
+        from jy_exam_plan_tab e left join jy_exam_sub_tab es
+    	on e.id = es.exam_plan_id
+    	where #{currentTime} &gt; e.start_time AND #{currentTime} &lt; e.end_time
+    </select>
+    
+    <select id="queryMaxExamNo" resultType="string">
+    	SELECT MAX(EXAM_NO) FROM JY_EXAM_PLAN_TAB
+    </select>
+
+	<delete id="clearExamData">
+		TRUNCATE TABLE `JY_EXAM_PLAN_TAB`;
+	</delete>
+
+    <!-- 下发考试使用该sql -->
+    <select id="queryExamToSend" resultMap="BaseResultMap">
+        SELECT e.*,es.id AS examSub_id,es.no,es.name AS examSub_name,
+				es.start_time AS examSub_start_time,es.end_time AS examSub_end_time,es.exam_plan_id
+        from JY_EXAM_PLAN_TAB e left join JY_EXAM_SUB_TAB es
+    	on e.id = es.exam_plan_id
+    	where 1=1 
+        <if test="status != null and '' != status">
+            AND status = #{status}
+        </if>
+    </select>
+
+
+	<!-- 查看考试计划是否已经能够存在 -->
+	<select id="queryExamsByExamTypeAndYear" resultMap="BaseResultMap">
+		select * from jy_exam_plan_tab WHERE left(exam_no,4) = #{year} AND exam_type_id = #{examTypeId}
+	</select>
+    
+    <select id="queryExamFilter" resultMap="BaseResultMap">
+        SELECT ep.*,org.id AS organization_id,org.name
+        from `JY_EXAM_PLAN_TAB` ep, `jy_organization_tab` org
+        WHERE 1 = 1 AND ep.org_id = org.id
+			<if test="id != null and '' != id">
+				AND ep.id = #{id}
+			</if>
+			<if test="examName != null and '' != examName">
+				AND ep.exam_name = #{examName}
+			</if>
+			<if test="examNo != null and '' != examNo">
+				AND ep.exam_no = #{examNo}
+			</if>
+			<if test="startTime != null and '' != startTime">
+				AND ep.start_time = #{startTime}
+			</if>
+			<if test="endTime != null and '' != endTime">
+				AND ep.end_time = #{endTime}
+			</if>
+			<if test="status != null and '' != status">
+				AND ep.status = #{status}
+			</if>
+			<if test="examTypeId != null and '' != examTypeId">
+				AND ep.exam_type_id = #{examTypeId}
+			</if>
+			<if test="orgId != null and '' != orgId">
+				AND ep.org_id = #{orgId}
+			</if>
+			<if test="createUser != null and '' != createUser">
+				AND ep.create_user = #{createUser}
+			</if>
+			<if test="createDate != null and '' != createDate">
+				AND ep.create_date = #{createDate}
+			</if>
+			<if test="updateUser != null and '' != updateUser">
+				AND ep.update_user = #{updateUser}
+			</if>
+			<if test="updateDate != null and '' != updateDate">
+				AND ep.update_date = #{updateDate}
+			</if>
+			<if test="lastTime != null and '' != lastTime">
+				AND ep.update_date &gt; #{lastTime}
+			</if>
+			<if test="currentTime != null and '' != currentTime">
+				AND ep.update_date &lt;= #{currentTime}
+			</if>
+    	order by ep.update_date
+    </select>
+    
+    <select id="getExamSubData" resultMap="BaseResultMap">
+    	SELECT e.id,e.exam_name,e.exam_no,es.no,es.name,es.id
+    	from JY_EXAM_PLAN_TAB e left join JY_EXAM_SUB_TAB es
+    	on e.id = es.exam_plan_id
+    	where e.id = #{id}
+    </select>
+    
+    <insert id="addExam"  parameterType="com.jy.moudles.exam.entity.Exam">
+    	insert into JY_EXAM_PLAN_TAB
+    		(id, exam_name, exam_no, start_time, end_time, status, exam_type_id, org_id, create_user, create_date, update_user, update_date, remark) 
+    	values
+    	(
+			#{id},#{examName},#{examNo},#{startTime},#{endTime},#{status},#{examTypeId},
+			#{orgId},#{createUser},#{createDate},#{updateUser},#{updateDate},#{remark}
+		)
+    </insert>
+    
+    <update id="updateExam"  parameterType="com.jy.moudles.exam.entity.Exam">
+    	update JY_EXAM_PLAN_TAB set 
+    		exam_name=#{examName},start_time=#{startTime},end_time=#{endTime},status=#{status}  
+    	where id=#{id}
+    </update>
+    
+    <delete id="deleteExamById" parameterType="java.lang.String">
+    	delete from JY_EXAM_PLAN_TAB where id = #{id}
+    </delete>
+    
+    <delete id="deleteExams" parameterType="java.util.List">
+    	delete from JY_EXAM_PLAN_TAB 
+    	where id IN 
+    	<foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+    <select id="queryExamById" parameterType="string" resultMap="BaseResultMap">
+    	select * from JY_EXAM_PLAN_TAB where id = #{id}
+    </select>
+    
+    <select id="queryExamsByKafka" resultMap="BaseResultMap">
+    	select * from JY_EXAM_PLAN_TAB where 1 = 1 
+    	<if test="lastTime != null and '' != lastTime">
+			AND update_date &gt; #{lastTime}
+		</if>
+		<if test="currentTime != null and '' != currentTime">
+			AND update_date &lt;= #{currentTime}
+		</if>
+		<if test="orgId != null and '' != orgId">
+			AND org_id = #{orgId}
+		</if>
+    	order by update_date 
+    </select>
+    
+    <delete id="deleteExamByKafka" >
+    	delete from  JY_EXAM_PLAN_TAB where 1 = 1
+    	<if test="lastTime != null and '' != lastTime">
+			AND update_date &gt; #{lastTime}
+		</if>
+		<if test="currentTime != null and '' != currentTime">
+			AND update_date &lt;= #{currentTime}
+		</if>
+		<if test="orgId != null and '' != orgId">
+			AND org_id = #{orgId}
+		</if>
+    </delete>
+    
+    <insert id="insertExamBatch">
+    	insert into JY_EXAM_PLAN_TAB
+    		(id, exam_name, exam_no, start_time, end_time, status, exam_type_id, org_id, create_user, create_date, update_user, update_date, remark) 
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+	    	(
+		    	#{item.id},#{item.examName},#{item.examNo},#{item.startTime},#{item.endTime},#{item.status},#{item.examTypeId},
+				#{item.orgId},#{item.createUser},#{item.createDate},#{item.updateUser},#{item.updateDate},#{item.remark}
+	    	)
+    	</foreach>
+    </insert>
+    
+</mapper>

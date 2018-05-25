@@ -1,0 +1,23 @@
+#reset{
+	margin-left: 5%;
+}
+
+.form-control{
+	width:40%;
+}
+.form-group{
+	margin-top:2%;
+}
+#updatePsSub{
+	margin-left: 24%;
+}
+#big-div{
+	margin-top: 5%;
+	margin-left: 26%;
+}
+.btn-primary{
+	width: 14%;
+}
+
+#noteAlert-warning{position:absolute;padding:8px;left:40%;z-index:9999;display:none;} 
+#noteAlert-success{position:absolute;padding:8px;left:40%;z-index:9999;display:none;} 

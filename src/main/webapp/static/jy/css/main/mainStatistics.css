@@ -1,0 +1,278 @@
+.fl{
+	float:left;
+}
+.tl{
+	text-align:left;
+}
+.Jry_top .top_title{
+	width:100%;
+	text-align:center;
+	color:#fff;
+	font-size:25px;
+	
+}
+.Jry_top .top_user{
+	width:300px;
+	color:#32CCFE;
+	right:0px;
+}
+.goToMain{
+	position:fixed;
+	top:45%;
+	right:20px;
+	width:60px;
+	height:120px;
+	line-height:120px;
+	font-size:32px;
+	color:#b5b5b5;
+	text-align:center;
+	background:rgba(0,0,0,0.2);
+	cursor:pointer;
+	z-index:9999;
+}
+.goToMain:hover{
+	background:rgba(0,0,0,0.6);
+	color:#fff;
+	font-size: 16px;
+    line-height: 20px;
+    padding: 20px;
+    height: 80px;
+    width: 20px;
+}
+#city_all{
+	width:100%;
+	height:887px;
+	background:#162743;
+	overflow-y:hidden;
+	margin-top:60px;
+	
+}
+#city_all .leftPart{
+	width:40%;
+	height:780px;
+	margin-top: 20px;
+}
+#city_all .back{
+	position:absolute;
+	left:40px;
+	top:100px;
+	color:#32CCFE;
+	border:1px #32CCFE  solid;
+	border-radius:4px;
+	padding:3px 14px;
+	font-size:20px;
+	text-align:center;
+	cursor:pointer;
+	z-index:9999;
+}
+#city_all .back #goback{
+	text-decoration:none;
+}
+#city_all .rightPart{
+	width:60%;
+	padding:30px 0;
+}
+#city_all .rightPart .items{
+	width:31%;
+	margin:10px 1%;
+}
+#city_all .rightPart .items .title{
+	height:40px;
+	width:100%;
+	line-height:30px;
+	background:#21324D;
+}
+#city_all .rightPart .items .title .title_img{
+	width:30px;
+	height:30px;
+	margin-left:20px;
+	margin-top:5px;
+	line-height:20px;
+	margin-right:20px;
+}
+#city_all .rightPart .items .title .title_img img{
+	width:100%;
+}
+#city_all .rightPart .items .title .title_img_text{
+	padding-right:30px
+}
+#city_all .rightPart .items .bottomPart .table_col{
+	width:145px
+}
+#city_all .rightPart .items .bottomPart .baseinfo{
+	color:#32CCFE;
+	width: 87%;
+    height: 150px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+#city_all .rightPart .items .bottomPart .baseinfo li{
+	height:60px;
+	line-height:60px;
+	color:#32CCFE;
+}
+#city_all .rightPart .items .bottomPart .baseinfo .info{
+	color:#fff;
+}
+#city_all .rightPart .items .bottomPart .baseinfo .info .num{
+	color:#FBF115;
+}
+#city_all .rightPart .items .title .title_text{
+	line-height:40px;
+	color:#32CCFE;
+	font-size:16px;
+}
+#city_all .rightPart .items .title .title_text .img_break{
+	padding-left:300px;
+}
+#city_all .rightPart .items .title .title_text .img_notbreak{
+	padding-left:10px;
+}
+#city_all .rightPart .items .bottomPart{
+	background:#0C1C36!important;
+}
+#city_all td{
+	padding: 5px 0px!important;
+}
+#city_all table{
+	width:95%;
+	font-size:14px;
+	color:#fff;
+	margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+#cheatInfo_tab{
+	overflow:hidden;
+}
+
+#cheatInfo_tab .fl{
+	height:43px;
+	line-height:43px;
+	color:#fff;
+	width:25%;
+	text-align:center;
+	text-overflow:ellipsis; 
+	white-space:nowrap; 
+	overflow:hidden;
+}
+#cheatInfo_tab .items_cheat{
+	width:100%;
+}
+
+#bwList_tab{
+	color:#fff;
+	
+}
+#bwList_main{
+	overflow:hidden;
+}
+#bwList_tab .items_bw{
+	width:100%;
+}
+
+#bwList_tab .items_bw .fl{
+	height:32px;
+	line-height:32px;
+	color:#fff;
+	width:25%;
+	text-align:center;
+	text-overflow:ellipsis; 
+	white-space:nowrap; 
+	overflow:hidden;
+}
+
+#cheatedPointPie{
+	position:relative;
+}
+#cheatedPointPie .topPart{
+	width:50%;
+	height:40px;
+	line-height:40px;
+	color:#fff;
+}
+#cheatedPointPie .block{
+	width:30px;
+	height:16px;
+	border-radius:4px;
+	margin:11px 20px 0px 20px;
+}
+#cheatedPointPie .block.w{
+	background:#fff;
+}
+#cheatedPointPie .block.b{
+	background:#32ccfe;
+}
+#cheatedPointPie .cheatMain{
+	height:100%;
+	width:100%;
+	position:relative;
+}
+#cheatedPointPie .main_circle{
+	width:80%;
+	margin:auto;
+	height:80%;
+	padding-top:40px;
+}
+#cheatedPointPie .circle {
+	width: 200px;
+	height: 200px;
+	margin:auto;
+	position: relative;
+	border-radius: 50%;
+	background: #32ccfe;
+}
+#cheatedPointPie .pie_left, .pie_right {
+	width:200px; 
+	height:200px;
+	position: absolute;
+	top: 0;left: 0;
+}
+#cheatedPointPie .left, .right {
+	width:200px; 
+	height:200px;
+	background:#fff;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#cheatedPointPie .pie_right, .right {
+	clip:rect(0,auto,auto,100px);
+}
+#cheatedPointPie .pie_left, .left {
+	clip:rect(0,100px,auto,0);
+}
+#cheatedPointPie .mask {
+	width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    left: 20px;
+    top: 20px;
+    background: #0c1c36;
+    position: absolute;
+    font-size: 20px;
+    color: #00aacc;
+}
+#cheatedPointPie .mask .text{
+	height:80px;
+	width:100%;
+ 	text-align: center;
+}
+
+#cheatedPointPie .mask .text.top{
+	line-height:120px;
+}
+#cheatedPointPie .mask .text.bottom{
+	line-height:40px;
+	font-size:28px;
+	color:#FBF115;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.blackwhitelist.dao.BlackWhiteListDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.blackwhitelist.entity.BlackWhiteList">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="frequency_type" property="frequencyType" jdbcType="TINYINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="marjor_frequency" property="marjorFrequency" jdbcType="VARCHAR"/>
+        <result column="second_frequency" property="secondFrequency" jdbcType="VARCHAR"/>
+        <result column="source" property="source" jdbcType="TINYINT"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <association property="organization" javaType="com.jy.moudles.organization.entity.Organization">
+            <id column="organization_id" property="id" jdbcType="VARCHAR" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, frequency_type, type, marjor_frequency, second_frequency, source, org_id, create_user, create_date, update_user, update_date
+    </sql>
+
+    <insert id="insertBlackWhiteListBatch">
+        INSERT INTO JY_B_W_LIST_TAB
+          (id, frequency_type, type, marjor_frequency, second_frequency, source, org_id,  create_user, create_date,
+           update_user, update_date)
+        VALUES
+            <foreach collection="list" item="item" index="index" separator=",">
+                (
+                #{item.id},#{item.frequencyType},#{item.type},#{item.marjorFrequency},
+                #{item.secondFrequency},#{item.source},#{item.orgId},#{item.createUser},
+                #{item.createDate},#{item.updateUser},#{item.updateDate}
+                )
+            </foreach>
+
+    </insert>
+
+    <insert id="insertBlackWhiteList">
+        INSERT INTO JY_B_W_LIST_TAB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="frequencyType != null">frequency_type,</if>
+            <if test="type != null">type,</if>
+            <if test="marjorFrequency != null">marjor_frequency,</if>
+            <if test="secondFrequency != null">second_frequency,</if>
+            <if test="source != null">source,</if>
+            <if test="orgId != null">org_id,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+            <if test="frequencyType != null">#{frequencyType},</if>
+            <if test="type != null">#{type},</if>
+            <if test="marjorFrequency != null">#{marjorFrequency},</if>
+            <if test="secondFrequency != null">#{secondFrequency},</if>
+            <if test="source != null">#{source},</if>
+            <if test="orgId != null">#{orgId},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateBlackWhiteList">
+        update JY_B_W_LIST_TAB
+        <set>
+				<if test="frequencyType != null and '' != frequencyType">
+				frequency_type = #{frequencyType},
+				</if>
+				<if test="type != null and '' != type">
+				type = #{type},
+				</if>
+				<if test="marjorFrequency != null and '' != marjorFrequency">
+				marjor_frequency = #{marjorFrequency},
+				</if>
+				<if test="secondFrequency != null and '' != secondFrequency">
+				second_frequency = #{secondFrequency},
+				</if>
+				<if test="source != null and '' != source">
+				source = #{source},
+				</if>
+				<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+				</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getBlackWhiteListById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `JY_B_W_LIST_TAB`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryBlackWhiteListsFilter" resultMap="BaseResultMap">
+        SELECT bw.*,org.id as organization_id,org.name
+        from `JY_B_W_LIST_TAB` bw, `jy_organization_tab` org
+        WHERE 1 = 1 AND bw.org_id = org.id
+			<if test="frequencyType != null and -1 != frequencyType">
+				AND bw.frequency_type = #{frequencyType}
+			</if>
+			<if test="type != null and '' != type">
+				AND bw.type = #{type}
+			</if>
+			<if test="marjorFrequency != null and -1 != marjorFrequency">
+				AND bw.marjor_frequency = #{marjorFrequency}
+			</if>
+			<if test="secondFrequency != null and '' != secondFrequency">
+				AND bw.second_frequency = #{secondFrequency}
+			</if>
+			<if test="source != null and '' != source">
+				AND bw.source = #{source}
+			</if>
+			<if test="orgId != null and '' != orgId">
+				AND bw.org_id = #{orgId}
+			</if>
+            <if test="lastTime != null and '' != lastTime">
+                AND bw.update_date &gt; #{lastTime}
+            </if>
+            <if test="currentTime != null and '' != currentTime">
+                AND bw.update_date &lt;= #{currentTime}
+            </if>
+        ORDER BY bw.type, bw.update_date DESC
+    </select>
+    
+    <delete id="deleteBlackWhiteListById" parameterType="java.lang.String">
+        delete from `JY_B_W_LIST_TAB`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteBlackWhiteLists" parameterType="java.lang.String">
+        delete from `JY_B_W_LIST_TAB`
+        where id IN 
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBWsByKafka">
+        delete from  JY_B_W_LIST_TAB where 1 = 1
+        <if test="lastTime != null and '' != lastTime">
+            AND update_date &gt; #{lastTime}
+        </if>
+        <if test="currentTime != null and '' != currentTime">
+            AND update_date &lt;= #{currentTime}
+        </if>
+        <if test="orgId != null and '' != orgId">
+            AND org_id = #{orgId}
+        </if>
+    </delete>
+    
+</mapper>

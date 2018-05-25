@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jy.moudles.exam.dao.ExamSubDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.exam.entity.ExamSub">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="no" property="no" />
+		<result column="name" property="name" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="exam_plan_id" property="examPlanId" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, no, name, start_time, end_time, org_id, create_user, create_date, update_user, update_date, remark  
+    </sql>
+
+    <delete id="clearExamSubData">
+        TRUNCATE TABLE `JY_EXAM_SUB_TAB`;
+    </delete>
+    <insert id="insertExsubBatch">
+    	insert into JY_EXAM_SUB_TAB 
+    	(
+    		id, no, name, start_time, end_time,exam_plan_id, org_id, create_user, create_date, update_user, update_date, remark  
+    	)
+        values 
+    	<foreach collection="list" item="item" index="index" separator=",">
+			(
+				#{item.id},
+				#{item.no},
+				#{item.name},
+				#{item.startTime},
+				#{item.endTime},
+				#{item.examPlanId},
+				#{item.orgId},
+				#{item.createUser},
+				#{item.createDate},
+				#{item.updateUser},
+				#{item.updateDate},
+				#{item.remark}
+			)
+    	</foreach>
+    </insert>
+    
+    <insert id="insertExsub">
+        INSERT INTO JY_EXAM_SUB_TAB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="no != null">no,</if>
+			<if test="name != null">name,</if>
+			<if test="startTime != null">start_time,</if>
+			<if test="endTime != null">end_time,</if>
+			<if test="examPlanId != null">exam_plan_id,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="createUser != null">create_user,</if>
+			<if test="createDate != null">create_date,</if>
+			<if test="updateUser != null">update_user,</if>
+			<if test="updateDate != null">update_date,</if>
+			<if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="no != null">#{no},</if>
+			<if test="name != null">#{name},</if>
+			<if test="startTime != null">#{startTime},</if>
+			<if test="endTime != null">#{endTime},</if>
+			<if test="examPlanId != null">#{examPlanId},</if>
+			<if test="orgId != null">#{orgId},</if>
+			<if test="createUser != null">#{createUser},</if>
+			<if test="createDate != null">#{createDate},</if>
+			<if test="updateUser != null">#{updateUser},</if>
+			<if test="updateDate != null">#{updateDate},</if>
+			<if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateExsub">
+        update JY_EXAM_SUB_TAB
+        <set>
+			<if test="no != null and '' != no">
+				no = #{no},
+			</if>
+			<if test="name != null and '' != name">
+				name = #{name},
+			</if>
+			<if test="startTime != null and '' != startTime">
+				start_time = #{startTime},
+			</if>
+			<if test="endTime != null and '' != endTime">
+				end_time = #{endTime},
+			</if>
+			<if test="examPlanId != null and '' != examPlanId">
+				exam_plan_id = #{examPlanId},
+			</if>
+			<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+			</if>
+			<if test="updateUser != null and '' != updateUser">
+				update_user = #{updateUser},
+			</if>
+			<if test="updateDate != null and '' != updateDate">
+				update_date = #{updateDate},
+			</if>
+			<if test="remark != null and '' != remark">
+				remark = #{remark},
+			</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getExsubById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        from `JY_EXAM_SUB_TAB`
+        WHERE id = #{id} 
+    </select>
+    
+    <select id="queryExsubsFilter" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        from `JY_EXAM_SUB_TAB`
+        WHERE 1 = 1 
+			<if test="id != null and '' != id">
+				AND id = #{id} 
+			</if>
+			<if test="no != null and '' != no">
+				AND no = #{no} 
+			</if>
+			<if test="name != null and '' != name">
+				AND name = #{name} 
+			</if>
+			<if test="startTime != null and '' != startTime">
+				AND start_time = #{startTime} 
+			</if>
+			<if test="endTime != null and '' != endTime">
+				AND end_time = #{endTime} 
+			</if>
+			<if test="examPlanId != null and '' != examPlanId">
+				AND exam_plan_id = #{examPlanId} 
+			</if>
+			<if test="orgId != null and '' != orgId">
+				AND org_id = #{orgId}
+			</if>
+			<if test="createUser != null and '' != createUser">
+				AND create_user = #{createUser}
+			</if>
+			<if test="createDate != null and '' != createDate">
+				AND create_date = #{createDate}
+			</if>
+			<if test="updateUser != null and '' != updateUser">
+				AND update_user = #{updateUser}
+			</if>
+			<if test="updateDate != null and '' != updateDate">
+				AND update_date = #{updateDate}
+			</if>
+			<if test="lastTime != null and '' != lastTime">
+				AND update_date &gt; #{lastTime}
+			</if>
+			<if test="currentTime != null and '' != currentTime">
+				AND update_date &lt;= #{currentTime}
+			</if>
+	    	order by no,start_time DESC
+    </select>
+
+	<delete id="deleteExsubsByExamPlanId" parameterType="java.lang.String">
+		delete from `JY_EXAM_SUB_TAB`
+        where exam_plan_id = #{examPlanId}
+	</delete>
+
+    <delete id="deleteExsubById" parameterType="java.lang.String">
+        delete from `JY_EXAM_SUB_TAB` 
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteExsubs" parameterType="java.lang.String">
+        delete from `JY_EXAM_SUB_TAB`
+        where id IN 
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteExamSubBykafka">
+    	delete from `JY_EXAM_SUB_TAB`
+        where 1 = 1
+		<if test="lastTime != null and '' != lastTime">
+			AND update_date &gt; #{lastTime}
+		</if>
+		<if test="currentTime != null and '' != currentTime">
+			AND update_date &lt;= #{currentTime}
+		</if>
+		<if test="orgId != null and '' != orgId">
+			AND org_id = #{orgId}
+		</if>
+    </delete>
+    
+</mapper>

@@ -1,7 +1,5 @@
 package com.jy.common.persistence.interceptor;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jy.common.utils.auth.AuthBuilder;
 import com.jy.common.utils.auth.AuthUser;
+import com.jy.moudles.main.service.MenuService;
 import com.jy.moudles.organization.entity.Organization;
 import com.jy.moudles.organization.service.OrganizationService;
 import com.jy.moudles.user.entity.User;
+import com.jy.moudles.user.service.UserService;
 @SuppressWarnings("unused")
 public class LoginInterceptor implements HandlerInterceptor {
 	
@@ -55,15 +57,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 			Object obj) throws Exception {
 		boolean flag = false;
 		boolean urlFlag = false;
-		
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String nowDate = sdf.format(date);
-		Date expressDate = sdf.parse("2019-04-30 23:59:59");
-		if(expressDate.compareTo(date) < 0){
-			return false;
-		}
-		
 //		urlFlag = true;
 		String url = request.getRequestURL().toString();
 
@@ -114,13 +107,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 				}
 			}*/
 		}
-//		if (!flag || !urlFlag) {
-//			//AuthBuilder.clearCookie(response);
-//			SESSION_USER.remove();
-//			response.sendRedirect(request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort()+ request.getContextPath() + "/loginHtml");
-//		}
-		//return (flag && urlFlag);
-		return true;
+		if (!flag || !urlFlag) {
+			//AuthBuilder.clearCookie(response);
+			SESSION_USER.remove();
+			response.sendRedirect(request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort()+ request.getContextPath() + "/loginHtml");
+		}
+		return (flag && urlFlag);
 	}
 	
 	/**

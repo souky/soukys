@@ -1,0 +1,40 @@
+.indexQuery{position:relative;height:75px;overflow:hidden;}
+.queryshows{width:30px;position:absolute;top:20px;left:50%;cursor:pointer;}
+.queryshows img{width:100%;}
+.query_part{padding-top:10px;}
+.goToMain{
+	position:fixed;
+	top:45%;
+	right:20px;
+	width:60px;
+	height:120px;
+	line-height:120px;
+	font-size:32px;
+	color:#b5b5b5;
+	text-align:center;
+	background:rgba(0,0,0,0.2);
+	cursor:pointer;
+	z-index:9999;
+}
+.goToMain:hover{
+	background:rgba(0,0,0,0.6);
+	color:#fff;
+	font-size: 16px;
+    line-height: 20px;
+    padding: 20px;
+    height: 80px;
+    width: 20px;
+}
+.logo{
+	width: 200px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	color: #fff;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 999;
+	font-family: "Microsoft YaHei";
+	cursor: pointer;
+}

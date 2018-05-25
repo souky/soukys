@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.device.dao.DeviceDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.device.entity.Device">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="ip" property="ip" jdbcType="VARCHAR"/>
+		<result column="mac" property="mac" jdbcType="VARCHAR"/>
+		<result column="sn" property="sn" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="TINYINT"/>
+		<result column="version" property="version" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="poweroff" property="poweroff" jdbcType="TINYINT"/>
+        <result column="list_order" property="listOrder" />
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="work_status" property="workStatus" jdbcType="TINYINT"/>
+        <result column="controlled" property="controlled" jdbcType="TINYINT"/>
+        <result column="operation_type" property="operationType" jdbcType="TINYINT"/>
+        <result column="group_no" property="groupNo" jdbcType="TINYINT"/>
+        <result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="vender" property="vender" />
+        <association property="organization" javaType="com.jy.moudles.organization.entity.Organization">
+			<id column="organization_id" property="id" jdbcType="VARCHAR" />
+			<result column="name" property="name" jdbcType="VARCHAR" />
+		</association>
+    </resultMap>
+    
+    <resultMap id="deviceCount" type="com.jy.moudles.statistics.entity.DeviceCollectVO">
+        <result column="name" property="orgName" jdbcType="VARCHAR" />
+        <result column="count" property="count" />
+        <result column="type" property="type"/>
+        <result column="status" property="status" />
+	</resultMap>
+    
+    <sql id="Base_Column_List">
+        id, ip, mac, sn, type, version, status, poweroff, list_order, address, work_status, controlled, operation_type,
+        group_no, org_id, create_user, create_date, update_user, update_date, vender
+    </sql>
+
+    <!-- 清理数据 -->
+    <delete id="clearDeviceData">
+        delete from `JY_DEVICE_TAB`
+    </delete>
+
+    <select id="queryDevicesByGroupNo" resultMap="BaseResultMap">
+    	SELECT d.* FROM jy_device_tab d,jy_device_group_tab dg 
+    	WHERE d.group_no = dg.group_no and dg.id = #{id}
+    </select>
+    
+    <update id="deleteDeviceGroupNo">
+    	update JY_DEVICE_TAB set group_no = null 
+    	where group_no = (SELECT group_no FROM jy_device_group_tab WHERE id = #{id})
+    </update>
+    
+    <update id="addDeviceGroupNo" parameterType="java.lang.String">
+    	update JY_DEVICE_TAB set group_no = (SELECT group_no FROM jy_device_group_tab WHERE id = #{id})
+    	where mac in 
+    	<foreach collection="list" item="mac" index="index" separator="," open="(" close=")">
+             #{mac}
+        </foreach>
+    </update>
+    
+    <select id="queryDeviceCount"  resultMap="deviceCount">
+        SELECT org.`name`, COUNT(*) AS count, d.type, d.status 
+        FROM jy_device_tab d LEFT JOIN jy_organization_tab org ON d.org_id = org.id 
+		GROUP BY org.name,d.type,d.status
+
+    </select>
+    
+    <insert id="insertDevice">
+        INSERT INTO JY_DEVICE_TAB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="ip != null">ip,</if>
+            <if test="mac != null">mac,</if>
+            <if test="sn != null">sn,</if>
+            <if test="type != null">type,</if>
+            <if test="address != null">address,</if>
+            <if test="version != null">version,</if>
+            <if test="status != null">status,</if>
+            <if test="workStatus != null">work_status,</if>
+            <if test="controlled != null">controlled,</if>
+            <if test="operationType != null">operation_type,</if>
+            <if test="groupNo != null">group_no,</if>
+            <if test="orgId != null">org_id,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="vender != null">vender,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="mac != null">#{mac},</if>
+            <if test="sn != null">#{sn},</if>
+            <if test="type != null">#{type},</if>
+            <if test="address != null">#{address},</if>
+            <if test="version != null">#{version},</if>
+            <if test="status != null">#{status},</if>
+            <if test="workStatus != null">#{workStatus},</if>
+            <if test="controlled != null">#{controlled},</if>
+            <if test="operationType != null">#{operationType},</if>
+            <if test="groupNo != null">#{groupNo},</if>
+            <if test="orgId != null">#{orgId},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+            <if test="vender != null">#{vender},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateDevice">
+        update JY_DEVICE_TAB
+        <set>
+            <if test="ip != null and '' != ip">
+                ip = #{ip},
+            </if>
+            <if test="mac != null and '' != mac">
+                mac = #{mac},
+            </if>
+            <if test="sn != null and '' != sn">
+                sn = #{sn},
+            </if>
+            <if test="type != null and '' != type">
+                type = #{type},
+            </if>
+            <if test="address != null and '' != address">
+                address = #{address},
+            </if>
+            <if test="version != null and '' != version">
+                version = #{version},
+            </if>
+            <if test="status != null and '' != status">
+                status = #{status},
+            </if>
+            <if test="poweroff != null and '' != poweroff">
+                poweroff = #{poweroff},
+            </if>
+            <if test="listOrder != null and '' != listOrder">
+                list_order = #{listOrder},
+            </if>
+            <if test="workStatus != null and '' != workStatus">
+                work_status = #{workStatus},
+            </if>
+            <if test="controlled != null and '' != controlled">
+                controlled = #{controlled},
+            </if>
+            <if test="operationType != null and '' != operationType">
+                operation_type = #{operationType},
+            </if>
+            <if test="groupNo != null and '' != groupNo">
+                group_no = #{groupNo},
+            </if>
+            <if test="orgId != null and '' != orgId">
+                org_id = #{orgId},
+            </if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <update id="updateDeviceByMac">
+        update JY_DEVICE_TAB
+        <set>
+				<if test="ip != null and '' != ip">
+				ip = #{ip},
+				</if>
+				<if test="mac != null and '' != mac">
+				mac = #{mac},
+				</if>
+				<if test="sn != null and '' != sn">
+				sn = #{sn},
+				</if>
+				<if test="type != null and '' != type">
+				type = #{type},
+				</if>
+                <if test="address != null and '' != address">
+                address = #{address},
+                </if>
+				<if test="version != null and '' != version">
+				version = #{version},
+				</if>
+				<if test="status != null and '' != status">
+				status = #{status},
+				</if>
+				<if test="workStatus != null and '' != workStatus">
+				work_status = #{workStatus},
+				</if>
+				<if test="controlled != null and '' != controlled">
+				controlled = #{controlled},
+				</if>
+				<if test="operationType != null and '' != operationType">
+				operation_type = #{operationType},
+				</if>
+				<if test="groupNo != null and '' != groupNo">
+				group_no = #{groupNo},
+				</if>
+				<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+				</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="mac != null">
+                    mac = #{mac}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getDeviceById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `JY_DEVICE_TAB` 
+        WHERE id = #{id}
+    </select>
+    
+     <select id="getDeviceByMac" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `JY_DEVICE_TAB` 
+        WHERE mac = #{mac}
+    </select>
+
+    <select id="getDeviceListByIds" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT  <include refid="Base_Column_List"/>
+        from `JY_DEVICE_TAB`
+        WHERE id IN
+            <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+    </select>
+
+    <select id="queryDevicesFilter" resultMap="BaseResultMap">
+        SELECT d.*,org.id AS organization_id,org.name
+        from `JY_DEVICE_TAB` d,  `jy_organization_tab` org
+        WHERE 1 = 1 AND d.org_id = org.id
+			<if test="ip != null and '' != ip">
+				AND d.ip LIKE concat(concat('%',#{ip}),'%')
+			</if>
+			<if test="mac != null and '' != mac">
+				AND d.mac LIKE concat(concat('%',#{mac}),'%')
+			</if>
+			<if test="sn != null and '' != sn">
+				AND d.sn = #{sn}
+			</if>
+			<if test="type != null and -1 != type">
+				AND d.type = #{type}
+			</if>
+            <if test="address != null and '' != address">
+                AND d.address LIKE concat(concat('%',#{address}),'%')
+            </if>
+			<if test="version != null and '' != version">
+				AND d.version = #{version}
+			</if>
+			<if test="status != null and -1 != status">
+				AND d.status = #{status}
+			</if>
+            <if test="listOrder != null">
+                AND d.list_order = #{listOrder}
+            </if>
+			<if test="workStatus != null and '' != workStatus">
+				AND d.work_status = #{workStatus}
+			</if>
+			<if test="controlled != null and '' != controlled">
+				AND d.controlled = #{controlled}
+			</if>
+			<if test="operationType != null and '' != operationType">
+				AND d.operation_type = #{operationType}
+			</if>
+			<if test="groupNo != null and '' != groupNo">
+				AND d.group_no = #{groupNo}
+			</if>
+			<if test="orgId != null and '' != orgId">
+				AND d.org_id = #{orgId}
+			</if>
+			<if test="lastTime != null and '' != lastTime">
+				AND d.update_date &gt; #{lastTime}
+			</if>
+			<if test="currentTime != null and '' != currentTime">
+				AND d.update_date &lt;= #{currentTime}
+			</if>
+		ORDER BY d.type,d.update_date
+    </select>
+    
+<!--     删除设备 -->
+    <delete id="deleteDeviceById" parameterType="java.lang.String">
+        delete from `JY_DEVICE_TAB`
+        where id = #{id}
+    </delete>
+    
+<!--     批量删除设备 -->
+    <delete id="deleteDevices" parameterType="java.lang.String">
+        delete from `JY_DEVICE_TAB`
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+<!-- 	开启关闭选中的阻断设备 -->
+    <update id="openOrCloseSelectedDevices">
+        update JY_DEVICE_TAB
+            <set>
+                controlled = 2,
+                operation_type = #{operationType}
+            </set>
+        where id IN
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </update>	
+    
+	<!--开启关闭所有阻断设备 -->
+    <update id="openOrCloseAllDevices">
+        update JY_DEVICE_TAB
+            <set>
+                controlled = 2,
+                operation_type = #{operationType}
+            </set>
+        where type = 2
+    </update>
+    
+    <!--设备状态更新 协议专用 --> 
+    <update id="updateDeviceStatusOnAgreement">
+    	UPDATE jy_device_tab SET `status` = 2, poweroff = 2 WHERE (NOW() - update_date) > 60;
+    </update>
+    
+    <delete id="deleteDevicesByKafka">
+		delete from  JY_DEVICE_TAB where 1 = 1
+		<if test="lastTime != null and '' != lastTime">
+			AND update_date &gt; #{lastTime}
+		</if>
+		<if test="currentTime != null and '' != currentTime">
+			AND update_date &lt;= #{currentTime}
+		</if>
+		<if test="orgId != null and '' != orgId">
+			AND org_id = #{orgId}
+		</if>
+	</delete>
+
+    <insert id="insertDevicesBatch" parameterType="java.util.List">
+        INSERT INTO JY_DEVICE_TAB
+            (id, ip, mac, sn, type,address, version, status, work_status, controlled, operation_type, group_no,
+            org_id, create_user, create_date, update_user, update_date, address, poweroff, list_order, vender)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.ip},
+            #{item.mac},
+            #{item.sn},
+            #{item.type},
+            #{item.address},
+            #{item.version},
+            #{item.status},
+            #{item.workStatus},
+            #{item.controlled},
+            #{item.operationType},
+            #{item.groupNo},
+            #{item.orgId},
+            #{item.createUser},
+            #{item.createDate},
+            #{item.updateUser},
+            #{item.updateDate},
+            #{item.address},
+            #{item.poweroff},
+            #{item.listOrder},
+            #{item.vender}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据list_order排序获取屏蔽终端 -->
+    <select id="queryDevicesByListOrder" resultMap="BaseResultMap">
+        SELECT d.*,org.id AS organization_id,org.name
+        from `JY_DEVICE_TAB` d,  `jy_organization_tab` org
+        WHERE 1 = 1 AND d.org_id = org.id
+            AND d.type = 2
+        ORDER BY d.list_order
+    </select>
+
+    <!-- 查询屏蔽终端ip,过滤list_order不为空的 -->
+    <select id="queryIPs" resultType="java.lang.String">
+        SELECT ip FROM jy_device_tab WHERE list_order is null and type = 2
+    </select>
+
+    <!-- 更新屏蔽终端list_order -->
+    <update id="updateShieldListOrder">
+        UPDATE jy_device_tab
+        <set>
+            <if test="address != null and '' != address">
+                address = #{address},
+            </if>
+            <if test="listOrder != null">
+                list_order = #{listOrder},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="ip != null">
+                    ip = #{ip}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+</mapper>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jy.moudles.organization.dao.OrganizationDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.organization.entity.Organization">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="bsid" property="bsid" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+	</resultMap>
+    
+    <sql id="Base_Column_List">
+        id, bsid, name, parent_id,ip, is_delete, remark, create_user, create_date, update_user, update_date,code
+    </sql>
+    
+    <select id="getOrgByCode" resultMap="BaseResultMap">
+     	SELECT
+        	<include refid="Base_Column_List"/>
+        FROM `jy_organization_tab`
+        WHERE code = #{code}
+    </select>
+    
+    <select id="getSubOrgByLocationCode" resultMap="BaseResultMap">
+        SELECT
+        	<include refid="Base_Column_List"/>
+        from `jy_organization_tab`
+        WHERE parent_id = (select id from `jy_organization_tab` where code= #{locationCode})
+    </select>
+    
+    <insert id="insertOrganization">
+        INSERT INTO jy_organization_tab
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+			<if test="bsid != null">bsid,</if>
+			<if test="name != null">name,</if>
+			<if test="parentId != null">parent_id,</if>
+			<if test="ip != null">ip,</if>
+			<if test="code != null">code,</if>
+			<if test="isDelete != null">is_delete,</if>
+			<if test="remark != null">remark,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="bsid != null">#{bsid},</if>
+			<if test="name != null">#{name},</if>
+			<if test="parentId != null">#{parentId},</if>
+			<if test="ip != null">#{ip},</if>
+			<if test="code != null">#{code},</if>
+			<if test="isDelete != null">#{isDelete},</if>
+			<if test="remark != null">#{remark},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+	<update id="updateOrganization">
+		update jy_organization_tab
+		<set>
+			<if test="bsid != null and '' != bsid">
+				bsid = #{bsid},
+			</if>
+			<if test="name != null and '' != name">
+				name = #{name},
+			</if>
+			<if test="parentId != null and '' != parentId">
+				parent_id = #{parentId},
+			</if>
+			<if test="ip != null and '' != ip">
+				ip = #{ip},
+			</if>
+			<if test="isDelete != null and '' != isDelete">
+				is_delete = #{isDelete},
+			</if>
+			<if test="remark != null and '' != remark">
+				remark = #{remark},
+			</if>
+			<if test="createUser != null and ''!=createUser">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null and ''!=createDate">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null and ''!=updateUser">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null  and ''!=updateDate">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>
+			<choose>
+				<when test="id != null">
+					id = #{id}
+				</when>
+			</choose>
+		</where>
+	</update>
+    
+    <select id="getOrganizationById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `jy_organization_tab`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryOrganizationsFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `jy_organization_tab`
+        WHERE 1 = 1
+			<if test="bsid != null and '' != bsid">
+				AND bsid = #{bsid}
+			</if>
+			<if test="name != null and '' != name">
+				AND name = #{name}
+			</if>
+			<if test="parentId != null and '' != parentId">
+				AND parent_id = #{parentId}
+			</if>
+			<if test="ip != null and '' != ip">
+				AND ip = #{ip}
+			</if>
+			<if test="lastTime != null and '' != lastTime">
+				AND update_date &gt; #{lastTime}
+			</if>
+			<if test="now != null and '' != now">
+				AND update_date &lt;= #{now}
+			</if>
+	    	order by update_date 
+    </select>
+    
+    <delete id="deleteOrganizationById" parameterType="java.lang.String">
+        delete from `jy_organization_tab`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteOrganizations" parameterType="java.lang.String">
+        delete from `jy_organization_tab`
+        where id IN 
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+    <select id="queryOrgMaxBsid" parameterType="java.lang.String" resultType="java.lang.String">
+    	SELECT MAX(bsid) FROM jy_menu_tab WHERE bsid LIKE #{bsid}
+    </select>
+
+
+	<!-- jy_own_org_tab -->
+	<select id="queryOwnOrgByUserId" resultMap="BaseResultMap">
+		SELECT org.* FROM jy_organization_tab org, jy_own_org_tab oo
+		WHERE org.id = oo.org_id
+			<if test="userId != null and '' != userId">
+				AND oo.user_id = #{userId}
+			</if>
+
+	</select>
+
+	<delete id="deleteOwnOrgByUserId" parameterType="java.lang.String">
+		DELETE FROM jy_own_org_tab WHERE user_id = #{userId}
+	</delete>
+
+	<insert id="batchInsertOwnOrg" parameterType="java.util.List">
+		INSERT INTO jy_own_org_tab
+			(id, user_id, org_id, create_user, create_date, update_user, update_date)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.id}, #{item.userId}, #{item.orgId}, #{item.user}, now(), #{item.user}, now())
+		</foreach>
+	</insert>
+
+</mapper>

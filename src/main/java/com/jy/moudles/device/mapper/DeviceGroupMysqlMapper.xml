@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.device.dao.DeviceGroupDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.device.entity.DeviceGroup">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+		<result column="group_no" property="groupNo"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="control_module" property="controlModule"/>
+        <result column="is_active" property="isActive"/>
+		<result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" />
+        <result column="user_name" property="userName"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, group_name, group_no, start_time, end_time, control_module, is_active, org_id, remark, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <select id="getMaxGroupNo" resultType="java.lang.Integer">
+    	SELECT MAX(group_no) FROM jy_device_group_tab
+    </select>
+    
+    <insert id="insertDeviceGroup">
+        INSERT INTO JY_DEVICE_GROUP_TAB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+			<if test="groupName != null">group_name,</if>
+			<if test="groupNo != null">group_no,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="controlModule != null">control_module,</if>
+            <if test="isActive != null">is_active,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="remark != null">remark,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="groupName != null">#{groupName},</if>
+			<if test="groupNo != null">#{groupNo},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="controlModule != null">#{controlModule},</if>
+            <if test="isActive != null">#{isActive},</if>
+			<if test="orgId != null">#{orgId},</if>
+			<if test="remark != null">#{remark},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateDeviceGroup">
+        update JY_DEVICE_GROUP_TAB
+        <set>
+			<if test="groupName != null and '' != groupName">
+				group_name = #{groupName},
+			</if>
+			<if test="groupNo != null and '' != groupNo">
+				group_no = #{groupNo},
+			</if>
+            <if test="startTime != null and '' != startTime">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null and '' != endTime">
+                end_time = #{endTime},
+            </if>
+            <if test="controlModule != null">
+                control_module = #{controlModule},
+            </if>
+            <if test="isActive != null">
+                is_active = #{isActive},
+            </if>
+			<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+			</if>
+			<if test="remark != null and '' != remark">
+				remark = #{remark},
+			</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getDeviceGroupById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `JY_DEVICE_GROUP_TAB`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryDeviceGroupsFilter" resultMap="BaseResultMap">
+        SELECT dg.*,u.user_name 
+        from `JY_DEVICE_GROUP_TAB` dg,jy_user_tab u
+        WHERE 1 = 1 AND dg.create_user = u.id
+			<if test="groupName != null and '' != groupName">
+				AND dg.group_name = #{groupName}
+			</if>
+			<if test="groupNo != null and '' != groupNo">
+				AND dg.group_no = #{groupNo}
+			</if>
+			<if test="orgId != null and '' != orgId">
+				AND dg.org_id = #{orgId}
+			</if>
+			<if test="remark != null and '' != remark">
+				AND dg.remark = #{remark}
+			</if>
+    </select>
+    
+    <delete id="deleteDeviceGroupById" parameterType="java.lang.String">
+        delete from `JY_DEVICE_GROUP_TAB`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteDeviceGroups" parameterType="java.lang.String">
+        delete from `JY_DEVICE_GROUP_TAB`
+        where id IN 
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

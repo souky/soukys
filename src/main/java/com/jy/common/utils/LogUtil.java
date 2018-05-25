@@ -55,35 +55,21 @@ public class LogUtil {
 	 * @return
 	 */
 	public static String getRequestIpAddr(HttpServletRequest request){
-//		String ip = request.getHeader("X-Real-IP");
-//		if (ip!= null && !"".equals(ip) && !"unknown".equalsIgnoreCase(ip)) {  
-//            return ip;  
-//        }  
-//        ip = request.getHeader("X-Forwarded-For");  
-//        if (ip!= null && !"".equals(ip)  && !"unknown".equalsIgnoreCase(ip)) {  
-//            // 多次反向代理后会有多个IP值，第一个为真实IP。  
-//            int index = ip.indexOf(',');  
-//            if (index != -1) {  
-//                return ip.substring(0, index);  
-//            } else {  
-//                return ip;  
-//            }  
-//        } else {  
-//            return request.getRemoteAddr();  
-//        }  
-		
-		String ip = request.getHeader("x-forwarded-for");  
-		if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-			ip = request.getHeader("Proxy-Client-IP");  
-		}else {
-			ip = ip.split(",")[0];
-		}
-		if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-			ip = request.getHeader("WL-Proxy-Client-IP");  
-		}  
-		if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-			ip = request.getRemoteAddr();  
-		}  
-		return ip; 		 
+		String ip = request.getHeader("X-Real-IP");
+		if (ip!= null && !"".equals(ip) && !"unknown".equalsIgnoreCase(ip)) {  
+            return ip;  
+        }  
+        ip = request.getHeader("X-Forwarded-For");  
+        if (ip!= null && !"".equals(ip)  && !"unknown".equalsIgnoreCase(ip)) {  
+            // 多次反向代理后会有多个IP值，第一个为真实IP。  
+            int index = ip.indexOf(',');  
+            if (index != -1) {  
+                return ip.substring(0, index);  
+            } else {  
+                return ip;  
+            }  
+        } else {  
+            return request.getRemoteAddr();  
+        }  
 	}
 }

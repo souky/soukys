@@ -1,0 +1,4 @@
+# 系统超级管理员
+INSERT INTO `anti-cheat-system-2.0.0`.`jy_user_tab`(`id`, `name`, `sex`, `age`, `email`, `phone`, `mobile`, `user_name`, `password`, `province_code`, `city_code`, `region_code`, `address`, `image`, `role_id`, `data_permission`, `org_id`, `create_user`, `create_date`, `update_user`, `update_date`, `is_delete`, `remark`) VALUES ('1', '超级管理员', 1, 18, '711@sina.com', '13511111111', '13511111111', 'goldsun', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, '苏州园区', NULL, '2fb89e09a25b42f28f6a93edb92ddd7f', NULL, '787fc1be09c74f2cbc0e3cffa4b075f0', NULL, '2017-12-04 10:47:16', '1', '2017-12-11 16:37:57', 0, NULL);
+
+# 2018-1-17 14:38:13

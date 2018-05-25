@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jy.moudles.user.dao.UserDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.user.entity.User">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" />
+		<result column="age" property="age" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="province_code" property="provinceCode" />
+		<result column="city_code" property="cityCode" />
+		<result column="region_code" property="regionCode" />
+		<result column="address" property="address" />
+		<result column="image" property="image" />
+		<result column="role_id" property="roleId" jdbcType="VARCHAR" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="data_permission" property="dataPermission" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="org_name" property="orgName" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		
+	</resultMap>
+
+	<sql id="Base_Column_List">
+        id, name, sex, age, phone, email,mobile,province_code,city_code,region_code, address, password, user_name,
+        image,role_id,data_permission, org_id, remark, is_delete, create_user, create_date, update_user, update_date 
+    </sql>
+    
+    <sql id="Query_Column_List">
+        u.id, u.name, sex, age, phone, email,mobile,province_code,city_code,region_code, address, password, user_name,
+        image,role_id,data_permission, org_id, u.remark, u.is_delete, u.create_user, u.create_date, u.update_user,
+         u.update_date ,role_name, o.name org_name
+    </sql>
+
+	<insert id="insertUser">
+		INSERT INTO JY_USER_TAB
+            (id, name, sex, age, phone, email,mobile,province_code,city_code,region_code, address, password, user_name,
+            image,role_id,data_permission, org_id, remark, is_delete, create_user, create_date, update_user, update_date )
+        VALUES
+            (#{id},#{name},#{sex},#{age},#{phone},#{email},#{mobile},#{provinceCode},#{cityCode},#{regionCode},
+            #{address},#{password},#{userName},#{image},#{roleId},#{dataPermission},#{orgId},#{remark},#{isDelete},
+            #{createUser},#{createDate},#{updateUser},#{updateDate})
+	</insert>
+    
+    <select id="queryUserFilter" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Query_Column_List" />
+		from `jy_user_tab` u 
+		left join jy_role_tab r
+		on u.role_id = r.id 
+		left join jy_organization_tab o 
+		on u.org_id = o.id
+		WHERE u.is_delete = 0
+		<if test="name != null and '' != name">
+			AND u.name = #{name}
+		</if>
+		<if test="userName != null and '' != userName">
+			AND user_name = #{userName}
+		</if>
+		<if test="phone != null and '' != phone">
+			AND phone = #{phone}
+		</if>
+	</select>
+    
+	<delete id="deleteUserById" parameterType="java.lang.String">
+		UPDATE `jy_user_tab` USER SET IS_DELETE = 1 WHERE ID = #{id}
+	</delete>
+	
+	<update id="deleteUsers" parameterType="java.util.List">
+        update `jy_user_tab` set is_delete = 1
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </update>
+	
+	 <select id="getUserByNameAndPwd" resultMap="BaseResultMap">
+        SELECT
+        	<include refid="Base_Column_List"/>
+        	from `jy_user_tab` user
+        		WHERE is_delete = 0
+        		AND user_name = #{userName}
+        		AND password = #{password} 
+    </select>
+    
+	<select id="getUserById" resultMap="BaseResultMap">
+		SELECT u.*,org.name org_name
+		from `jy_user_tab` u left join jy_organization_tab org on u.org_id = org.id
+		WHERE u.is_delete = 0
+		AND u.id = #{id}
+	</select>
+	
+	<update id="modifyPassword">
+		UPDATE `jy_user_tab` SET password = #{password} WHERE id = #{id}
+	</update>
+
+	<update id="updateUser">
+		update jy_user_tab
+		<set>
+			<if test="name != null and '' != name">
+				name = #{name},
+			</if>
+			<if test="age != null and '' != age">
+				age = #{age},
+			</if>
+			<if test="address != null and '' != address">
+				address = #{address},
+			</if>
+			<if test="phone != null and '' != phone">
+				phone = #{phone},
+			</if>
+			<if test="mobile != null and '' != mobile">
+				mobile = #{mobile},
+			</if>
+			<if test="email != null and '' != email">
+				email = #{email},
+			</if>
+			<if test="roleId != null and '' != roleId">
+				role_id = #{roleId},
+			</if>
+			<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+			</if>
+			<if test="remark != null and '' != remark">
+				remark = #{remark},
+			</if>
+			<if test="isDelete != null and '' != isDelete">
+				is_delete = #{isDelete},
+			</if>
+			<if test="provinceCode != null  and ''!= provinceCode">
+				province_code = #{provinceCode},
+			</if>
+			<if test="cityCode != null  and ''!= cityCode">
+				city_code = #{cityCode},
+			</if>
+			<if test="regionCode != null  and ''!= regionCode">
+				region_code = #{regionCode},
+			</if>
+			<if test="image != null  and ''!= image">
+				image = #{image},
+			</if>
+			<if test="dataPermission != null  and ''!= dataPermission">
+				data_permission = #{dataPermission},
+			</if>
+			<if test="createUser != null and ''!=createUser">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null and ''!=createDate">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null and ''!=updateUser">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null  and ''!=updateDate">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<where>
+			<choose>
+				<when test="id != null">
+					id = #{id}
+				</when>
+			</choose>
+		</where>
+	</update>
+	
+	<!-- 查询电话号码 -->
+	<select id="checkPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" />
+		from jy_user_tab where phone=#{phone}
+	</select>
+	
+	<!-- 查询邮箱 -->
+	<select id="checkEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" />
+		from jy_user_tab where email=#{email}
+	</select>
+	
+	<!-- 查询姓名 -->
+	<select id="checkName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" /> 
+		from jy_user_tab where name=#{name}
+	</select>
+	
+	<!-- 查询用户名 -->
+	<select id="checkUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select <include refid="Base_Column_List" /> 
+		from jy_user_tab where user_name=#{userName}
+	</select>
+    
+</mapper>

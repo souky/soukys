@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.reductionInfo.dao.ReductionInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.reductionInfo.entity.ReductionInfo">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="exam_plan_id" property="examPlanId" jdbcType="VARCHAR"/>
+		<result column="exam_number_id" property="examNumberId" jdbcType="VARCHAR"/>
+		<result column="frequency" property="frequency" jdbcType="VARCHAR"/>
+		<result column="db" property="db" jdbcType="VARCHAR"/>
+		<result column="suffix" property="suffix" jdbcType="VARCHAR"/>
+		<result column="signal_type" property="signalType" jdbcType="TINYINT"/>
+		<result column="recognition_result" property="recognitionResult" jdbcType="TINYINT"/>
+		<result column="reduction_time" property="reductionTime" />
+		<result column="file_addr" property="fileAddr" jdbcType="VARCHAR"/>
+		<result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+		<result column="org_id" property="orgId" jdbcType="VARCHAR"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" />
+        <association property="exam" javaType="com.jy.moudles.exam.entity.Exam">
+            <id column="exam_id" property="id" jdbcType="VARCHAR" />
+			<result column="exam_name" property="examName" />
+			<result column="exam_no" property="examNo" />
+			<result column="exam_start_time" property="startTime" />
+			<result column="exam_end_time" property="endTime" />
+			<result column="status" property="status" />
+			<result column="exam_type_id" property="examTypeId" />
+        </association>
+        <association property="examSub" javaType="com.jy.moudles.exam.entity.ExamSub">
+			<id column="examSub_id" property="id" jdbcType="VARCHAR"/>
+			<result column="no" property="no" />
+			<result column="examSub_name" property="name" />
+			<result column="examSub_start_time" property="startTime" />
+			<result column="examSub_end_time" property="endTime" />
+			<result column="exam_plan_id" property="examPlanId" />
+        </association>
+		<association property="organization" javaType="com.jy.moudles.organization.entity.Organization">
+			<id column="organization_id" property="id" jdbcType="VARCHAR" />
+			<result column="organization_name" property="name" jdbcType="VARCHAR" />
+		</association>
+    </resultMap>
+
+	<resultMap id="reductionInfoCount" type="com.jy.moudles.statistics.entity.ReductionCollectVO">
+        <result column="name" property="orgName" jdbcType="VARCHAR" />
+        <result column="count" property="count" />
+        <result column="suffix" property="suffix"/>
+        <result column="recognition_result" property="recognitionResult" />
+	</resultMap>
+    
+    <sql id="Base_Column_List">
+        id, exam_plan_id, exam_number_id, frequency, db, suffix, signal_type, recognition_result, reduction_time, file_addr, file_name, org_id, remark, create_user, create_date, update_user, update_date
+    </sql>
+
+    <select id="queryReductionInfoCount"  resultMap="reductionInfoCount">
+        SELECT org.`name`, COUNT(*) AS count, a.suffix, a.recognition_result
+        FROM JY_REDUCTION_INFO_TAB a LEFT JOIN jy_organization_tab org ON a.org_id = org.id
+        WHERE 1 = 1
+        <if test="examPlanId != null and '' != examPlanId">
+            AND a.exam_plan_id = #{examPlanId}
+        </if>
+        <if test="examNumberId != null and '' != examNumberId">
+            AND a.exam_number_id = #{examNumberId}
+        </if>
+        GROUP BY org.name,a.suffix,a.recognition_result
+
+    </select>
+
+	<delete id="clearReductionInfoData">
+		TRUNCATE TABLE `JY_REDUCTION_INFO_TAB`;
+	</delete>
+
+    <insert id="insertReductionInfo">
+        INSERT INTO JY_REDUCTION_INFO_TAB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+			<if test="examPlanId != null">exam_plan_id,</if>
+			<if test="examNumberId != null">exam_number_id,</if>
+			<if test="frequency != null">frequency,</if>
+			<if test="db != null">db,</if>
+			<if test="suffix != null">suffix,</if>
+			<if test="signalType != null">signal_type,</if>
+			<if test="recognitionResult != null">recognition_result,</if>
+			<if test="reductionTime != null">reduction_time,</if>
+			<if test="fileAddr != null">file_addr,</if>
+			<if test="fileName != null">file_name,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="remark != null">remark,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="examPlanId != null">#{examPlanId},</if>
+			<if test="examNumberId != null">#{examNumberId},</if>
+			<if test="frequency != null">#{frequency},</if>
+			<if test="db != null">#{db},</if>
+			<if test="suffix != null">#{suffix},</if>
+			<if test="signalType != null">#{signalType},</if>
+			<if test="recognitionResult != null">#{recognitionResult},</if>
+			<if test="reductionTime != null">#{reductionTime},</if>
+			<if test="fileAddr != null">#{fileAddr},</if>
+			<if test="fileName != null">#{fileName},</if>
+			<if test="orgId != null">#{orgId},</if>
+			<if test="remark != null">#{remark},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateReductionInfo">
+        update JY_REDUCTION_INFO_TAB
+        <set>
+			<if test="examPlanId != null and '' != examPlanId">
+				exam_plan_id = #{examPlanId},
+			</if>
+			<if test="examNumberId != null and '' != examNumberId">
+				exam_number_id = #{examNumberId},
+			</if>
+			<if test="frequency != null and '' != frequency">
+				frequency = #{frequency},
+			</if>
+			<if test="db != null and '' != db">
+				db = #{db},
+			</if>
+			<if test="suffix != null and '' != suffix">
+				suffix = #{suffix},
+			</if>
+			<if test="signalType != null and '' != signalType">
+				signal_type = #{signalType},
+			</if>
+			<if test="recognitionResult != null and '' != recognitionResult">
+				recognition_result = #{recognitionResult},
+			</if>
+			<if test="reductionTime != null and '' != reductionTime">
+				reduction_time = #{reductionTime},
+			</if>
+			<if test="fileAddr != null and '' != fileAddr">
+				file_addr = #{fileAddr},
+			</if>
+			<if test="fileName != null and '' != fileName">
+				file_name = #{fileName},
+			</if>
+			<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+			</if>
+			<if test="remark != null and '' != remark">
+				remark = #{remark},
+			</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getReductionInfoById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `JY_REDUCTION_INFO_TAB`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryReductionInfosFilter" resultMap="BaseResultMap">
+        SELECT r.*,exam.id AS exam_id,exam.exam_name,exam.exam_no,exam.start_time AS exam_start_time,
+              exam.end_time AS exam_end_time,exam.status,exam.exam_type_id,
+              es.id AS examSub_id,es.no,es.name AS examSub_name,es.start_time AS examSub_start_time,
+              es.end_time AS examSub_end_time,es.exam_plan_id,
+              org.id AS organization_id,org.name AS organization_name
+        from `JY_REDUCTION_INFO_TAB` r,JY_EXAM_PLAN_TAB exam,JY_EXAM_SUB_TAB es , `jy_organization_tab` org
+        WHERE 1 = 1 AND r.exam_plan_id = exam.id AND r.exam_number_id = es.id AND r.org_id = org.id
+			<if test="examPlanId != null and '' != examPlanId">
+				AND r.exam_plan_id = #{examPlanId}
+			</if>
+			<if test="examNumberId != null and '' != examNumberId">
+				AND r.exam_number_id = #{examNumberId}
+			</if>
+			<if test="frequency != null and '' != frequency">
+				AND r.frequency = #{frequency}
+			</if>
+			<if test="db != null and '' != db">
+				AND r.db = #{db}
+			</if>
+			<if test="suffix != null and '' != suffix">
+				AND r.suffix = #{suffix}
+			</if>
+			<if test="signalType != null and '' != signalType">
+				AND r.signal_type = #{signalType}
+			</if>
+			<if test="recognitionResult != null and '' != recognitionResult">
+				AND r.recognition_result = #{recognitionResult}
+			</if>
+			<if test="reductionTime != null and '' != reductionTime">
+				AND r.reduction_time = #{reductionTime}
+			</if>
+			<if test="fileAddr != null and '' != fileAddr">
+				AND r.file_addr = #{fileAddr}
+			</if>
+			<if test="fileName != null and '' != fileName">
+				AND r.file_name = #{fileName}
+			</if>
+			<if test="orgId != null and '' != orgId">
+				AND r.org_id = #{orgId}
+			</if>
+			<if test="remark != null and '' != remark">
+				AND r.remark = #{remark}
+			</if>
+			<if test="frequencyPointBegin != null and '' != frequencyPointBegin">
+				AND r.frequency &gt;= #{frequencyPointBegin}
+			</if>
+			<if test="frequencyPointEnd != null and '' != frequencyPointEnd">
+				AND r.frequency &lt;= #{frequencyPointEnd}
+			</if>
+			<if test="lastTime != null and '' != lastTime">
+				AND r.update_date &gt; #{lastTime}
+			</if>
+			<if test="currentTime != null and '' != currentTime">
+				AND r.update_date &lt;= #{currentTime}
+			</if>
+			order by r.reduction_time DESC
+    </select>
+    
+    <delete id="deleteReductionInfoById" parameterType="java.lang.String">
+        delete from `JY_REDUCTION_INFO_TAB`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteReductionInfos" parameterType="java.lang.String">
+        delete from `JY_REDUCTION_INFO_TAB`
+        where id IN 
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+
+	<!-- insert batch -->
+	<insert id="insertReductionInfosBatch">
+		INSERT INTO JY_REDUCTION_INFO_TAB
+			(id, exam_plan_id, exam_number_id, frequency, db, suffix, signal_type, recognition_result, reduction_time,
+			file_addr, file_name, org_id, remark, create_user, create_date, update_user, update_date)
+		VALUES
+            <foreach collection="list" item="item" index="index" separator=",">
+                (
+                #{item.id},
+                #{item.examPlanId},
+                #{item.examNumberId},
+                #{item.frequency},
+                #{item.db},
+                #{item.suffix},
+                #{item.signalType},
+                #{item.recognitionResult},
+                #{item.reductionTime},
+                #{item.fileAddr},
+                #{item.fileName},
+                #{item.orgId},
+                #{item.remark},
+                #{item.createUser},
+                #{item.createDate},
+                #{item.updateUser},
+                #{item.updateDate}
+                )
+            </foreach>
+	</insert>
+
+    <delete id="deleteReductionInfosByKafka">
+        delete from  JY_REDUCTION_INFO_TAB where 1 = 1
+        <if test="lastTime != null and '' != lastTime">
+            AND update_date &gt; #{lastTime}
+        </if>
+        <if test="currentTime != null and '' != currentTime">
+            AND update_date &lt;= #{currentTime}
+        </if>
+        <if test="orgId != null and '' != orgId">
+            AND org_id = #{orgId}
+        </if>
+    </delete>
+    
+</mapper>

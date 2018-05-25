@@ -1,10 +1,5 @@
 package com.jy.common.utils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -15,11 +10,17 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExcelRead {
 
 	public int totalRows; //sheet中总行数  
-    public static int totalCells; //每一行总单元格数  
-    /** 
+    public static int totalCells; //每一行总单元格数
+
+    /**
      * read the Excel .xlsx,.xls 
      * @param file jsp中的上传文件 
      * @return 
@@ -45,9 +46,7 @@ public class ExcelRead {
     /** 
      * read the Excel 2010 .xlsx 
      * @param file 
-     * @param beanclazz 
-     * @param titleExist 
-     * @return 
+     * @return
      * @throws IOException  
      */  
     public List<ArrayList<String>> readXlsx(MultipartFile file){  
@@ -74,7 +73,7 @@ public class ExcelRead {
                         rowList = new ArrayList<String>();  
                         totalCells = xssfRow.getLastCellNum();  
                         //读取列，从第一列开始  
-                        for(int c=0;c<=totalCells+1;c++){  
+                        for(int c=0;c<totalCells;c++){
                             XSSFCell cell = xssfRow.getCell(c);  
                             if(cell==null){  
                                 rowList.add(ExcelUtil.EMPTY);  
@@ -103,9 +102,7 @@ public class ExcelRead {
     /** 
      * read the Excel 2003-2007 .xls 
      * @param file 
-     * @param beanclazz 
-     * @param titleExist 
-     * @return 
+     * @return
      * @throws IOException  
      */  
     public List<ArrayList<String>> readXls(MultipartFile file){   
@@ -117,7 +114,7 @@ public class ExcelRead {
         try {  
             input = file.getInputStream();  
             // 创建文档  
-            wb = new HSSFWorkbook(input);                         
+            wb = new HSSFWorkbook(input);
             //读取sheet(页)  
             for(int numSheet=0;numSheet<wb.getNumberOfSheets();numSheet++){  
                 HSSFSheet hssfSheet = wb.getSheetAt(numSheet);  
@@ -130,9 +127,9 @@ public class ExcelRead {
                     HSSFRow hssfRow = hssfSheet.getRow(rowNum);  
                     if(hssfRow!=null){  
                         rowList = new ArrayList<String>();  
-                        totalCells = hssfRow.getLastCellNum();  
+                        totalCells = hssfRow.getLastCellNum();
                         //读取列，从第一列开始  
-                        for(short c=0;c<=totalCells+1;c++){  
+                        for(short c=0;c<totalCells;c++){
                             HSSFCell cell = hssfRow.getCell(c);  
                             if(cell==null){  
                                 rowList.add(ExcelUtil.EMPTY);  

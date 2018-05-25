@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.permission.dao.PermissionDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.permission.entity.Permission">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="bsid" property="bsid" jdbcType="VARCHAR" />
+		<result column="permission_name" property="permissionName" jdbcType="VARCHAR" />
+		<result column="is_delete" property="isDelete"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+    
+    <sql id="Base_Column_List">
+        id, bsid, permission_name, parent_id, is_delete, remark, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <select id="getPermissonById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `jy_permission_tab`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryPermissonsFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `jy_permission_tab`
+        WHERE 1 = 1
+			<if test="bsid != null and '' != bsid">
+				AND bsid = #{bsid}
+			</if>
+			<if test="permissionName != null and '' != permissionName">
+				AND permission_name = #{permissionName}
+			</if>
+			<if test="parentId != null and '' != parentId">
+				AND parent_id = #{parentId}
+			</if>
+
+    </select>
+
+    <select id="queryRolePermissonsByRoleId" resultMap="BaseResultMap">
+        SELECT
+        T1.id, T1.bsid, T1.permission_name, T1.parent_id, T1.is_delete, T1.remark, T1.create_user, T1.create_date, T1.update_user, T1.update_date
+        FROM `jy_permission_tab` T1
+        INNER JOIN `jy_role_permission_relation_tab` T2 ON (
+        	T1.id = T2.permission_id
+        	ANd T2.role_id = #{roleId}
+        )
+    </select>
+
+     <delete id="deleteRolePermissionRelationByRoleId" parameterType="java.lang.String">
+        delete from `jy_role_permission_relation_tab`
+        where role_id = #{roleId}
+    </delete>
+
+	<insert id="batchInsertRolePermissionRelation" parameterType="java.util.List">
+        INSERT INTO jy_role_permission_relation_tab
+            (id, role_id, permission_id, create_user, create_date, update_user, update_date)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.roleId}, #{item.permissionId}, #{item.user}, now(), #{item.user}, now())
+        </foreach>
+    </insert>
+    
+    
+</mapper>

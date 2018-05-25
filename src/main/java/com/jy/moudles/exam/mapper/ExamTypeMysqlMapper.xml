@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jy.moudles.exam.dao.ExamTypeDao">
+	<resultMap id="BaseResultMap" type="com.jy.moudles.exam.entity.ExamType">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="exam_type_no" property="examTypeNo" />
+		<result column="exam_type_name" property="examTypeName" />
+		<result column="org_id" property="orgId" jdbcType="VARCHAR" />
+		<result column="create_user" property="createUser" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" />
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+		<result column="update_date" property="updateDate" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, exam_type_no, exam_type_name, org_id, create_user, create_date, update_user, update_date,remark
+    </sql>
+
+	<delete id="clearExamType">
+		delete from JY_EXAM_TYPE_TAB
+	</delete>
+    
+    <select id="queryMaxExamTypeNo" resultType="int">
+    	SELECT MAX(exam_type_no) FROM JY_EXAM_TYPE_TAB
+    </select>
+    
+    <insert id="insertExamTypeBatch">
+        INSERT INTO JY_EXAM_TYPE_TAB
+        (
+			id, exam_type_no, exam_type_name, org_id, create_user, create_date, update_user, update_date,remark
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+	        (
+				#{item.id},
+				#{item.examTypeNo},
+				#{item.examTypeName},
+				#{item.orgId},
+				#{item.createUser},
+				#{item.createDate},
+				#{item.updateUser},
+				#{item.updateDate},
+				#{item.remark}
+	        )
+        </foreach>
+    </insert>
+    
+    <insert id="insertExamType" parameterType="com.jy.moudles.exam.entity.ExamType">
+        INSERT INTO JY_EXAM_TYPE_TAB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="examTypeNo != null">exam_type_no,</if>
+			<if test="examTypeName != null">exam_type_name,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="createUser != null">create_user,</if>
+			<if test="createDate != null">create_date,</if>
+			<if test="updateUser != null">update_user,</if>
+			<if test="updateDate != null">update_date,</if>
+			<if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="examTypeNo != null">#{examTypeNo},</if>
+			<if test="examTypeName != null">#{examTypeName},</if>
+			<if test="orgId != null">#{orgId},</if>
+			<if test="createUser != null">#{createUser},</if>
+			<if test="createDate != null">#{createDate},</if>
+			<if test="updateUser != null">#{updateUser},</if>
+			<if test="updateDate != null">#{updateDate},</if>
+			<if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateExamType" parameterType="com.jy.moudles.exam.entity.ExamType">
+        update JY_EXAM_TYPE_TAB
+        <set>
+			<if test="examTypeNo != null and '' != examTypeNo">
+				exam_type_no = #{examTypeNo},
+			</if>
+			<if test="examTypeName != null and '' != examTypeName">
+				exam_type_name = #{examTypeName},
+			</if>
+			<if test="orgId != null and '' != orgId">
+				org_id = #{orgId},
+			</if>
+			<if test="updateUser != null and '' != updateUser">
+				update_user = #{updateUser},
+			</if>
+			<if test="updateDate != null and '' != updateDate">
+				update_date = #{updateDate},
+			</if>
+			<if test="remark != null and '' != remark">
+				remark = #{remark},
+			</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getExamTypeById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        from `JY_EXAM_TYPE_TAB`
+        WHERE id = #{id} 
+    </select>
+    
+    <select id="queryExamTypesFilter" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        from `JY_EXAM_TYPE_TAB`
+        WHERE 1 = 1
+			<if test="id != null and '' != id">
+				AND id = #{id}
+			</if>
+			<if test="examTypeNo != null and '' != examTypeNo">
+				AND exam_type_no = #{examTypeNo}
+			</if>
+			<if test="examTypeName != null and '' != examTypeName">
+				AND exam_type_name = #{examTypeName}
+			</if>
+			<if test="orgId != null and '' != orgId">
+				AND org_id = #{orgId}
+			</if>
+			<if test="createUser != null and '' != createUser">
+				AND create_user = #{createUser}
+			</if>
+			<if test="createDate != null and '' != createDate">
+				AND create_date = #{createDate}
+			</if>
+			<if test="updateUser != null and '' != updateUser">
+				AND update_user = #{updateUser}
+			</if>
+			<if test="updateDate != null and '' != updateDate">
+				AND update_date = #{updateDate}
+			</if>
+			<if test="lastTime != null and '' != lastTime">
+				AND update_date &gt; #{lastTime}
+			</if>
+			<if test="currentTime != null and '' != currentTime">
+				AND update_date &lt;= #{currentTime}
+			</if>
+	    	order by exam_type_no,update_date
+    </select>
+    
+    <delete id="deleteExamTypeById" parameterType="java.lang.String">
+        delete from JY_EXAM_TYPE_TAB 
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteExamTypes" parameterType="java.util.List">
+    	delete from JY_EXAM_TYPE_TAB  
+    	where id IN 
+    	<foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteExamTypeBykafka">
+    	delete from JY_EXAM_TYPE_TAB 
+        where 1 = 1
+		<if test="lastTime != null and '' != lastTime">
+			AND update_date &gt; #{lastTime}
+		</if>
+		<if test="currentTime != null and '' != currentTime">
+			AND update_date &lt;= #{currentTime}
+		</if>
+		<if test="orgId != null and '' != orgId">
+			AND org_id = #{orgId}
+		</if>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,77 @@
+td{
+	text-align:left;
+	font-size:15px;
+	line-height:24px;
+}
+table{
+	margin : 10px 0px 0px 10px;
+}
+.title1{
+	font-size:20px;
+	font-weight:bold;
+	color:#228B22;
+}
+#lastCheckTime p{
+	float:left;
+}
+#diskDetail p{
+	float:left;
+}
+#platformServerTime p{
+	float:left;
+}
+#lastCheckTime .lastCheckTimeP{
+	color:#228B22;
+	margin-bottom:10px;
+}
+.title-margin{
+	 height: 40px;
+}
+#table_1 td{
+	height:30px;
+}
+#table_2 td{
+	height:30px;
+} 
+.now-p p{
+	float: left;
+}
+.red-color{
+	color: #ff0000;
+}
+.yellow-color{
+	color: #FFA500;
+}
+.table-small-img img{
+	float:left;
+	margin-right:5px;
+	margin-left:35px;
+}
+.lastCheckTimebutton{
+	display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #00bcd4;
+    border: 1px solid #00bcd4;
+    border-color: #00bcd4;
+    color: #FFF;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 7px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-right: 50px;
+}
+.marginL{
+	margin-left:20px;
+}
+ .f-left{
+	float:left;
+}

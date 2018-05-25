@@ -1,0 +1,46 @@
+#login{width:100%;background:url('../../../jy/img/pcImg/login_background.jpg') no-repeat;}
+.mainLogin{
+	width: 1000px;
+    height: 400px;
+    margin: 100px auto;
+    background: #fff;
+    border-radius: 4px;
+}
+.loginImg{width: 498px;}
+.loginImg img{width: 498px;height: 400px;}
+.loginLine{width: 1px;height: 380px;margin-top:10px;border-right: 1px #E8E8E8 dashed;}
+.loginInput{width: 430px;height: 400px;padding:10px 35px;}
+.loginInput .title{padding:10px 0;border-bottom:1px solid #00bcd4;font-size: 28px;color:#00bcd4;}
+.loginBody{width:410px;margin-left:10px}
+.loginBootm{margin-top:30px;}
+.loginBootm .r{cursor:pointer;color:#5B5B5B;}
+.loginButton{width:100%;height: 60px;line-height:60px;background: #00bcd4;color:#fff;border-radius: 4px;cursor: pointer;text-align: center;font-size: 20px;margin-top:40px;}
+
+.loginItems{width:100%;height:60px;margin-top:30px;}
+.loginItems input{
+	width:95%;
+	border:1px #dedede solid;
+	height:58px;
+	line-height:58px;
+	font-size:18px;
+	color:#525252;
+	padding-left:5%;
+}
+.inputRadio{
+	margin-left:5px;
+	padding-top: 9px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

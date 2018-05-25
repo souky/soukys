@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.classroomInfo.dao.ClassroomInfoDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.classroomInfo.entity.ClassroomInfo">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+			<result column="building_no" property="buildingNo"/>
+			<result column="floor_no" property="floorNo"/>
+			<result column="classroom_no" property="classroomNo"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, building_no, floor_no, classroom_no, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <insert id="insertClassroomInfo">
+        INSERT INTO JY_CLASSROOM_INFO_TAB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+				<if test="buildingNo != null">building_no,</if>
+				<if test="floorNo != null">floor_no,</if>
+				<if test="classroomNo != null">classroom_no,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+				<if test="buildingNo != null">#{buildingNo},</if>
+				<if test="floorNo != null">#{floorNo},</if>
+				<if test="classroomNo != null">#{classroomNo},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateClassroomInfo">
+        update JY_CLASSROOM_INFO_TAB
+        <set>
+				<if test="buildingNo != null and '' != buildingNo">
+				building_no = #{buildingNo},
+				</if>
+				<if test="floorNo != null and '' != floorNo">
+				floor_no = #{floorNo},
+				</if>
+				<if test="classroomNo != null and '' != classroomNo">
+				classroom_no = #{classroomNo},
+				</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getClassroomInfoById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `JY_CLASSROOM_INFO_TAB`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryClassroomInfosFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `JY_CLASSROOM_INFO_TAB`
+        WHERE 1 = 1
+			<if test="buildingNo != null and '' != buildingNo">
+				AND building_no = #{buildingNo},
+			</if>
+			<if test="floorNo != null and '' != floorNo">
+				AND floor_no = #{floorNo},
+			</if>
+			<if test="classroomNo != null and '' != classroomNo">
+				AND classroom_no = #{classroomNo},
+			</if>
+    </select>
+    
+    <delete id="deleteClassroomInfoById" parameterType="java.lang.String">
+        delete from `JY_CLASSROOM_INFO_TAB`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteClassroomInfos" parameterType="java.lang.String">
+        delete from `JY_CLASSROOM_INFO_TAB`
+        where id IN 
+        <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
