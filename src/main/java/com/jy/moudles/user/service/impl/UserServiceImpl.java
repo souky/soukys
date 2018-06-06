@@ -1,12 +1,11 @@
 package com.jy.moudles.user.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
-import com.jy.common.utils.UUIDUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jy.moudles.user.dao.UserDao;
 import com.jy.moudles.user.entity.User;
 import com.jy.moudles.user.service.UserService;
@@ -24,7 +23,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void insertUser(User User){
-		User.setId(UUIDUtil.get32UUID());
 		UserDao.insertUser(User);
 	}
 	

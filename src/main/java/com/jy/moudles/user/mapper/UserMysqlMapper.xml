@@ -19,7 +19,8 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, user_name, user_tel, user_sex, login_name, user_img, org_code, open_id, create_user, create_date, update_user, update_date
+        id, user_name, user_tel, user_sex, login_name, user_img, org_code,
+         open_id, create_user, create_date, update_user, update_date
     </sql>
     
     <insert id="insertUser">

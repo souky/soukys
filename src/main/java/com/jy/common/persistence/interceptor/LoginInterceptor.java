@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	/**
 	 * 忽略url
 	 */
-	private final static String[] IGNORE_URI = {"/loginHtml","/login"};
+	private final static String[] IGNORE_URI = {"/loginHtml","/login","/Wxlogin","/openIdlogin"};
 	
 
 	private static WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
