@@ -1,5 +1,7 @@
 package com.jy.moudles.login.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -93,6 +95,10 @@ public class LoginController {
 			usernew.setUserImg(wxVO.getAvatarUrl());
 			usernew.setUserName(wxVO.getNickName());
 			usernew.setUserSex(Integer.parseInt(wxVO.getGender()));
+			usernew.setCreateDate(new Date());
+			usernew.setUpdateDate(new Date());
+			usernew.setCreateUser("wx");
+			usernew.setUpdateUser("wx");
 			userService.insertUser(usernew);
 			request.getSession().setAttribute("user", usernew);
 		}else {
