@@ -87,6 +87,9 @@ public class LoginController {
 	@RequestMapping(value = "/openIdlogin",  method = RequestMethod.POST)
 	@ResponseBody
 	public AsyncResponseData.ResultData openIdlogin(WxVO wxVO,HttpServletRequest request) {
+		if(StringUtils.isBlank(wxVO.getOpenId())) {
+			return AsyncResponseData.getSuccess().asLogicError("can not find openId");
+		}
 		User user = userService.getUserById(wxVO.getOpenId());
 		if(null == user) {
 			User usernew = new User();
