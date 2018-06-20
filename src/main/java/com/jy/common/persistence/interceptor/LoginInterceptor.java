@@ -1,5 +1,9 @@
 package com.jy.common.persistence.interceptor;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +18,10 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.jy.common.entity.ReturnObj;
 import com.jy.common.utils.auth.AuthBuilder;
 import com.jy.common.utils.auth.AuthUser;
 import com.jy.moudles.user.entity.User;
@@ -74,12 +82,30 @@ public class LoginInterceptor implements HandlerInterceptor {
 				}
 			}
 		}
+		
+		//开发
+//		flag = true;
+//		urlFlag = true;
+		
 		if (!flag || !urlFlag) {
-			// TODO
-			String returns ="{'code':'20000','message':'no login'}";
-			response.getOutputStream().write(returns.getBytes());
+			ReturnObj returnObj = new ReturnObj();
+			returnObj.setCode(30000);
+			returnObj.setMessage("no logins");
+			
+			sendJsonMessage(response,returnObj);
+			return false;
 		}
 		return (flag && urlFlag);
 	}
+	
+	
+	public static void sendJsonMessage(HttpServletResponse response, Object obj) throws Exception {
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter writer = response.getWriter();
+        writer.print(JSONObject.toJSONString(obj, SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat));
+        writer.close();
+        response.flushBuffer();
+    }
 	
 }

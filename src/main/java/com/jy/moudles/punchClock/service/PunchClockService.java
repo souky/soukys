@@ -53,5 +53,7 @@ public interface PunchClockService {
 	 */
 	public void deletePunchClocks(List<String> ids);
 	
+	public List<Integer> getPunchClockByMonth(String userId,int month);
+	
 }
 

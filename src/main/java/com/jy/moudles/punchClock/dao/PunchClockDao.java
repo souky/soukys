@@ -3,6 +3,8 @@ package com.jy.moudles.punchClock.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.jy.moudles.punchClock.entity.PunchClock;
 import com.jy.common.persistence.annotation.MyBatisDao;
 
@@ -56,6 +58,12 @@ public interface PunchClockDao {
 	 */
 	public void deletePunchClocks(List<String> ids);
 	
+	/**
+	 * 根据userid和月数查询打卡记录
+	 *
+	 * @param ids
+	 */
+	public List<Integer> getPunchClockByMonth(@Param("userId")String userId,@Param("month")int month);
 }
 
 

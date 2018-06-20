@@ -233,7 +233,7 @@ public final class AsyncResponseData {
         }
 
         public ResultData asLogicError(String msg) {
-            return switchStatus(RESPONSE_STATUS_CLIENT_ERROR).putOneMessage(msg);
+            return switchStatus(RESPONSE_STATUS_CLIENT_LOGIC_ERROR).putOneMessage(msg);
         }
 
         public ResultData asSessionError(String msg) {

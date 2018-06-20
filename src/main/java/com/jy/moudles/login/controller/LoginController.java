@@ -66,7 +66,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/Wxlogin",  method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData Wxlogin(@Param("code")String code) {
+	public AsyncResponseData.ResultData Wxlogin(@Param("code")String code,HttpServletRequest request) {
 		if(StringUtils.isBlank(code)) {
 			return AsyncResponseData.getSuccess().asParamError("code is null");
 		}
@@ -80,6 +80,7 @@ public class LoginController {
 		if(null == responsePost) {
 			responsePost = new ResponsePost();
 		}
+		responsePost.setSession_id(request.getSession().getId());
 		return AsyncResponseData.getSuccess(responsePost);
 	}
 	

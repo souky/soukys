@@ -43,11 +43,11 @@ CREATE TABLE `PERMISSION` (
   		PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `TARGETINFO`;
+DROP TABLE IF EXISTS `TARGET_INFO`;
 CREATE TABLE `TARGET_INFO` (
  		`id` varchar(32) NOT NULL,
 		`user_id` varchar(64)  NULL COMMENT '用户id',
-		`message` varchar(64)  NULL COMMENT '目标说明',
+		`message` varchar(200)  NULL COMMENT '目标说明',
 		`start_time` datetime  NULL COMMENT '开始时间',
 		`end_time` datetime  NULL COMMENT '结束时间',
 		`rate_progress` tinyint(1)  NULL COMMENT '目标进度',
@@ -59,14 +59,15 @@ CREATE TABLE `TARGET_INFO` (
   		PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `PUNCHCLOCK`;
+DROP TABLE IF EXISTS `PUNCH_CLOCK`;
 CREATE TABLE `PUNCH_CLOCK` (
- 		`id` varchar(32) NOT NULL,
+ 		`id` varchar(100) NOT NULL,
 		`user_id` varchar(64)  NULL COMMENT '用户id',
 		`org_id` varchar(64)  NULL COMMENT '机构id',
-		`punch_info` varchar(64)  NULL COMMENT '打卡信息',
+		`punch_info` varchar(200)  NULL COMMENT '打卡信息',
 		`img_base` text(0)  NULL COMMENT '图片信息',
 		`time_info` varchar(64)  NULL COMMENT '打卡时间',
+		`is_leave` varchar(1) DEFAULT '0' COMMENT '是否请假',
 		`create_user`  varchar(64) NULL COMMENT '创建用户' ,
 		`create_date`  datetime NULL COMMENT '创建时间' ,
 		`update_user`  varchar(64) NULL COMMENT '更新用户' ,

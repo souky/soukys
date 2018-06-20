@@ -9,6 +9,7 @@
 		<result column="punch_info" property="punchInfo" jdbcType="VARCHAR"/>
 		<result column="img_base" property="imgBase" jdbcType="VARCHAR"/>
 		<result column="time_info" property="timeInfo" jdbcType="VARCHAR"/>
+		<result column="is_leave" property="isLeave" jdbcType="VARCHAR"/>
 		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
@@ -16,7 +17,8 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, user_id, org_id, punch_info, img_base, time_info, create_user, create_date, update_user, update_date
+        id, user_id, org_id, punch_info, img_base, time_info,is_leave,
+         create_user, create_date, update_user, update_date
     </sql>
     
     <insert id="insertPunchClock">
@@ -28,6 +30,7 @@
 			<if test="punchInfo != null">punch_info,</if>
 			<if test="imgBase != null">img_base,</if>
 			<if test="timeInfo != null">time_info,</if>
+			<if test="isLeave != null">is_leave,</if>
             <if test="createUser != null">create_user,</if>
             <if test="createDate != null">create_date,</if>
             <if test="updateUser != null">update_user,</if>
@@ -40,6 +43,7 @@
 			<if test="punchInfo != null">#{punchInfo},</if>
 			<if test="imgBase != null">#{imgBase},</if>
 			<if test="timeInfo != null">#{timeInfo},</if>
+			<if test="isLeave != null">#{isLeave},</if>
             <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
             <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
             <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
@@ -92,6 +96,13 @@
         <include refid="Base_Column_List"/>
         from `PUNCH_CLOCK`
         WHERE id = #{id}
+    </select>
+    
+    <select id="getPunchClockByMonth" resultType="Integer">
+        SELECT
+        DATE_FORMAT( create_date, '%e' )
+        from `PUNCH_CLOCK`
+        WHERE user_id = #{userId} AND DATE_FORMAT( create_date, '%c' ) = #{month} AND is_leave = 0
     </select>
     
     <select id="queryPunchClocksFilter" resultMap="BaseResultMap">

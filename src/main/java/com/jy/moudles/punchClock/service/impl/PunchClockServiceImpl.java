@@ -1,12 +1,11 @@
 package com.jy.moudles.punchClock.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
-import com.jy.common.utils.UUIDUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jy.moudles.punchClock.dao.PunchClockDao;
 import com.jy.moudles.punchClock.entity.PunchClock;
 import com.jy.moudles.punchClock.service.PunchClockService;
@@ -24,7 +23,6 @@ public class PunchClockServiceImpl implements PunchClockService {
 	
 	@Override
 	public void insertPunchClock(PunchClock PunchClock){
-		PunchClock.setId(UUIDUtil.get32UUID());
 		PunchClockDao.insertPunchClock(PunchClock);
 	}
 	
@@ -51,6 +49,11 @@ public class PunchClockServiceImpl implements PunchClockService {
 	@Override
 	public void deletePunchClocks(List<String> ids){
 		PunchClockDao.deletePunchClocks(ids);
+	}
+
+	@Override
+	public List<Integer> getPunchClockByMonth(String userId,int month) {
+		return PunchClockDao.getPunchClockByMonth(userId, month);
 	}
 	
 }

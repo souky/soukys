@@ -35,6 +35,11 @@ public class PunchClock extends BaseEntity{
 	 */
 	private String timeInfo;
 	
+	/**
+	 * 是否请假
+	 */
+	private String isLeave;
+	
 	
 	public String getUserId() {
 		return userId;
@@ -74,6 +79,14 @@ public class PunchClock extends BaseEntity{
 
 	public void setTimeInfo(String timeInfo) {
 		this.timeInfo = timeInfo;
+	}
+
+	public String getIsLeave() {
+		return isLeave;
+	}
+
+	public void setIsLeave(String isLeave) {
+		this.isLeave = isLeave;
 	}
 	
 }
