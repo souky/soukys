@@ -36,7 +36,7 @@ public class DatesUtil {
 
 		int for_int = 35;
 		
-		if (week > 5) {
+		if (week > 4) {
 			for_int = 42;
 		}
 		

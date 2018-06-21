@@ -1,5 +1,7 @@
 package com.jy.moudles.punchClock.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jy.common.config.Global;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.DatesUtil;
 import com.jy.common.utils.UserUtils;
@@ -24,7 +27,6 @@ import com.jy.moudles.punchClock.VO.DateVO;
 import com.jy.moudles.punchClock.entity.PunchClock;
 import com.jy.moudles.punchClock.service.PunchClockService;
 import com.jy.moudles.user.entity.User;
-import com.thoughtworks.xstream.core.util.Base64Encoder;
 
 /**
  * PunchClock实现类
@@ -131,6 +133,39 @@ public class PunchClockController {
 	}
 	
 	/**
+	 * 打卡检测
+	 * 
+	 * @param punchclock
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/checkPunch", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData checkPunch(HttpServletRequest request) throws Exception {
+		logger.info("checkPunch Start");
+		
+		User user = UserUtils.getLoginUser(request);
+		if(null == user) {
+			return AsyncResponseData.getSuccess().asLogicError("no login");
+		}
+		
+		String id = DatesUtil.getDateFormat("yyyyMMdd") + "_" + user.getId();
+		
+		PunchClock punchclock = punchclockService.getPunchClockById(id);
+		
+		if(null != punchclock) {
+			if("1".equals(punchclock.getIsLeave())) {
+				return AsyncResponseData.getSuccess().asParamError("已经请假了哟");
+			}else {
+				return AsyncResponseData.getSuccess().asParamError("已经打卡了哟");
+			}
+		}
+
+		logger.info("checkPunch End");
+
+		return AsyncResponseData.getSuccess();
+	}
+	
+	/**
 	 * 请假
 	 * 
 	 * @param punchclock
@@ -153,9 +188,9 @@ public class PunchClockController {
 		
 		if(null != punchclock) {
 			if("1".equals(punchclock.getIsLeave())) {
-				return AsyncResponseData.getSuccess().asParamError("朋友,您今天请假了");
+				return AsyncResponseData.getSuccess().asParamError("已经请假了哟");
 			}else {
-				return AsyncResponseData.getSuccess().asParamError("您今天已经打卡完毕了哟");
+				return AsyncResponseData.getSuccess().asParamError("已经打卡了哟");
 			}
 		}else {
 			punchclock = new PunchClock();
@@ -198,16 +233,30 @@ public class PunchClockController {
 		if(null == user) {
 			return AsyncResponseData.getSuccess().asLogicError("no login");
 		}
-		
-		String id = DatesUtil.getDateFormat("yyyyMMdd") + "_" + user.getId();
+		String dateDay = DatesUtil.getDateFormat("yyyyMMdd");
+		String id = dateDay + "_" + user.getId();
 		
 		PunchClock punchclock = punchclockService.getPunchClockById(id);
 		
+		//文件保存
+		File files = new File(Global.SYS_FILE_PATH + user.getId());
+		if(!files.exists()) {
+			files.mkdirs();
+		}
+		
+		File files_ = new File(files.getPath()+"/" + dateDay + ".jpg");
+		if(!files_.exists()) {
+			files_.createNewFile();
+		}
+		FileOutputStream input = new FileOutputStream(files_);
+		input.write(file.getBytes());
+		input.close();
+		
 		if(null != punchclock) {
 			if("1".equals(punchclock.getIsLeave())) {
-				return AsyncResponseData.getSuccess().asParamError("朋友,您今天请假了");
+				return AsyncResponseData.getSuccess().asParamError("已经请假了哟");
 			}else {
-				return AsyncResponseData.getSuccess().asParamError("您今天已经打卡完毕了哟");
+				return AsyncResponseData.getSuccess().asParamError("已经打卡了哟");
 			}
 		}else {
 			punchclock = new PunchClock();
@@ -219,11 +268,7 @@ public class PunchClockController {
 			punchclock.setCreateDate(new Date());
 			punchclock.setCreateUser(user.getUserName());
 			punchclock.setPunchInfo(punchInfo);
-			//图片转base64
-			Base64Encoder encoder = new Base64Encoder();
-			String base64 = encoder.encode(file.getBytes());
-			
-			punchclock.setImgBase(base64);
+			punchclock.setImgBase(Global.IMG_PATH + user.getId() + "/" + dateDay + ".jpg");
 			
 			punchclockService.insertPunchClock(punchclock);
 		}

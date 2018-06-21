@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jy.common.jsonadpter.AsyncResponseData;
+import com.jy.common.utils.UserUtils;
 import com.jy.moudles.user.entity.User;
 import com.jy.moudles.user.service.UserService;
 
@@ -63,6 +66,23 @@ public class UserController {
 		
 		logger.info("修改User End");
 		return AsyncResponseData.getSuccess();
+	}
+	
+	/**
+	 * 根据ID获取user对象
+	 * 
+	 * @param user
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getLoginUser", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData getLoginUser(HttpServletRequest request) throws Exception{
+		logger.info("获取User Start");
+		
+		User user = UserUtils.getLoginUser(request);
+		
+		logger.info("获取User End");
+		return AsyncResponseData.getSuccess(user);
 	}
 	
 	/**

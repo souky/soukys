@@ -1,5 +1,12 @@
 package com.jy.moudles.login.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,7 +103,7 @@ public class LoginController {
 			User usernew = new User();
 			usernew.setId(wxVO.getOpenId());
 			usernew.setOpenId(wxVO.getOpenId());
-			usernew.setUserImg(wxVO.getAvatarUrl());
+			usernew.setUserImg(getUserImg(wxVO.getAvatarUrl(),wxVO.getOpenId()));
 			usernew.setUserName(wxVO.getNickName());
 			usernew.setUserSex(Integer.parseInt(wxVO.getGender()));
 			usernew.setCreateDate(new Date());
@@ -109,6 +116,45 @@ public class LoginController {
 			request.getSession().setAttribute("user", user);
 		}
 		return AsyncResponseData.getSuccess();
+	}
+	
+	@SuppressWarnings("resource")
+	public String getUserImg(String avatarUrl,String openId) {
+		String url = "";
+		if(StringUtils.isBlank(avatarUrl)) {
+			return avatarUrl;
+		}
+		try {
+			HttpURLConnection conn = (HttpURLConnection) new URL(avatarUrl)
+	                .openConnection();
+	        conn.setReadTimeout(5000);
+	        conn.setConnectTimeout(5000);
+	        conn.setRequestMethod("GET");
+
+	        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	            InputStream inputStream = conn.getInputStream();
+	            BufferedInputStream bis = new BufferedInputStream(inputStream);
+	            File file = new File(Global.SYS_FILE_PATH + openId);
+	            if(!file.exists()) {
+	            	file.mkdirs();
+	            }
+	            File files = new File(file.getPath() + Global.USER_IMG_NAME);
+	            if(!files.exists()) {
+	            	files.createNewFile();
+	            }
+	            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(files));
+		        byte[] buffer = new byte[1024];
+		        int len = -1;
+		        while ((len = bis.read(buffer)) != -1) {
+		            bos.write(buffer, 0, len);
+		            bos.flush();
+		        }
+	        }
+		}catch(Exception e) {
+			url = avatarUrl;
+		}
+		url = Global.IMG_PATH + openId + Global.USER_IMG_NAME;
+		return url;
 	}
 	
 }

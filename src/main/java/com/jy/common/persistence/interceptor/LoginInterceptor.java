@@ -71,6 +71,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 				break;
 			}
 		}
+		//开发
+		HttpSession sessions = request.getSession();
+		User users = new User();
+		users.setId("o9VYl0WXsheqXEfVnf9o6xiTKaDY");
+		users.setUserName("布朗斯基大王");
+		users.setUserImg("http://192.168.1.89:8080/image/o9VYl0WXsheqXEfVnf9o6xiTKaDY/portrait.jpg");
+		users.setUserSex(1);
+		users.setOpenId("o9VYl0WXsheqXEfVnf9o6xiTKaDY");
+		users.setOrgCode("");
+		sessions.setAttribute("user", users);
 		
 		if (!flag) {
 			HttpSession session = request.getSession();
@@ -83,9 +93,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 			}
 		}
 		
-		//开发
-//		flag = true;
-//		urlFlag = true;
 		
 		if (!flag || !urlFlag) {
 			ReturnObj returnObj = new ReturnObj();
