@@ -8,7 +8,7 @@
 		<result column="message" property="message" jdbcType="VARCHAR"/>
 		<result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
 		<result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
-		<result column="rate_progress" property="rateProgress" jdbcType="TINYINT"/>
+		<result column="rate_progress" property="rateProgress" jdbcType="VARCHAR"/>
 		<result column="status" property="status" jdbcType="TINYINT"/>
 		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>

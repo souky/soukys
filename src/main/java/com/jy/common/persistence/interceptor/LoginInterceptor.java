@@ -22,8 +22,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.jy.common.entity.ReturnObj;
-import com.jy.common.utils.auth.AuthBuilder;
-import com.jy.common.utils.auth.AuthUser;
 import com.jy.moudles.user.entity.User;
 import com.jy.moudles.user.service.UserService;
 @SuppressWarnings("unused")

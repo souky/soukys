@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jy.common.config.Global;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.DatesUtil;
@@ -101,12 +103,22 @@ public class PunchClockController {
 	 */
 	@RequestMapping(value = "/queryPunchClocks", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData queryPunchClocks(PunchClock punchclock) throws Exception {
+	public AsyncResponseData.ResultData queryPunchClocks(PunchClock punchclock,
+			int pageNum,int pageSize,HttpServletRequest request) throws Exception {
 		logger.info("获取PunchClock Start");
-
+		
+		User user = UserUtils.getLoginUser(request);
+		if(null == user) {
+			return AsyncResponseData.getSuccess().asLogicError("no login");
+		}
+		
 		Map<String, Object> filter = new HashMap<String, Object>();
-
-		List<PunchClock> punchclocks = punchclockService.queryPunchClocksFilter(filter);
+		filter.put("isLeave", punchclock.getIsLeave());
+		
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo<PunchClock> punchclocks = new PageInfo<PunchClock>(
+				punchclockService.queryPunchClocksFilter(filter));
+		
 		logger.info("获取PunchClock End");
 
 		return AsyncResponseData.getSuccess(punchclocks);

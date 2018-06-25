@@ -34,10 +34,10 @@ public class TargetInfo extends BaseEntity{
 	/**
 	 * 目标进度
 	 */
-	private int rateProgress;
+	private String rateProgress;
 	
 	/**
-	 * 目标状态
+	 * 目标状态 1:启用  2:禁用  3:已结束
 	 */
 	private int status;
 	
@@ -74,11 +74,11 @@ public class TargetInfo extends BaseEntity{
 		this.endTime = endTime;
 	}
 	
-	public int getRateProgress() {
+	public String getRateProgress() {
 		return rateProgress;
 	}
 
-	public void setRateProgress(int rateProgress) {
+	public void setRateProgress(String rateProgress) {
 		this.rateProgress = rateProgress;
 	}
 	

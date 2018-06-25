@@ -109,7 +109,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         from `PUNCH_CLOCK`
-        WHERE 1 = 1
+        WHERE is_leave = #{isLeave}
 			<if test="userId != null and '' != userId">
 				AND user_id = #{userId}
 			</if>
@@ -125,6 +125,7 @@
 			<if test="timeInfo != null and '' != timeInfo">
 				AND time_info = #{timeInfo}
 			</if>
+		ORDER BY create_date DESC
     </select>
     
     <delete id="deletePunchClockById" parameterType="java.lang.String">
