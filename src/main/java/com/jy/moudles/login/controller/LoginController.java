@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jy.common.config.Global;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.MD5Util;
+import com.jy.common.utils.UserUtils;
 import com.jy.common.utils.https.HttpUtils;
 import com.jy.common.utils.https.RequestPost;
 import com.jy.common.utils.https.ResponsePost;
@@ -117,6 +118,19 @@ public class LoginController {
 		}
 		return AsyncResponseData.getSuccess();
 	}
+	
+	@RequestMapping(value = "/updateImage",  method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData updateImage(WxVO wxVO,HttpServletRequest request) {
+		User user = UserUtils.getLoginUser(request);
+		if(null == user) {
+			return AsyncResponseData.getSuccess().asLogicError("no login");
+		}
+		getUserImg(wxVO.getAvatarUrl(),user.getId());
+		return AsyncResponseData.getSuccess();
+	}
+	
+	
 	
 	@SuppressWarnings("resource")
 	public String getUserImg(String avatarUrl,String openId) {

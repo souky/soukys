@@ -7,6 +7,7 @@ CREATE TABLE `USER` (
 		`user_name` varchar(64)  NULL COMMENT '用户姓名',
 		`user_tel` varchar(64)  NULL COMMENT '用户电话',
 		`user_sex` tinyint(1)  NULL COMMENT '用户性别',
+		`real_name` varchar(64)  NULL COMMENT '真实姓名',
 		`login_name` varchar(64)  NULL COMMENT '登陆名',
 		`passwrod` varchar(64)  NULL COMMENT '密码',
 		`user_img` text(0)  NULL COMMENT '用户头像',

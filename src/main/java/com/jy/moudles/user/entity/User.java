@@ -16,6 +16,11 @@ public class User extends BaseEntity{
 	private String userName;
 	
 	/**
+	 * 真实姓名
+	 */
+	private String realName;
+	
+	/**
 	 * 用户电话
 	 */
 	private String userTel;
@@ -113,6 +118,14 @@ public class User extends BaseEntity{
 
 	public void setOpenId(String openId) {
 		this.openId = openId;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 	
 }
