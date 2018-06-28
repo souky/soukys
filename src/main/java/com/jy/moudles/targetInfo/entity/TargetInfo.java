@@ -1,6 +1,8 @@
 package com.jy.moudles.targetInfo.entity;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.jy.common.entity.BaseEntity;
 
 public class TargetInfo extends BaseEntity{
@@ -24,17 +26,19 @@ public class TargetInfo extends BaseEntity{
 	/**
 	 * 开始时间
 	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startTime;
 	
 	/**
 	 * 结束时间
 	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endTime;
 	
 	/**
 	 * 目标进度
 	 */
-	private String rateProgress;
+	private int rateProgress;
 	
 	/**
 	 * 目标状态 1:启用  2:禁用  3:已结束
@@ -74,11 +78,11 @@ public class TargetInfo extends BaseEntity{
 		this.endTime = endTime;
 	}
 	
-	public String getRateProgress() {
+	public int getRateProgress() {
 		return rateProgress;
 	}
 
-	public void setRateProgress(String rateProgress) {
+	public void setRateProgress(int rateProgress) {
 		this.rateProgress = rateProgress;
 	}
 	

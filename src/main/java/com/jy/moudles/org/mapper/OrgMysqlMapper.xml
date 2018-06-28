@@ -6,14 +6,47 @@
         <id column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="p_id" property="pId" jdbcType="VARCHAR"/>
 		<result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+		<result column="member_count" property="memberCount" jdbcType="VARCHAR"/>
 		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
     
+    <resultMap id="BaseResultMapWithUser" type="com.jy.moudles.org.entity.Org">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="p_id" property="pId" jdbcType="VARCHAR"/>
+		<result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+		<result column="member_count" property="memberCount" jdbcType="VARCHAR"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <collection property="userList" javaType="java.util.List" ofType="com.jy.moudles.user.entity.User">  
+            <id column="id" property="id" jdbcType="VARCHAR"/>
+			<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+			<result column="real_name" property="realName" jdbcType="VARCHAR"/>
+			<result column="user_tel" property="userTel" jdbcType="VARCHAR"/>
+			<result column="user_sex" property="userSex" jdbcType="TINYINT"/>
+			<result column="user_img" property="userImg" jdbcType="VARCHAR"/>
+			<result column="open_id" property="openId" jdbcType="VARCHAR"/>
+	        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        </collection>  
+    </resultMap>
+    
+    
+    
     <sql id="Base_Column_List">
         id, p_id, org_name, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <sql id="Base_Column_List_with_member">
+        o.id, o.p_id, o.org_name, o.create_user, o.create_date, o.update_user, o.update_date,
+        u.id,user_name,real_name,user_tel,user_sex,user_img,open_id,u.create_date
+    </sql>
+    
+    <sql id="Base_Column_List_with_count">
+        o.id, o.p_id, o.org_name, count(u.id) as member_count
     </sql>
     
     <insert id="insertOrg">
@@ -69,24 +102,25 @@
         </where>
     </update>
     
-    <select id="getOrgById" resultMap="BaseResultMap">
+    <select id="getOrgById" resultMap="BaseResultMapWithUser">
         SELECT
-        <include refid="Base_Column_List"/>
-        from `ORG`
-        WHERE id = #{id}
+        <include refid="Base_Column_List_with_member"/>
+        from `ORG` o left join USER u on o.id = u.org_code
+        WHERE o.id = #{id}
     </select>
     
     <select id="queryOrgsFilter" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        from `ORG`
-        WHERE 1 = 1
+        <include refid="Base_Column_List_with_count"/>
+        from `ORG` o left join USER u on o.id = u.org_code
+        WHERE 1 = 1 
 			<if test="pId != null and '' != pId">
 				AND p_id = #{pId}
 			</if>
 			<if test="orgName != null and '' != orgName">
 				AND org_name = #{orgName}
 			</if>
+		GROUP BY o.id
     </select>
     
     <delete id="deleteOrgById" parameterType="java.lang.String">

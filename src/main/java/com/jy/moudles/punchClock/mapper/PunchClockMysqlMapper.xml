@@ -125,6 +125,9 @@
 			<if test="timeInfo != null and '' != timeInfo">
 				AND time_info = #{timeInfo}
 			</if>
+			<if test="timeComperS != null and '' != timeComperS">
+				AND create_date <![CDATA[>=]]> #{timeComperS} AND create_date <![CDATA[<=]]> #{timeComperE}
+			</if>
 		ORDER BY create_date DESC
     </select>
     

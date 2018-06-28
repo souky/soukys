@@ -59,10 +59,11 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData updateUser(User user) throws Exception{
+	public AsyncResponseData.ResultData updateUser(User user,HttpServletRequest request) throws Exception{
 		logger.info("修改User Start");
 		
 		userService.updateUser(user);
+		UserUtils.resetUser(request,userService);
 		
 		logger.info("修改User End");
 		return AsyncResponseData.getSuccess();

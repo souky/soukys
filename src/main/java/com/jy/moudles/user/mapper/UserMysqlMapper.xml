@@ -12,6 +12,7 @@
 		<result column="passwrod" property="passwrod" jdbcType="VARCHAR"/>
 		<result column="user_img" property="userImg" jdbcType="VARCHAR"/>
 		<result column="org_code" property="orgCode" jdbcType="VARCHAR"/>
+		<result column="org_name" property="orgName" jdbcType="VARCHAR"/>
 		<result column="open_id" property="openId" jdbcType="VARCHAR"/>
 		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
@@ -22,6 +23,11 @@
     <sql id="Base_Column_List">
         id, user_name,real_name, user_tel, user_sex, login_name, user_img, org_code,
          open_id, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <sql id="Base_Column_List_with_org">
+        u.id, u.user_name,u.real_name, u.user_tel, u.user_sex, u.login_name, u.user_img, u.org_code,
+         u.open_id, u.create_user, u.create_date, u.update_user, u.update_date,o.org_name
     </sql>
     
     <insert id="insertUser">
@@ -114,9 +120,9 @@
     
     <select id="getUserById" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        from `USER`
-        WHERE id = #{id}
+        <include refid="Base_Column_List_with_org"/>
+        from `USER` u left join ORG o on u.org_code = o.id 
+        WHERE u.id = #{id}
     </select>
     
     <select id="getUserByNameAndPwd" resultMap="BaseResultMap">

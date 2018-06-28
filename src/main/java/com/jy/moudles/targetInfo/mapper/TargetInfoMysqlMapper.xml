@@ -8,7 +8,7 @@
 		<result column="message" property="message" jdbcType="VARCHAR"/>
 		<result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
 		<result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
-		<result column="rate_progress" property="rateProgress" jdbcType="VARCHAR"/>
+		<result column="rate_progress" property="rateProgress" jdbcType="TINYINT"/>
 		<result column="status" property="status" jdbcType="TINYINT"/>
 		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
@@ -98,6 +98,13 @@
         <include refid="Base_Column_List"/>
         from `TARGET_INFO`
         WHERE id = #{id}
+    </select>
+    
+    <select id="getTargetNow" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `TARGET_INFO`
+        WHERE user_id = #{userId} AND start_time <![CDATA[<=]]> now() AND end_time <![CDATA[>=]]> now() AND status = 1
     </select>
     
     <select id="queryTargetInfosFilter" resultMap="BaseResultMap">

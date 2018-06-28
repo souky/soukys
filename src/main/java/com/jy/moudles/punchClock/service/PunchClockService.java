@@ -1,8 +1,14 @@
 package com.jy.moudles.punchClock.service;
 
+import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.moudles.punchClock.entity.PunchClock;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
+
 
 /** 
  * PunchClock业务接口
@@ -54,6 +60,11 @@ public interface PunchClockService {
 	public void deletePunchClocks(List<String> ids);
 	
 	public List<Integer> getPunchClockByMonth(String userId,int month);
+
+	public AsyncResponseData.ResultData punch(HttpServletRequest request, MultipartFile file);
+	
+	public AsyncResponseData.ResultData punchLeave(String leaveInfo,
+			HttpServletRequest request);
 	
 }
 

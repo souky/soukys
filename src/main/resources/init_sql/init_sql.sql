@@ -51,7 +51,7 @@ CREATE TABLE `TARGET_INFO` (
 		`message` varchar(200)  NULL COMMENT '目标说明',
 		`start_time` datetime  NULL COMMENT '开始时间',
 		`end_time` datetime  NULL COMMENT '结束时间',
-		`rate_progress` tinyint(1)  NULL COMMENT '目标进度',
+		`rate_progress` tinyint(2)  NULL COMMENT '目标进度',
 		`status` tinyint(1) DEFAULT '1' NOT NULL COMMENT '目标状态',
 		`create_user`  varchar(64) NULL COMMENT '创建用户' ,
 		`create_date`  datetime NULL COMMENT '创建时间' ,

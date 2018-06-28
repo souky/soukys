@@ -3,6 +3,8 @@ package com.jy.moudles.targetInfo.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.jy.moudles.targetInfo.entity.TargetInfo;
 import com.jy.common.persistence.annotation.MyBatisDao;
 
@@ -55,6 +57,13 @@ public interface TargetInfoDao {
 	 * @param ids
 	 */
 	public void deleteTargetInfos(List<String> ids);
+	
+	/**
+	 * 寻找当前对象
+	 *
+	 * @param ids
+	 */
+	public TargetInfo getTargetNow(@Param("userId")String userId);
 	
 }
 

@@ -1,5 +1,6 @@
 package com.jy.moudles.targetInfo.service;
 
+import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.moudles.targetInfo.entity.TargetInfo;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface TargetInfoService {
 	 *
 	 * @param TargetInfo
 	 */
-	public void insertTargetInfo(TargetInfo TargetInfo);
+	public AsyncResponseData.ResultData insertTargetInfo(TargetInfo TargetInfo);
 	
 	/**
 	 * 更新TargetInfo对象
@@ -52,6 +53,8 @@ public interface TargetInfoService {
 	 * @param ids
 	 */
 	public void deleteTargetInfos(List<String> ids);
+	
+	public TargetInfo getTargetNow(String userId);
 	
 }
 

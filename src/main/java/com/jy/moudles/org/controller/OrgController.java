@@ -1,8 +1,6 @@
 package com.jy.moudles.org.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,9 +91,8 @@ public class OrgController {
 	public AsyncResponseData.ResultData queryOrgs(Org org) throws Exception{
 		logger.info("获取Org Start");
 		
-		Map<String, Object> filter = new HashMap<String, Object>();
+		List<Org> orgs= orgService.queryOrgsFilter(null);
 		
-		List<Org> orgs= orgService.queryOrgsFilter(filter);
 		logger.info("获取Org End");
 		
 		return AsyncResponseData.getSuccess(orgs);

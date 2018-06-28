@@ -55,6 +55,9 @@ public class User extends BaseEntity{
 	 */
 	private String openId;
 	
+	//多表联查字段
+	private String orgName;
+	
 	
 	public String getUserName() {
 		return userName;
@@ -126,6 +129,14 @@ public class User extends BaseEntity{
 
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
 	}
 	
 }

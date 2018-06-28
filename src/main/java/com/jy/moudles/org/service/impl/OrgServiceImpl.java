@@ -1,10 +1,11 @@
 package com.jy.moudles.org.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jy.common.utils.UUIDUtil;
 import com.jy.moudles.org.dao.OrgDao;
@@ -25,6 +26,8 @@ public class OrgServiceImpl implements OrgService {
 	@Override
 	public void insertOrg(Org Org){
 		Org.setId(UUIDUtil.get32UUID());
+		Org.setCreateDate(new Date());
+		Org.setCreateUser("wx");
 		OrgDao.insertOrg(Org);
 	}
 	
@@ -40,7 +43,14 @@ public class OrgServiceImpl implements OrgService {
 	
 	@Override
 	public List<Org> queryOrgsFilter(Map<String, Object> filter){
-		return OrgDao.queryOrgsFilter(filter);
+		List<Org> orgs = OrgDao.queryOrgsFilter(filter);
+		if(null != orgs && orgs.size() == 1) {
+			String id = orgs.get(0).getId();
+			if(null == id) {
+				orgs.clear();
+			}
+		}
+		return orgs;
 	}
 	
 	@Override

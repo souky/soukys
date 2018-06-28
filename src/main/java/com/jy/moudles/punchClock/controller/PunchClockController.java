@@ -1,9 +1,6 @@
 package com.jy.moudles.punchClock.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jy.common.config.Global;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.DatesUtil;
 import com.jy.common.utils.UserUtils;
@@ -114,6 +110,7 @@ public class PunchClockController {
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
 		filter.put("isLeave", punchclock.getIsLeave());
+		filter.put("userId", user.getId());
 		
 		PageHelper.startPage(pageNum, pageSize);
 		PageInfo<PunchClock> punchclocks = new PageInfo<PunchClock>(
@@ -189,40 +186,7 @@ public class PunchClockController {
 			HttpServletRequest request) throws Exception {
 		logger.info("ask_leave Start");
 
-		User user = UserUtils.getLoginUser(request);
-		if(null == user) {
-			return AsyncResponseData.getSuccess().asLogicError("no login");
-		}
-		
-		String id = DatesUtil.getDateFormat("yyyyMMdd") + "_" + user.getId();
-		
-		PunchClock punchclock = punchclockService.getPunchClockById(id);
-		
-		if(null != punchclock) {
-			if("1".equals(punchclock.getIsLeave())) {
-				return AsyncResponseData.getSuccess().asParamError("已经请假了哟");
-			}else {
-				return AsyncResponseData.getSuccess().asParamError("已经打卡了哟");
-			}
-		}else {
-			punchclock = new PunchClock();
-			punchclock.setId(id);
-			punchclock.setIsLeave("1");
-			punchclock.setUserId(user.getId());
-			punchclock.setOrgId(user.getOrgCode());
-			punchclock.setPunchInfo(leaveInfo);
-			punchclock.setTimeInfo(DatesUtil.getDateFormat("yyyy-MM-dd HH:mm:ss"));
-			punchclock.setCreateDate(new Date());
-			punchclock.setCreateUser(user.getUserName());
-			punchclock.setImgBase("");
-			
-			punchclockService.insertPunchClock(punchclock);
-		}
-		
-
-		logger.info("ask_leave End");
-
-		return AsyncResponseData.getSuccess();
+		return punchclockService.punchLeave(leaveInfo, request);
 	}
 	
 	/**
@@ -234,61 +198,9 @@ public class PunchClockController {
 	@RequestMapping(value = "/punch", method = RequestMethod.POST)
 	@ResponseBody
 	public AsyncResponseData.ResultData punch(HttpServletRequest request,MultipartFile file) throws Exception {
-		logger.info("ask_leave Start");
-		
-		if(null == file) {
-			return AsyncResponseData.getSuccess().asParamError("no file");
-		}
-		
-		User user = UserUtils.getLoginUser(request);
-		String punchInfo = request.getParameter("text");
-		if(null == user) {
-			return AsyncResponseData.getSuccess().asLogicError("no login");
-		}
-		String dateDay = DatesUtil.getDateFormat("yyyyMMdd");
-		String id = dateDay + "_" + user.getId();
-		
-		PunchClock punchclock = punchclockService.getPunchClockById(id);
-		
-		//文件保存
-		File files = new File(Global.SYS_FILE_PATH + user.getId());
-		if(!files.exists()) {
-			files.mkdirs();
-		}
-		
-		File files_ = new File(files.getPath()+"/" + dateDay + ".jpg");
-		if(!files_.exists()) {
-			files_.createNewFile();
-		}
-		FileOutputStream input = new FileOutputStream(files_);
-		input.write(file.getBytes());
-		input.close();
-		
-		if(null != punchclock) {
-			if("1".equals(punchclock.getIsLeave())) {
-				return AsyncResponseData.getSuccess().asParamError("已经请假了哟");
-			}else {
-				return AsyncResponseData.getSuccess().asParamError("已经打卡了哟");
-			}
-		}else {
-			punchclock = new PunchClock();
-			punchclock.setId(id);
-			punchclock.setIsLeave("0");
-			punchclock.setUserId(user.getId());
-			punchclock.setOrgId(user.getOrgCode());
-			punchclock.setTimeInfo(DatesUtil.getDateFormat("yyyy-MM-dd HH:mm:ss"));
-			punchclock.setCreateDate(new Date());
-			punchclock.setCreateUser(user.getUserName());
-			punchclock.setPunchInfo(punchInfo);
-			punchclock.setImgBase(Global.IMG_PATH + user.getId() + "/" + dateDay + ".jpg");
-			
-			punchclockService.insertPunchClock(punchclock);
-		}
-		
+		logger.info("punch Start");
 
-		logger.info("ask_leave End");
-
-		return AsyncResponseData.getSuccess();
+		return punchclockService.punch(request, file);
 	}
 	
 	

@@ -1,8 +1,9 @@
 package com.jy.moudles.targetInfo.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jy.common.jsonadpter.AsyncResponseData;
+import com.jy.common.utils.UserUtils;
 import com.jy.moudles.targetInfo.entity.TargetInfo;
 import com.jy.moudles.targetInfo.service.TargetInfoService;
+import com.jy.moudles.user.entity.User;
 
 /** 
  * TargetInfo实现类
@@ -39,13 +44,19 @@ public class TargetInfoController {
 	 */
 	@RequestMapping(value = "/saveTargetInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData saveTargetInfo(TargetInfo targetinfo) throws Exception{
+	public AsyncResponseData.ResultData saveTargetInfo(TargetInfo targetinfo,
+			HttpServletRequest request) throws Exception{
 		logger.info("新增TargetInfo Start");
 		
-		targetinfoService.insertTargetInfo(targetinfo);
+		User user = UserUtils.getLoginUser(request);
+		if(null == user) {
+			return AsyncResponseData.getSuccess().asLogicError("no login");
+		}
 		
-		logger.info("新增TargetInfo End");
-		return AsyncResponseData.getSuccess();
+		targetinfo.setUserId(user.getId());
+		targetinfo.setCreateUser(user.getCreateUser());
+		
+		return targetinfoService.insertTargetInfo(targetinfo);
 	}
 	
 	/**
@@ -83,6 +94,30 @@ public class TargetInfoController {
 	}
 	
 	/**
+	 * 根据ID获取targetinfo对象
+	 * 
+	 * @param targetinfo
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/targetNow", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData targetNow(HttpServletRequest request) throws Exception{
+		logger.info("获取TargetInfo Start");
+		
+		User user = UserUtils.getLoginUser(request);
+		if(null == user) {
+			return AsyncResponseData.getSuccess().asLogicError("no login");
+		}
+		TargetInfo targetinfo = new TargetInfo();
+		
+		targetinfo = targetinfoService.getTargetNow(user.getId());
+		
+		logger.info("获取TargetInfo End");
+		
+		return AsyncResponseData.getSuccess(targetinfo);
+	}
+	
+	/**
 	 * 获取targetinfo对象
 	 * 
 	 * @param targetinfo
@@ -90,12 +125,22 @@ public class TargetInfoController {
 	 */
 	@RequestMapping(value = "/queryTargetInfos", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData queryTargetInfos(TargetInfo targetinfo) throws Exception{
+	public AsyncResponseData.ResultData queryTargetInfos(TargetInfo targetinfo,
+			int pageNum,int pageSize,HttpServletRequest request) throws Exception{
 		logger.info("获取TargetInfo Start");
+		User user = UserUtils.getLoginUser(request);
+		if(null == user) {
+			return AsyncResponseData.getSuccess().asLogicError("no login");
+		}
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("status", targetinfo.getStatus());
+		filter.put("userId", user.getId());
 		
-		List<TargetInfo> targetinfos= targetinfoService.queryTargetInfosFilter(filter);
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo<TargetInfo> targetinfos = new PageInfo<TargetInfo>(
+				targetinfoService.queryTargetInfosFilter(filter));
+		
 		logger.info("获取TargetInfo End");
 		
 		return AsyncResponseData.getSuccess(targetinfos);

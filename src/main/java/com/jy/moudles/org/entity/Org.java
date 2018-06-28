@@ -1,6 +1,9 @@
 package com.jy.moudles.org.entity;
 
+import java.util.List;
+
 import com.jy.common.entity.BaseEntity;
+import com.jy.moudles.user.entity.User;
 
 public class Org extends BaseEntity{
 
@@ -20,6 +23,11 @@ public class Org extends BaseEntity{
 	 */
 	private String orgName;
 	
+	//关联字段
+	private String memberCount;
+	
+	private List<User> userList;
+	
 	
 	public String getPId() {
 		return pId;
@@ -35,6 +43,22 @@ public class Org extends BaseEntity{
 
 	public void setOrgName(String orgName) {
 		this.orgName = orgName;
+	}
+
+	public String getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(String memberCount) {
+		this.memberCount = memberCount;
+	}
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
 	}
 	
 }
