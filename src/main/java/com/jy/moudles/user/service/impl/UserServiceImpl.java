@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
 	public User getUserByNameAndPwd(User user) {
 		return UserDao.getUserByNameAndPwd(user);
 	}
+
+	@Override
+	public List<User> queryFriends(User user) {
+		return UserDao.queryFriends(user);
+	}
 	
 }
 

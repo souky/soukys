@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,14 +104,45 @@ public class PunchClockController {
 			int pageNum,int pageSize,HttpServletRequest request) throws Exception {
 		logger.info("获取PunchClock Start");
 		
+		Map<String, Object> filter = new HashMap<String, Object>();
+		//封装userId
+		
 		User user = UserUtils.getLoginUser(request);
 		if(null == user) {
 			return AsyncResponseData.getSuccess().asLogicError("no login");
 		}
+		filter.put("userId", user.getId());
+		filter.put("isLeave", punchclock.getIsLeave());
+	
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo<PunchClock> punchclocks = new PageInfo<PunchClock>(
+				punchclockService.queryPunchClocksFilter(filter));
+		
+		logger.info("获取PunchClock End");
+
+		return AsyncResponseData.getSuccess(punchclocks);
+	}
+	
+	/**
+	 * 获取punchclock对象
+	 * 
+	 * @param punchclock
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/queryOtherPunchClocks", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData queryOtherPunchClocks(PunchClock punchclock,
+			int pageNum,int pageSize) throws Exception {
+		logger.info("获取PunchClock Start");
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
-		filter.put("isLeave", punchclock.getIsLeave());
-		filter.put("userId", user.getId());
+		//封装userId
+		String id = punchclock.getId();
+		if(StringUtils.isBlank(id)) {
+			return AsyncResponseData.getSuccess("");
+		}
+		
+		filter.put("userId", id);
 		
 		PageHelper.startPage(pageNum, pageSize);
 		PageInfo<PunchClock> punchclocks = new PageInfo<PunchClock>(

@@ -123,6 +123,25 @@ public class UserController {
 	}
 	
 	/**
+	 * 获取朋友数据
+	 * 
+	 * @param user
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/findFriends", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData findFriends(HttpServletRequest request) throws Exception{
+		logger.info("获取friends Start");
+		User user = UserUtils.getLoginUser(request);
+		if(null == user) {
+			return AsyncResponseData.getSuccess().asLogicError("no login");
+		}
+		List<User> users= userService.queryFriends(user);
+		logger.info("获取friends End");
+		return AsyncResponseData.getSuccess(users);
+	}
+	
+	/**
 	 * 根据ID获取user对象
 	 * 
 	 * @param user

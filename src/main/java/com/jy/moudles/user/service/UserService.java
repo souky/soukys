@@ -60,5 +60,12 @@ public interface UserService {
 	 */
 	public void deleteUsers(List<String> ids);
 	
+	/**
+	 * 查询同组织机构用户
+	 *
+	 * @param filter
+	 */
+	public List<User> queryFriends(User user);
+	
 }
 

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,14 +129,46 @@ public class TargetInfoController {
 	public AsyncResponseData.ResultData queryTargetInfos(TargetInfo targetinfo,
 			int pageNum,int pageSize,HttpServletRequest request) throws Exception{
 		logger.info("获取TargetInfo Start");
+		
+		
+		Map<String, Object> filter = new HashMap<String, Object>();
+		
 		User user = UserUtils.getLoginUser(request);
 		if(null == user) {
 			return AsyncResponseData.getSuccess().asLogicError("no login");
 		}
-		
-		Map<String, Object> filter = new HashMap<String, Object>();
 		filter.put("status", targetinfo.getStatus());
 		filter.put("userId", user.getId());
+		
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo<TargetInfo> targetinfos = new PageInfo<TargetInfo>(
+				targetinfoService.queryTargetInfosFilter(filter));
+		
+		logger.info("获取TargetInfo End");
+		
+		return AsyncResponseData.getSuccess(targetinfos);
+	}
+	
+	/**
+	 * 获取targetinfo对象
+	 * 
+	 * @param targetinfo
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/queryOtherTargetInfos", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData queryOrtherTargetInfos(TargetInfo targetinfo,
+			int pageNum,int pageSize) throws Exception{
+		logger.info("获取TargetInfo Start");
+		
+		//封装userId
+		String id = targetinfo.getId();
+		if(StringUtils.isBlank(id)) {
+			return AsyncResponseData.getSuccess("");
+		}
+		Map<String, Object> filter = new HashMap<String, Object>();
+		
+		filter.put("userId", id);
 		
 		PageHelper.startPage(pageNum, pageSize);
 		PageInfo<TargetInfo> targetinfos = new PageInfo<TargetInfo>(

@@ -132,6 +132,13 @@
         WHERE login_name = #{logingName} AND passwrod = #{passwrod}
     </select>
     
+    <select id="queryFriends" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `USER`
+        WHERE 1 = 1 AND org_code = #{orgCode} AND id != #{openId}
+    </select>
+    
     <select id="queryUsersFilter" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>

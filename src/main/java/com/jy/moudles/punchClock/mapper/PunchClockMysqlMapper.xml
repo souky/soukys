@@ -109,7 +109,10 @@
         SELECT
         <include refid="Base_Column_List"/>
         from `PUNCH_CLOCK`
-        WHERE is_leave = #{isLeave}
+        WHERE 1=1 
+        	<if test="isLeave != null and '' != isLeave">
+				AND is_leave = #{isLeave}
+			</if>
 			<if test="userId != null and '' != userId">
 				AND user_id = #{userId}
 			</if>
