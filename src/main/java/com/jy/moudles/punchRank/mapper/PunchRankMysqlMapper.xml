@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.punchRank.dao.PunchRankDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.punchRank.entity.PunchRank">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="org_code" property="orgCode" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="rank_time" property="rankTime" jdbcType="VARCHAR"/>
+		<result column="punch_days" property="punchDays" jdbcType="TINYINT"/>
+		<result column="rate_progress" property="rateProgress" jdbcType="TINYINT"/>
+		<result column="rank_num" property="rankNum" jdbcType="TINYINT"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <association property="user" javaType="com.jy.moudles.user.entity.User">
+		  <id column="id" property="id" jdbcType="VARCHAR"/>
+			<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+			<result column="real_name" property="realName" jdbcType="VARCHAR"/>
+			<result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+			<result column="user_img" property="userImg" jdbcType="VARCHAR"/>
+			<result column="open_id" property="openId" jdbcType="VARCHAR"/>
+	  	</association>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, org_code, user_id, rank_time, punch_days, rate_progress, 
+        rank_num, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <sql id="Base_Column_List_User">
+        r.*,u.*
+    </sql>
+    
+    <insert id="insertPunchRank">
+        INSERT INTO PUNCH_RANK
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="orgCode != null">org_code,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="rankTime != null">rank_time,</if>
+			<if test="punchDays != null">punch_days,</if>
+			<if test="rateProgress != null">rate_progress,</if>
+			<if test="rankNum != null">rank_num,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="orgCode != null">#{orgCode},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="rankTime != null">#{rankTime},</if>
+			<if test="punchDays != null">#{punchDays},</if>
+			<if test="rateProgress != null">#{rateProgress},</if>
+			<if test="rankNum != null">#{rankNum},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <update id="updatePunchRank">
+        update PUNCH_RANK
+        <set>
+			
+			<if test="orgCode != null and '' != orgCode">
+				org_code = #{orgCode},
+			</if>
+			<if test="userId != null and '' != userId">
+				user_id = #{userId},
+			</if>
+			<if test="rankTime != null and '' != rankTime">
+				rank_time = #{rankTime},
+			</if>
+			<if test="punchDays != null and '' != punchDays">
+				punch_days = #{punchDays},
+			</if>
+			<if test="rateProgress != null and '' != rateProgress">
+				rate_progress = #{rateProgress},
+			</if>
+			<if test="rankNum != null and '' != rankNum">
+				rank_num = #{rankNum},
+			</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getPunchRankById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `PUNCH_RANK`
+        WHERE id = #{id}
+    </select>
+    
+   
+    
+    <select id="getLastPunchRank" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List_User"/>
+        from `PUNCH_RANK` r left join USER u on u.id = r.user_id
+        WHERE r.org_code = #{orgCode}
+        ORDER by r.rank_time DESC ,r.rank_num limit 3
+    </select>
+    
+    <select id="queryPunchRanksFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `PUNCH_RANK`
+        WHERE 1 = 1
+			
+			<if test="orgCode != null and '' != orgCode">
+				AND org_code = #{orgCode}
+			</if>
+			<if test="userId != null and '' != userId">
+				AND user_id = #{userId}
+			</if>
+			<if test="rankTime != null and '' != rankTime">
+				AND rank_time = #{rankTime}
+			</if>
+			<if test="punchDays != null and '' != punchDays">
+				AND punch_days = #{punchDays}
+			</if>
+			<if test="rateProgress != null and '' != rateProgress">
+				AND rate_progress = #{rateProgress}
+			</if>
+			<if test="rankNum != null and '' != rankNum">
+				AND rank_num = #{rankNum}
+			</if>
+    </select>
+    
+    <delete id="deletePunchRankById" parameterType="java.lang.String">
+        delete from `PUNCH_RANK`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deletePunchRanks" parameterType="java.lang.String">
+        delete from `PUNCH_RANK`
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

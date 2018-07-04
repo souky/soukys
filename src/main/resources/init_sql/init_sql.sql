@@ -75,3 +75,19 @@ CREATE TABLE `PUNCH_CLOCK` (
 		`update_date`  datetime NULL COMMENT '更新时间' ,
   		PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `PUNCH_RANK`;
+CREATE TABLE `PUNCH_RANK` (
+ 		`id` varchar(32) NOT NULL,
+		`org_code` varchar(32) NOT NULL COMMENT '机构id',
+		`user_id` varchar(32) NOT NULL COMMENT '用户id',
+		`rank_time` varchar(10) NOT NULL COMMENT '排名时间',
+		`punch_days` tinyint(2) NOT NULL COMMENT '签到天数',
+		`rate_progress` tinyint(2) NOT NULL COMMENT '目标完成进度',
+		`rank_num` tinyint(1) NOT NULL COMMENT '排名名次',
+		`create_user`  varchar(20) NULL COMMENT '创建用户' ,
+		`create_date`  datetime NULL COMMENT '创建时间' ,
+		`update_user`  varchar(20) NULL COMMENT '更新用户' ,
+		`update_date`  datetime NULL COMMENT '更新时间' ,
+  		PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
