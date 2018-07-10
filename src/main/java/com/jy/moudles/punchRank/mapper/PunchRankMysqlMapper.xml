@@ -127,12 +127,12 @@
     
     <select id="queryPunchRanksFilter" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        from `PUNCH_RANK`
+        <include refid="Base_Column_List_User"/>
+        from `PUNCH_RANK` r left join USER u on u.id = r.user_id
         WHERE 1 = 1
 			
 			<if test="orgCode != null and '' != orgCode">
-				AND org_code = #{orgCode}
+				AND r.org_code = #{orgCode}
 			</if>
 			<if test="userId != null and '' != userId">
 				AND user_id = #{userId}
@@ -144,11 +144,12 @@
 				AND punch_days = #{punchDays}
 			</if>
 			<if test="rateProgress != null and '' != rateProgress">
-				AND rate_progress = #{rateProgress}
+				AND r.rate_progress = #{rateProgress}
 			</if>
 			<if test="rankNum != null and '' != rankNum">
 				AND rank_num = #{rankNum}
 			</if>
+		order by rank_num
     </select>
     
     <delete id="deletePunchRankById" parameterType="java.lang.String">

@@ -59,6 +59,7 @@ public class User extends BaseEntity{
 	private String orgName;
 	
 	
+	
 	public String getUserName() {
 		return userName;
 	}

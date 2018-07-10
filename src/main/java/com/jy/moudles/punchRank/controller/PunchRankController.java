@@ -1,5 +1,6 @@
 package com.jy.moudles.punchRank.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +44,8 @@ public class PunchRankController {
 	 */
 	@RequestMapping(value = "/savePunchRank", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData savePunchRank(PunchRank punchrank) throws Exception{
-		logger.info("新增PunchRank Start");
-		
-		punchrankService.insertPunchRank(punchrank);
-		
-		logger.info("新增PunchRank End");
-		return AsyncResponseData.getSuccess();
+	public AsyncResponseData.ResultData savePunchRank(String rankTime,String orgCode) throws Exception{
+		return punchrankService.insertPunchRank(orgCode,rankTime);
 	}
 	
 	/**
@@ -125,6 +121,8 @@ public class PunchRankController {
 		logger.info("获取PunchRank Start");
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("rankTime", punchrank.getRankTime());
+		filter.put("orgCode", punchrank.getOrgCode());
 		
 		List<PunchRank> punchranks= punchrankService.queryPunchRanksFilter(filter);
 		logger.info("获取PunchRank End");

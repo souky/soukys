@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.UUIDUtil;
 import com.jy.moudles.punchRank.dao.PunchRankDao;
 import com.jy.moudles.punchRank.entity.PunchRank;
@@ -24,9 +27,26 @@ public class PunchRankServiceImpl implements PunchRankService {
 	private PunchRankDao PunchRankDao;
 	
 	@Override
-	public void insertPunchRank(PunchRank PunchRank){
-		PunchRank.setId(UUIDUtil.get32UUID());
-		PunchRankDao.insertPunchRank(PunchRank);
+	public AsyncResponseData.ResultData insertPunchRank(String orgCode,String rankTime){
+		Map<String, Object> filter = new HashMap<>();
+		filter.put("rankTime", rankTime);
+		filter.put("orgCode", orgCode);
+		List<PunchRank> list = PunchRankDao.queryPunchRanksFilter(filter);
+		if(null != list && list.size() > 0) {
+			return AsyncResponseData.getSuccess().asParamError("已有此天记录");
+		}else {
+			for(int i = 1;i<4;i++) {
+				PunchRank punchRank = new PunchRank();
+				punchRank.setRankNum(i);
+				punchRank.setOrgCode(orgCode);
+				punchRank.setRankTime(rankTime);
+				punchRank.setCreateDate(new Date());
+				punchRank.setCreateUser("manager");
+				punchRank.setId(UUIDUtil.get32UUID());
+				PunchRankDao.insertPunchRank(punchRank);
+			}
+			return AsyncResponseData.getSuccess();
+		}
 	}
 	
 	@Override

@@ -1,5 +1,10 @@
 package com.jy.moudles.punchClock.service.impl;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +59,7 @@ public class PunchClockServiceImpl implements PunchClockService {
 		if(null == user) {
 			return AsyncResponseData.getSuccess().asLogicError("no login");
 		}
-		String dateDay = DatesUtil.getDateFormat("yyyyMMdd");
+		String dateDay = DatesUtil.getDateFormat("yyyy-MM-dd");
 		String id = dateDay + "_" + user.getId();
 		
 		PunchClock punchclock = PunchClockDao.getPunchClockById(id);
@@ -67,10 +73,33 @@ public class PunchClockServiceImpl implements PunchClockService {
 		File files_ = new File(files.getPath()+"/" + dateDay + ".jpg");
 		if(!files_.exists()) {
 			try {
+				
 				files_.createNewFile();
 				FileOutputStream input = new FileOutputStream(files_);
 				input.write(file.getBytes());
-				input.close();
+				input.flush();
+	            input.close();
+				//图片加时间水印
+				Image srcImg = ImageIO.read(files_);
+	            int srcImgWidth = srcImg.getWidth(null);
+	            int srcImgHeight = srcImg.getHeight(null);
+	            // 加水印
+	            BufferedImage bufImg = new BufferedImage(srcImgWidth, srcImgHeight, 
+	            		BufferedImage.TYPE_INT_RGB);
+	            Graphics2D g = bufImg.createGraphics();
+	            g.drawImage(srcImg, 0, 0, srcImgWidth, srcImgHeight, null);
+	            Font font = new Font("Courier New", Font.PLAIN, 20);  
+	            g.setColor(Color.BLACK); //根据图片的背景设置水印颜色
+	            g.setFont(font);
+	            int x = srcImgWidth - 
+	            		g.getFontMetrics(g.getFont()).charsWidth(dateDay.toCharArray(), 0, dateDay.length())
+	            		- 10;
+	            int y = srcImgHeight - 10;
+	            g.drawString(dateDay, x, y);
+	            g.dispose();
+	            FileOutputStream inputs = new FileOutputStream(files_);
+	            ImageIO.write(bufImg, "jpg", inputs);
+	            inputs.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
