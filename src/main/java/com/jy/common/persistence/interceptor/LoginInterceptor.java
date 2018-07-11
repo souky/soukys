@@ -71,20 +71,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 			}
 		}
 		//开发
-		HttpSession sessions = request.getSession();
-		UserService userService = context.getBean(UserService.class);
-		User users = new User();
-		users = userService.getUserById("o9VYl0WXsheqXEfVnf9o6xiTKaDY");
-//		users.setId("o9VYl0WXsheqXEfVnf9o6xiTKaDY");
-//		users.setUserName("布朗斯基大王");
-//		users.setUserImg("http://192.168.1.89:8080/image/o9VYl0WXsheqXEfVnf9o6xiTKaDY/portrait.jpg");
-//		users.setUserSex(1);
-//		users.setOpenId("o9VYl0WXsheqXEfVnf9o6xiTKaDY");
-//		users.setOrgCode("");
-//		users.setLoginName("manager");
-//		users.setCreateDate(new Date());
-		sessions.setAttribute("user", users);
-		
+//		HttpSession sessions = request.getSession();
+//		UserService userService = context.getBean(UserService.class);
+//		User users = new User();
+//		users = userService.getUserById("o9VYl0WXsheqXEfVnf9o6xiTKaDY");
+//		sessions.setAttribute("user", users);
+//		
 		if (!flag) {
 			HttpSession session = request.getSession();
 			if(session != null){

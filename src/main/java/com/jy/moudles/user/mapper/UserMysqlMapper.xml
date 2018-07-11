@@ -20,6 +20,16 @@
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
     
+    <resultMap id="userTarget" type="com.jy.moudles.user.entity.UserTargetVO">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="real_name" property="realName" jdbcType="VARCHAR"/>
+		<result column="user_sex" property="userSex" jdbcType="TINYINT"/>
+		<result column="user_img" property="userImg" jdbcType="VARCHAR"/>
+		<result column="rate_progress" property="rateProgress" jdbcType="TINYINT"/>
+		<result column="target_days" property="targetDays" jdbcType="TINYINT"/>
+    </resultMap>
+    
     <sql id="Base_Column_List">
         id, user_name,real_name, user_tel, user_sex, login_name, user_img, org_code,
          open_id, create_user, create_date, update_user, update_date
@@ -137,6 +147,19 @@
         <include refid="Base_Column_List"/>
         from `USER`
         WHERE 1 = 1 AND org_code = #{orgCode} AND id != #{openId}
+    </select>
+    
+    <select id="queryUserWithTarget" resultMap="userTarget">
+    	SELECT
+			id, user_name,real_name, user_sex, user_img,
+			(SELECT rate_progress from target_info t where t.user_id = u.id ORDER BY
+			 ABS(UNIX_TIMESTAMP(#{rankTime}) - UNIX_TIMESTAMP(t.end_time)) LIMIT 1) as rate_progress,
+			(SELECT DATEDIFF(t.end_time,t.start_time) FROM target_info t WHERE t.user_id = u.id 
+			 ORDER BY 
+			 ABS( UNIX_TIMESTAMP( '2018-07-11' ) - UNIX_TIMESTAMP( t.end_time )) LIMIT 1) AS target_days
+		FROM
+			`user` u WHERE u.org_code = #{orgCode}
+		order by rate_progress desc
     </select>
     
     <select id="queryUsersFilter" resultMap="BaseResultMap">

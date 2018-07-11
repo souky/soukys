@@ -123,6 +123,25 @@ public class UserController {
 	}
 	
 	/**
+	 * 获取user对象带目标
+	 * 
+	 * @param user
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/queryUserWithTarger", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData queryUserWithTarger(String orgCode,String rankTime) 
+			throws Exception{
+		logger.info("获取User Start");
+		
+		
+		List<User> users= userService.queryUserWithTarget(orgCode, rankTime);
+		logger.info("获取User End");
+		
+		return AsyncResponseData.getSuccess(users);
+	}
+	
+	/**
 	 * 获取朋友数据
 	 * 
 	 * @param user

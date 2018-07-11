@@ -1,5 +1,6 @@
 package com.jy.moudles.punchRank.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.UUIDUtil;
 import com.jy.moudles.punchRank.dao.PunchRankDao;
 import com.jy.moudles.punchRank.entity.PunchRank;
+import com.jy.moudles.punchRank.entity.RankVO;
 import com.jy.moudles.punchRank.service.PunchRankService;
 
 /** 
@@ -50,8 +52,27 @@ public class PunchRankServiceImpl implements PunchRankService {
 	}
 	
 	@Override
-	public void updatePunchRank(PunchRank PunchRank){
-		PunchRankDao.updatePunchRank(PunchRank);
+	public void updatePunchRank(RankVO rankVO){
+		String userId = rankVO.getUserId();
+		PunchRank punchRank = new PunchRank();
+		if(StringUtils.isBlank(userId)) {
+			//删除
+			punchRank.setUserId("");
+			punchRank.setRateProgress(0);
+			punchRank.setPunchDays(0);
+			punchRank.setId(rankVO.getId());
+		}else {
+			//修改
+			punchRank.setId(rankVO.getId());
+			punchRank.setUserId(userId);
+			int rateProgress = rankVO.getRateProgress();
+			int targetDays = rankVO.getTargetDays();
+			double rateProgress_ = Double.parseDouble(rateProgress+"")/100;
+			Double punchDay = Math.ceil(targetDays * rateProgress_);
+			punchRank.setRateProgress(rateProgress);
+			punchRank.setPunchDays(punchDay.intValue());
+		}
+		PunchRankDao.updatePunchRank(punchRank);
 	}
 	
 	@Override

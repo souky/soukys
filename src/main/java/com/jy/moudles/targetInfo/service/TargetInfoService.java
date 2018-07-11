@@ -1,9 +1,10 @@
 package com.jy.moudles.targetInfo.service;
 
-import com.jy.common.jsonadpter.AsyncResponseData;
-import com.jy.moudles.targetInfo.entity.TargetInfo;
 import java.util.List;
 import java.util.Map;
+
+import com.jy.common.jsonadpter.AsyncResponseData;
+import com.jy.moudles.targetInfo.entity.TargetInfo;
 
 /** 
  * TargetInfo业务接口
@@ -56,5 +57,18 @@ public interface TargetInfoService {
 	
 	public TargetInfo getTargetNow(String userId);
 	
+	/**
+	 * 更新目标状态
+	 *
+	 * @param ids
+	 */
+	public void updateStatus();
+	
+	/**
+	 * 根据rankTime 查询目标
+	 *
+	 * @param ids
+	 */
+	public TargetInfo getTargetInfoByRankTime(String userId,String rankTime);
 }
 

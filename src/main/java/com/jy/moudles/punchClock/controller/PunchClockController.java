@@ -91,6 +91,25 @@ public class PunchClockController {
 		logger.info("删除PunchClock End");
 		return AsyncResponseData.getSuccess();
 	}
+	
+	/**
+	 * 获取当前目标的打卡记录
+	 * 
+	 * @param punchclock
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getPunchClockByTarget", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData getPunchClockByTarget(String userId,String rankTime) throws Exception {
+		logger.info("删除PunchClock Start");
+		
+		List<String> list = punchclockService.getPunchClockByTarget(userId,rankTime);
+
+		logger.info("删除PunchClock End");
+		return AsyncResponseData.getSuccess(list);
+	}
+	
+	
 
 	/**
 	 * 获取punchclock对象

@@ -67,37 +67,9 @@
     <update id="updatePunchRank">
         update PUNCH_RANK
         <set>
-			
-			<if test="orgCode != null and '' != orgCode">
-				org_code = #{orgCode},
-			</if>
-			<if test="userId != null and '' != userId">
-				user_id = #{userId},
-			</if>
-			<if test="rankTime != null and '' != rankTime">
-				rank_time = #{rankTime},
-			</if>
-			<if test="punchDays != null and '' != punchDays">
-				punch_days = #{punchDays},
-			</if>
-			<if test="rateProgress != null and '' != rateProgress">
-				rate_progress = #{rateProgress},
-			</if>
-			<if test="rankNum != null and '' != rankNum">
-				rank_num = #{rankNum},
-			</if>
-            <if test="createUser != null and ''!=createUser">
-                create_user = #{createUser,jdbcType=VARCHAR},
-            </if>
-            <if test="createDate != null and ''!=createDate">
-                create_date = #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateUser != null and ''!=updateUser">
-                update_user = #{updateUser,jdbcType=VARCHAR},
-            </if>
-            <if test="updateDate != null  and ''!=updateDate">
-                update_date = #{updateDate,jdbcType=TIMESTAMP},
-            </if>
+			user_id = #{userId},
+			punch_days = #{punchDays},
+			rate_progress = #{rateProgress},
         </set>
         <where>
             <choose>

@@ -1,6 +1,5 @@
 package com.jy.moudles.punchRank.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.UserUtils;
 import com.jy.moudles.punchRank.entity.PunchRank;
+import com.jy.moudles.punchRank.entity.RankVO;
 import com.jy.moudles.punchRank.service.PunchRankService;
 import com.jy.moudles.user.entity.User;
 
@@ -56,10 +56,10 @@ public class PunchRankController {
 	 */
 	@RequestMapping(value = "/updatePunchRank", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData updatePunchRank(PunchRank punchrank) throws Exception{
+	public AsyncResponseData.ResultData updatePunchRank(RankVO rankVO) throws Exception{
 		logger.info("修改PunchRank Start");
 		
-		punchrankService.updatePunchRank(punchrank);
+		punchrankService.updatePunchRank(rankVO);
 		
 		logger.info("修改PunchRank End");
 		return AsyncResponseData.getSuccess();

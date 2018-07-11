@@ -3,6 +3,8 @@ package com.jy.moudles.user.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.jy.moudles.user.entity.User;
 import com.jy.common.persistence.annotation.MyBatisDao;
 
@@ -69,6 +71,15 @@ public interface UserDao {
 	 * @param filter
 	 */
 	public List<User> queryFriends(User user);
+	
+	/**
+	 * 查询同组织用户带目标
+	 *
+	 * @param filter
+	 */
+	public List<User> queryUserWithTarget(@Param("orgCode")String orgCode,
+			@Param("rankTime")String rankTime);
+	
 	
 	
 	

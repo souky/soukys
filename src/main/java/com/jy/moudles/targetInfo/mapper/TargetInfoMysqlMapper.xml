@@ -50,6 +50,10 @@
         </trim>
     </insert>
     
+    <update id="updateStatus">
+    	update TARGET_INFO set status=3 where now() <![CDATA[>]]> end_time;
+    </update>
+    
     <update id="updateTargetInfo">
         update TARGET_INFO
         <set>
@@ -98,6 +102,15 @@
         <include refid="Base_Column_List"/>
         from `TARGET_INFO`
         WHERE id = #{id}
+    </select>
+    
+    <select id="getTargetInfoByRankTime" resultMap="BaseResultMap">
+        SELECT
+       	<include refid="Base_Column_List"/>
+        
+        from `TARGET_INFO` where user_id = #{userId}
+        ORDER BY
+			 ABS(UNIX_TIMESTAMP(#{rankTime}) - UNIX_TIMESTAMP(end_time)) LIMIT 1
     </select>
     
     <select id="getTargetNow" resultMap="BaseResultMap">

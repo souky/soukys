@@ -65,6 +65,21 @@ public interface TargetInfoDao {
 	 */
 	public TargetInfo getTargetNow(@Param("userId")String userId);
 	
+	/**
+	 * 更新目标状态
+	 *
+	 * @param ids
+	 */
+	public void updateStatus();
+	
+	/**
+	 * 根据rankTime 查询目标
+	 *
+	 * @param ids
+	 */
+	public TargetInfo getTargetInfoByRankTime(@Param("userId")String userId,
+			@Param("rankTime")String rankTime);
+	
 }
 
 

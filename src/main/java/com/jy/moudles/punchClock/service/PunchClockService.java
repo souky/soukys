@@ -66,5 +66,7 @@ public interface PunchClockService {
 	public AsyncResponseData.ResultData punchLeave(String leaveInfo,
 			HttpServletRequest request);
 	
+	public List<String> getPunchClockByTarget(String userId,String rankTime);
+	
 }
 

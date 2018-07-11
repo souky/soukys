@@ -2,6 +2,8 @@ package com.jy.moudles.punchRank.service;
 
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.moudles.punchRank.entity.PunchRank;
+import com.jy.moudles.punchRank.entity.RankVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public interface PunchRankService {
 	 *
 	 * @param PunchRank
 	 */
-	public void updatePunchRank(PunchRank PunchRank);
+	public void updatePunchRank(RankVO rankVO);
 	
 	/**
 	 * 根据ID获取PunchRank对象

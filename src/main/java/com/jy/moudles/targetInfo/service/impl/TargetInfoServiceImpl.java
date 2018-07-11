@@ -87,6 +87,16 @@ public class TargetInfoServiceImpl implements TargetInfoService {
 	public TargetInfo getTargetNow(String userId) {
 		return TargetInfoDao.getTargetNow(userId);
 	}
+
+	@Override
+	public void updateStatus() {
+		TargetInfoDao.updateStatus();
+	}
+
+	@Override
+	public TargetInfo getTargetInfoByRankTime(String userId, String rankTime) {
+		return TargetInfoDao.getTargetInfoByRankTime(userId, rankTime);
+	}
 	
 }
 

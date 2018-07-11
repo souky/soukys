@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService {
 	public List<User> queryFriends(User user) {
 		return UserDao.queryFriends(user);
 	}
+
+	@Override
+	public List<User> queryUserWithTarget(String orgCode, String rankTime) {
+		return UserDao.queryUserWithTarget(orgCode, rankTime);
+	}
 	
 }
 

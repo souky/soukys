@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -185,6 +186,27 @@ public class PunchClockServiceImpl implements PunchClockService {
 	public List<Integer> getPunchClockByMonth(String userId,int month) {
 		return PunchClockDao.getPunchClockByMonth(userId, month);
 	}
+	
+	public List<String> getPunchClockByTarget(String userId,String rankTime){
+		List<String> returnList = new ArrayList<>();
+		TargetInfo targetInfo = TargetInfoDao.getTargetInfoByRankTime(userId,rankTime);
+		if(null != targetInfo) {
+			Map<String,Object> filter = new HashMap<>();
+			filter.put("userId", targetInfo.getUserId());
+			filter.put("timeComperS", targetInfo.getStartTime());
+			filter.put("timeComperE", targetInfo.getEndTime());
+			filter.put("isLeave",0);
+			
+			List<PunchClock> list = PunchClockDao.queryPunchClocksFilter(filter);
+			if(null != list && list.size() > 0) {
+				for(PunchClock e:list) {
+					returnList.add(e.getImgBase());
+				}
+			}
+			
+		}
+		return returnList;
+	}
 
 	@Override
 	public void insertPunchClock(PunchClock PunchClock) {
@@ -198,7 +220,7 @@ public class PunchClockServiceImpl implements PunchClockService {
 			return AsyncResponseData.getSuccess().asLogicError("no login");
 		}
 		
-		String id = DatesUtil.getDateFormat("yyyyMMdd") + "_" + user.getId();
+		String id = DatesUtil.getDateFormat("yyyy-MM-dd") + "_" + user.getId();
 		
 		PunchClock punchclock = PunchClockDao.getPunchClockById(id);
 		
