@@ -155,7 +155,7 @@ body{
 	padding-bottom:10px;
 }
 .Jry_query .query_part input,select{
-	background: #e0e0e0;
+	background: #fff;
 	box-shadow: none;
 	border-image: none;
 	outline-offset:none;
@@ -228,8 +228,8 @@ body{
 	height: 40px;
 	line-height: 40px;
     color: #fff;
-    background-color: #00bcd4;
-    border-color: #00bcd4;
+    background-color: #FF5985;
+    border-color: #FF5985;
 	text-align: center;
 	cursor: pointer;
 	border-radius: 3px;
@@ -239,8 +239,8 @@ body{
 }
 
 .Jry_query .query_btn:hover{
-	background-color: #02b0c6;
-    border-color: #02b0c6;
+	background-color: #ff2d65;
+    border-color: #ff2d65;
 }
 
 .Jry_query .query_btns{
@@ -487,7 +487,7 @@ body{
 .Jry_menu .menu_level_one:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 .Jry_menu .menu_level_two .items_level_two:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 
-/*弹出框*/
+/*寮瑰嚭妗�*/
 .Jry_popup{
 	position:fixed;
 	left:0px;
@@ -522,7 +522,7 @@ body{
 	line-height:40px;
 	margin:20px auto 0 auto;
 	color:#fff;
-	background:#00bcd5;
+	background:#FF5985;
 	border-radius:3px;
 	text-align:center;
 	cursor:pointer;
@@ -569,7 +569,7 @@ body{
 .Jry_popup .Jconfim .Jconfim_btns  .Jconfim_btns_btn_cancle{background:#777;float:right;}
 
 
-/*自定义*/
+/*鑷畾涔�*/
 .Jry_popup .Jcustom{
 	width:500px;
 	margin:5% auto;
@@ -584,8 +584,8 @@ body{
 	background:#00bcd5;
 	text-align:center;
     font-size: 16px;
-    border-top-left-radius：3px;
-    border-top-right-radius：3px;
+    border-top-left-radius锛�3px;
+    border-top-right-radius锛�3px;
 }
 .Jry_popup .Jcustom .Jcustom_content{
 	padding:20px 30px;

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.auditionForm.dao.AuditionFormDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.auditionForm.entity.AuditionForm">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="really_name" property="reallyName" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+		<result column="c001" property="c001" jdbcType="VARCHAR"/>
+		<result column="c002" property="c002" jdbcType="VARCHAR"/>
+		<result column="c003" property="c003" jdbcType="VARCHAR"/>
+		<result column="c004" property="c004" jdbcType="VARCHAR"/>
+		<result column="c005" property="c005" jdbcType="VARCHAR"/>
+		<result column="c006" property="c006" jdbcType="VARCHAR"/>
+		<result column="c007" property="c007" jdbcType="VARCHAR"/>
+		<result column="c008" property="c008" jdbcType="VARCHAR"/>
+		<result column="c009" property="c009" jdbcType="VARCHAR"/>
+		<result column="c010" property="c010" jdbcType="VARCHAR"/>
+		<result column="c011" property="c011" jdbcType="VARCHAR"/>
+		<result column="c012" property="c012" jdbcType="VARCHAR"/>
+		<result column="c013" property="c013" jdbcType="VARCHAR"/>
+		<result column="c014" property="c014" jdbcType="VARCHAR"/>
+		<result column="c015" property="c015" jdbcType="VARCHAR"/>
+		<result column="c016" property="c016" jdbcType="VARCHAR"/>
+		<result column="c017" property="c017" jdbcType="VARCHAR"/>
+		<result column="c018" property="c018" jdbcType="VARCHAR"/>
+		<result column="c019" property="c019" jdbcType="VARCHAR"/>
+		<result column="c020" property="c020" jdbcType="VARCHAR"/>
+		<result column="c021" property="c021" jdbcType="VARCHAR"/>
+		<result column="c022" property="c022" jdbcType="VARCHAR"/>
+		<result column="c023" property="c023" jdbcType="VARCHAR"/>
+		<result column="c024" property="c024" jdbcType="VARCHAR"/>
+		<result column="c025" property="c025" jdbcType="VARCHAR"/>
+		<result column="c026" property="c026" jdbcType="VARCHAR"/>
+		<result column="c027" property="c027" jdbcType="VARCHAR"/>
+		<result column="c028" property="c028" jdbcType="VARCHAR"/>
+		<result column="c029" property="c029" jdbcType="VARCHAR"/>
+		<result column="c030" property="c030" jdbcType="VARCHAR"/>
+		<result column="c031" property="c031" jdbcType="VARCHAR"/>
+		<result column="c032" property="c032" jdbcType="VARCHAR"/>
+		<result column="c033" property="c033" jdbcType="VARCHAR"/>
+		<result column="c034" property="c034" jdbcType="VARCHAR"/>
+		<result column="c035" property="c035" jdbcType="VARCHAR"/>
+		<result column="c036" property="c036" jdbcType="VARCHAR"/>
+		<result column="c037" property="c037" jdbcType="VARCHAR"/>
+		<result column="c038" property="c038" jdbcType="VARCHAR"/>
+		<result column="c039" property="c039" jdbcType="VARCHAR"/>
+		<result column="c040" property="c040" jdbcType="VARCHAR"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, id, really_name, phone, id_card, c001, c002, c003, c004, c005, c006, c007, c008, c009, c010, c011, c012, c013, c014, c015, c016, c017, c018, c019, c020, c021, c022, c023, c024, c025, c026, c027, c028, c029, c030, c031, c032, c033, c034, c035, c036, c037, c038, c039, c040, create_user, create_date, update_user, update_date
+    </sql>
+    
+    <insert id="insertAuditionForm">
+        INSERT INTO AUDITION_FORM
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+			<if test="id != null">id,</if>
+			<if test="reallyName != null">really_name,</if>
+			<if test="phone != null">phone,</if>
+			<if test="idCard != null">id_card,</if>
+			<if test="c001 != null">c001,</if>
+			<if test="c002 != null">c002,</if>
+			<if test="c003 != null">c003,</if>
+			<if test="c004 != null">c004,</if>
+			<if test="c005 != null">c005,</if>
+			<if test="c006 != null">c006,</if>
+			<if test="c007 != null">c007,</if>
+			<if test="c008 != null">c008,</if>
+			<if test="c009 != null">c009,</if>
+			<if test="c010 != null">c010,</if>
+			<if test="c011 != null">c011,</if>
+			<if test="c012 != null">c012,</if>
+			<if test="c013 != null">c013,</if>
+			<if test="c014 != null">c014,</if>
+			<if test="c015 != null">c015,</if>
+			<if test="c016 != null">c016,</if>
+			<if test="c017 != null">c017,</if>
+			<if test="c018 != null">c018,</if>
+			<if test="c019 != null">c019,</if>
+			<if test="c020 != null">c020,</if>
+			<if test="c021 != null">c021,</if>
+			<if test="c022 != null">c022,</if>
+			<if test="c023 != null">c023,</if>
+			<if test="c024 != null">c024,</if>
+			<if test="c025 != null">c025,</if>
+			<if test="c026 != null">c026,</if>
+			<if test="c027 != null">c027,</if>
+			<if test="c028 != null">c028,</if>
+			<if test="c029 != null">c029,</if>
+			<if test="c030 != null">c030,</if>
+			<if test="c031 != null">c031,</if>
+			<if test="c032 != null">c032,</if>
+			<if test="c033 != null">c033,</if>
+			<if test="c034 != null">c034,</if>
+			<if test="c035 != null">c035,</if>
+			<if test="c036 != null">c036,</if>
+			<if test="c037 != null">c037,</if>
+			<if test="c038 != null">c038,</if>
+			<if test="c039 != null">c039,</if>
+			<if test="c040 != null">c040,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateDate != null">update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="id != null">#{id},</if>
+			<if test="reallyName != null">#{reallyName},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="idCard != null">#{idCard},</if>
+			<if test="c001 != null">#{c001},</if>
+			<if test="c002 != null">#{c002},</if>
+			<if test="c003 != null">#{c003},</if>
+			<if test="c004 != null">#{c004},</if>
+			<if test="c005 != null">#{c005},</if>
+			<if test="c006 != null">#{c006},</if>
+			<if test="c007 != null">#{c007},</if>
+			<if test="c008 != null">#{c008},</if>
+			<if test="c009 != null">#{c009},</if>
+			<if test="c010 != null">#{c010},</if>
+			<if test="c011 != null">#{c011},</if>
+			<if test="c012 != null">#{c012},</if>
+			<if test="c013 != null">#{c013},</if>
+			<if test="c014 != null">#{c014},</if>
+			<if test="c015 != null">#{c015},</if>
+			<if test="c016 != null">#{c016},</if>
+			<if test="c017 != null">#{c017},</if>
+			<if test="c018 != null">#{c018},</if>
+			<if test="c019 != null">#{c019},</if>
+			<if test="c020 != null">#{c020},</if>
+			<if test="c021 != null">#{c021},</if>
+			<if test="c022 != null">#{c022},</if>
+			<if test="c023 != null">#{c023},</if>
+			<if test="c024 != null">#{c024},</if>
+			<if test="c025 != null">#{c025},</if>
+			<if test="c026 != null">#{c026},</if>
+			<if test="c027 != null">#{c027},</if>
+			<if test="c028 != null">#{c028},</if>
+			<if test="c029 != null">#{c029},</if>
+			<if test="c030 != null">#{c030},</if>
+			<if test="c031 != null">#{c031},</if>
+			<if test="c032 != null">#{c032},</if>
+			<if test="c033 != null">#{c033},</if>
+			<if test="c034 != null">#{c034},</if>
+			<if test="c035 != null">#{c035},</if>
+			<if test="c036 != null">#{c036},</if>
+			<if test="c037 != null">#{c037},</if>
+			<if test="c038 != null">#{c038},</if>
+			<if test="c039 != null">#{c039},</if>
+			<if test="c040 != null">#{c040},</if>
+            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
+            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
+            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateAuditionForm">
+        update AUDITION_FORM
+        <set>
+			<if test="id != null and '' != id">
+				id = #{id},
+			</if>
+			<if test="reallyName != null and '' != reallyName">
+				really_name = #{reallyName},
+			</if>
+			<if test="phone != null and '' != phone">
+				phone = #{phone},
+			</if>
+			<if test="idCard != null and '' != idCard">
+				id_card = #{idCard},
+			</if>
+			<if test="c001 != null and '' != c001">
+				c001 = #{c001},
+			</if>
+			<if test="c002 != null and '' != c002">
+				c002 = #{c002},
+			</if>
+			<if test="c003 != null and '' != c003">
+				c003 = #{c003},
+			</if>
+			<if test="c004 != null and '' != c004">
+				c004 = #{c004},
+			</if>
+			<if test="c005 != null and '' != c005">
+				c005 = #{c005},
+			</if>
+			<if test="c006 != null and '' != c006">
+				c006 = #{c006},
+			</if>
+			<if test="c007 != null and '' != c007">
+				c007 = #{c007},
+			</if>
+			<if test="c008 != null and '' != c008">
+				c008 = #{c008},
+			</if>
+			<if test="c009 != null and '' != c009">
+				c009 = #{c009},
+			</if>
+			<if test="c010 != null and '' != c010">
+				c010 = #{c010},
+			</if>
+			<if test="c011 != null and '' != c011">
+				c011 = #{c011},
+			</if>
+			<if test="c012 != null and '' != c012">
+				c012 = #{c012},
+			</if>
+			<if test="c013 != null and '' != c013">
+				c013 = #{c013},
+			</if>
+			<if test="c014 != null and '' != c014">
+				c014 = #{c014},
+			</if>
+			<if test="c015 != null and '' != c015">
+				c015 = #{c015},
+			</if>
+			<if test="c016 != null and '' != c016">
+				c016 = #{c016},
+			</if>
+			<if test="c017 != null and '' != c017">
+				c017 = #{c017},
+			</if>
+			<if test="c018 != null and '' != c018">
+				c018 = #{c018},
+			</if>
+			<if test="c019 != null and '' != c019">
+				c019 = #{c019},
+			</if>
+			<if test="c020 != null and '' != c020">
+				c020 = #{c020},
+			</if>
+			<if test="c021 != null and '' != c021">
+				c021 = #{c021},
+			</if>
+			<if test="c022 != null and '' != c022">
+				c022 = #{c022},
+			</if>
+			<if test="c023 != null and '' != c023">
+				c023 = #{c023},
+			</if>
+			<if test="c024 != null and '' != c024">
+				c024 = #{c024},
+			</if>
+			<if test="c025 != null and '' != c025">
+				c025 = #{c025},
+			</if>
+			<if test="c026 != null and '' != c026">
+				c026 = #{c026},
+			</if>
+			<if test="c027 != null and '' != c027">
+				c027 = #{c027},
+			</if>
+			<if test="c028 != null and '' != c028">
+				c028 = #{c028},
+			</if>
+			<if test="c029 != null and '' != c029">
+				c029 = #{c029},
+			</if>
+			<if test="c030 != null and '' != c030">
+				c030 = #{c030},
+			</if>
+			<if test="c031 != null and '' != c031">
+				c031 = #{c031},
+			</if>
+			<if test="c032 != null and '' != c032">
+				c032 = #{c032},
+			</if>
+			<if test="c033 != null and '' != c033">
+				c033 = #{c033},
+			</if>
+			<if test="c034 != null and '' != c034">
+				c034 = #{c034},
+			</if>
+			<if test="c035 != null and '' != c035">
+				c035 = #{c035},
+			</if>
+			<if test="c036 != null and '' != c036">
+				c036 = #{c036},
+			</if>
+			<if test="c037 != null and '' != c037">
+				c037 = #{c037},
+			</if>
+			<if test="c038 != null and '' != c038">
+				c038 = #{c038},
+			</if>
+			<if test="c039 != null and '' != c039">
+				c039 = #{c039},
+			</if>
+			<if test="c040 != null and '' != c040">
+				c040 = #{c040},
+			</if>
+            <if test="createUser != null and ''!=createUser">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and ''!=createDate">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null and ''!=updateUser">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null  and ''!=updateDate">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getAuditionFormById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `AUDITION_FORM`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryAuditionFormsFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `AUDITION_FORM`
+        WHERE 1 = 1
+			<if test="id != null and '' != id">
+				AND id = #{id}
+			</if>
+			<if test="reallyName != null and '' != reallyName">
+				AND really_name = LIKE CONCAT('%',#{really_name},'%')
+			</if>
+			<if test="phone != null and '' != phone">
+				AND phone = LIKE CONCAT('%',#{phone},'%')
+			</if>
+			<if test="idCard != null and '' != idCard">
+				AND id_card = LIKE CONCAT('%',#{id_card},'%')
+			</if>
+    </select>
+    
+    <delete id="deleteAuditionFormById" parameterType="java.lang.String">
+        delete from `AUDITION_FORM`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteAuditionForms" parameterType="java.lang.String">
+        delete from `AUDITION_FORM`
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

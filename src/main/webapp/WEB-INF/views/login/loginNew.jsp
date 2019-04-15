@@ -6,7 +6,7 @@
     <title>登录页面</title>
     <%@ include file="/WEB-INF/views/version.jsp" %>
     <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/common/common.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/common/jry-Plug-in.css<%=version%>"/>
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/common/jry-Plug-in.css"/>
     <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/login/loginNew.css<%=version%>"/>
     
 </head>
@@ -57,9 +57,11 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="Jry_popup"></div>
 </body>
 <script  src="<%=basePath%>/static/common/js/jquery-3.1.1.js"></script>
-<script  src="<%=basePath%>/static/jy/js/common/jry-Plug-in.js<%=version%>"></script>
+<script  src="<%=basePath%>/static/jy/js/common/jry-Plug-in.js"></script>
 <script  src="<%=basePath%>/static/jy/js/login/login.js<%=version%>"></script>
 
 </html>

@@ -25,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jy.common.config.Global;
 import com.jy.common.jsonadpter.AsyncResponseData;
-import com.jy.common.utils.MD5Util;
 import com.jy.common.utils.UserUtils;
 import com.jy.common.utils.https.HttpUtils;
 import com.jy.common.utils.https.RequestPost;
@@ -50,21 +49,19 @@ public class LoginController {
 	public AsyncResponseData.ResultData login(HttpServletRequest request,
 			HttpServletResponse response,User user) {
 		
+		String username = user.getUserName();
 		String password = user.getPasswrod();
-		user.setPasswrod(MD5Util.MD5(password));
-		User users = userService.getUserByNameAndPwd(user);
-		if (null != users){
+		if("lvyadi".equals(username) && "zhenhaokan".equals(password)) {
 			LOGGER.info("用户登录成功");
-			request.getSession().setAttribute("user", users);
+			request.getSession().setAttribute("user", user);
 			return AsyncResponseData.getSuccess();
-		} else {
+		}else {
 			LOGGER.info("用户登录失败");
 			return AsyncResponseData.getSuccess().asParamError("用户名或密码错误");
 		}
 	}
 	@RequestMapping(value = "/loginNew")
-	public ModelAndView loginNew(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loginNew() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("login/loginNew");
 		return mv;

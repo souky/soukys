@@ -1,3 +1,13 @@
+
+$(function(){
+	document.onkeydown = function (event) {
+        var e = event || window.event;
+        if (e && e.keyCode == 13) { //回车键的键值为13
+        	login_in(); //调用登录按钮的登录事件
+        }
+    }; 
+})
+
 function login_in(){
 	var username = $("#username");
 	var password = $("#password");
@@ -19,7 +29,27 @@ function login_in(){
 		return;
 	}
 	
-	if(username.val() == 'lvyadi' && password.val() == 'zuipiaoliang'){
-		console.log('成功上朝');
-	}
+	var data = {userName:username.val(),passwrod:password.val()};
+	
+	$.ajax({
+		type:'POST',
+		url:$("#basePath").val() + "login/loginIn",
+		data:data,
+		dataType:"json",
+		success:function(res) {
+			var code = res.code;
+			console.log(code)
+			if (code == '10000') {
+				window.location.href = $("#basePath").val()+"auditionform/pages"
+			} else {
+				console.log(1)
+				JRYPopup.Jalert(res.message);
+				console.log(2)
+			}
+
+		},
+		error:function() {
+			JRYPopup.Jalert("网络错误");
+		}
+	});
 }
