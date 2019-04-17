@@ -1,4 +1,4 @@
-/*初始化样式*/
+/*鍒濆鍖栨牱寮�*/
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
 body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
 h1, h2, h3, h4, h5, h6{ font-size:100%; }
@@ -15,7 +15,7 @@ fieldset, img { border:0; }
 button, input, select, textarea { font-size:100%; }
 table { border-collapse:collapse; border-spacing:0; } 
 
-/*公共样式*/
+/*鍏叡鏍峰紡*/
 .clearfix, .cf{zoom:1}
 .clearfix:after, .cf:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
 
@@ -75,7 +75,7 @@ body {
 .bold{
 	font-weight: bold;
 }
-/*表格样式*/
+/*琛ㄦ牸鏍峰紡*/
 .table thead{
 	background-color: #F5F5F5;
 }
@@ -85,8 +85,8 @@ body {
 .table tbody tr td:first-child,.table thead tr th:first-child{
 	text-align: center;
 }
-/*表格样式*/
-/*checkbox样式*/
+/*琛ㄦ牸鏍峰紡*/
+/*checkbox鏍峰紡*/
 .checkboxImg{
 	width: 22px;
 	height: 22px;
@@ -104,9 +104,9 @@ body {
 .checkboxImg.checked {
 	background-position: -48px 0;
 }
-/*checkbox样式*/
+/*checkbox鏍峰紡*/
 
-/*新增公共样式  2017年6月2日10:37:23 孙嘉宁*/
+/*鏂板鍏叡鏍峰紡  2017骞�6鏈�2鏃�10:37:23 瀛欏槈瀹�*/
 .fl{float:left}
 .fr{float:right}
 .CP{cursor:pointer;}
@@ -115,3 +115,26 @@ body {
 .al{text-align:left;}
 .hide{display:none;}
 
+.title_fixed{
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	background: rgba(255,255,255,0.7);
+	color: #666;
+	font-size: 28px;
+	position:fixed;
+	left:0;top:0;
+}
+.tableMain{
+	width:90%;
+	margin:auto;
+}
+.el-table__empty-block{
+	height:100px;
+}
+.el-table, .el-table__expanded-cell{
+	background:rgba(255,255,255,0)
+}
+.el-table th, .el-table tr{
+	background:rgba(255,255,255,0)
+}

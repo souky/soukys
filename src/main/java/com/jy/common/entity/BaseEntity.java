@@ -45,6 +45,27 @@ public class BaseEntity implements Serializable {
 	 * 修改日期
 	 */
 	private Date updateDate;
+	
+	private int pageNum;
+	private int pageSize;
+	
+	
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 
 	public String getId() {
 		return id;

@@ -1,7 +1,15 @@
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-%>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>audition</title>
+	<%
+		java.util.Date currentTime = new java.util.Date();
+		String version = "?v="+currentTime.getTime();
+		String path = request.getContextPath();
+	    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+	    String listenPath = request.getScheme() + "://" + request.getServerName() + ":" + "100" + "/CollectData";
+	%>
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/common/jry-Plug-in.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.6.3/lib/theme-chalk/index.css">
+    <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/common/common.css<%=version%>"/>
+</head>

@@ -3,7 +3,6 @@
 <mapper namespace="com.jy.moudles.auditionForm.dao.AuditionFormDao">
 
 	<resultMap id="BaseResultMap" type="com.jy.moudles.auditionForm.entity.AuditionForm">
-        <id column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="really_name" property="reallyName" jdbcType="VARCHAR"/>
 		<result column="phone" property="phone" jdbcType="VARCHAR"/>
@@ -48,20 +47,19 @@
 		<result column="c038" property="c038" jdbcType="VARCHAR"/>
 		<result column="c039" property="c039" jdbcType="VARCHAR"/>
 		<result column="c040" property="c040" jdbcType="VARCHAR"/>
-		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
-        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
-        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, id, really_name, phone, id_card, c001, c002, c003, c004, c005, c006, c007, c008, c009, c010, c011, c012, c013, c014, c015, c016, c017, c018, c019, c020, c021, c022, c023, c024, c025, c026, c027, c028, c029, c030, c031, c032, c033, c034, c035, c036, c037, c038, c039, c040, create_user, create_date, update_user, update_date
+         id, really_name, phone, id_card, c001, c002, c003, c004, c005, c006, c007, c008,
+          c009, c010, c011, c012, c013, c014, c015, c016, c017, c018, c019, c020,
+           c021, c022, c023, c024, c025, c026, c027, c028, c029, c030, c031, c032,
+            c033, c034, c035, c036, c037, c038, c039, c040, create_date
     </sql>
     
     <insert id="insertAuditionForm">
         INSERT INTO AUDITION_FORM
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
 			<if test="id != null">id,</if>
 			<if test="reallyName != null">really_name,</if>
 			<if test="phone != null">phone,</if>
@@ -106,13 +104,9 @@
 			<if test="c038 != null">c038,</if>
 			<if test="c039 != null">c039,</if>
 			<if test="c040 != null">c040,</if>
-            <if test="createUser != null">create_user,</if>
             <if test="createDate != null">create_date,</if>
-            <if test="updateUser != null">update_user,</if>
-            <if test="updateDate != null">update_date,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
 			<if test="id != null">#{id},</if>
 			<if test="reallyName != null">#{reallyName},</if>
 			<if test="phone != null">#{phone},</if>
@@ -157,10 +151,7 @@
 			<if test="c038 != null">#{c038},</if>
 			<if test="c039 != null">#{c039},</if>
 			<if test="c040 != null">#{c040},</if>
-            <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
             <if test="createDate != null">#{createDate,jdbcType=TIMESTAMP},</if>
-            <if test="updateUser != null">#{updateUser,jdbcType=VARCHAR},</if>
-            <if test="updateDate != null">#{updateDate,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
     
@@ -299,17 +290,8 @@
 			<if test="c040 != null and '' != c040">
 				c040 = #{c040},
 			</if>
-            <if test="createUser != null and ''!=createUser">
-                create_user = #{createUser,jdbcType=VARCHAR},
-            </if>
             <if test="createDate != null and ''!=createDate">
                 create_date = #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateUser != null and ''!=updateUser">
-                update_user = #{updateUser,jdbcType=VARCHAR},
-            </if>
-            <if test="updateDate != null  and ''!=updateDate">
-                update_date = #{updateDate,jdbcType=TIMESTAMP},
             </if>
         </set>
         <where>
@@ -324,14 +306,14 @@
     <select id="getAuditionFormById" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from `AUDITION_FORM`
+        from audition_form
         WHERE id = #{id}
     </select>
     
     <select id="queryAuditionFormsFilter" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from `AUDITION_FORM`
+        from audition_form
         WHERE 1 = 1
 			<if test="id != null and '' != id">
 				AND id = #{id}
@@ -348,12 +330,12 @@
     </select>
     
     <delete id="deleteAuditionFormById" parameterType="java.lang.String">
-        delete from `AUDITION_FORM`
+        delete from audition_form
         where id = #{id}
     </delete>
     
     <delete id="deleteAuditionForms" parameterType="java.lang.String">
-        delete from `AUDITION_FORM`
+        delete from audition_form
         where id IN 
         <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
              #{id}

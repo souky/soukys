@@ -1,16 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>登录页面</title>
-    <%@ include file="/WEB-INF/views/version.jsp" %>
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/common/common.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/common/jry-Plug-in.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/login/loginNew.css<%=version%>"/>
-    
-</head>
+<%@ include file="/WEB-INF/views/header.jsp" %>
+<link rel="stylesheet" type="text/css" href="<%=basePath%>/static/jy/css/login/loginNew.css<%=version%>"/>
 <body id="login">
+	<div class="title_fixed ac">POWER BY SOUKY</div>
 	<input type="hidden" id="message" value="${message}">
 	<input type="hidden" id="basePath" value="<%=basePath%>">
 	<div class="mainLogin clearfix">

@@ -1,18 +1,20 @@
 package com.jy.moudles.auditionForm.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.moudles.auditionForm.entity.AuditionForm;
 import com.jy.moudles.auditionForm.service.AuditionFormService;
@@ -23,6 +25,7 @@ import com.jy.moudles.auditionForm.service.AuditionFormService;
  * 创建人：Administrator
  * 创建时间：2019-04-15
  */
+
 @Controller
 @RequestMapping(value="/auditionform")
 public class AuditionFormController {
@@ -101,12 +104,15 @@ public class AuditionFormController {
 	 */
 	@RequestMapping(value = "/queryAuditionForms", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData queryAuditionForms(AuditionForm auditionform) throws Exception{
+	public AsyncResponseData.ResultData queryAuditionForms(@RequestBody AuditionForm auditionform) throws Exception{
 		logger.info("获取AuditionForm Start");
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("reallyName", auditionform.getReallyName());
+		filter.put("phone", auditionform.getPhone());
 		
-		List<AuditionForm> auditionforms= auditionformService.queryAuditionFormsFilter(filter);
+		PageHelper.startPage(auditionform.getPageNum(), auditionform.getPageSize());
+    	PageInfo<AuditionForm> auditionforms = new PageInfo<AuditionForm>(auditionformService.queryAuditionFormsFilter(filter));
 		logger.info("获取AuditionForm End");
 		
 		return AsyncResponseData.getSuccess(auditionforms);
