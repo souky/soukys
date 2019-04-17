@@ -306,14 +306,14 @@
     <select id="getAuditionFormById" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from audition_form
+        from AUDITION_FORM
         WHERE id = #{id}
     </select>
     
     <select id="queryAuditionFormsFilter" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from audition_form
+        from AUDITION_FORM
         WHERE 1 = 1
 			<if test="id != null and '' != id">
 				AND id = #{id}
@@ -330,12 +330,12 @@
     </select>
     
     <delete id="deleteAuditionFormById" parameterType="java.lang.String">
-        delete from audition_form
+        delete from AUDITION_FORM
         where id = #{id}
     </delete>
     
     <delete id="deleteAuditionForms" parameterType="java.lang.String">
-        delete from audition_form
+        delete from AUDITION_FORM
         where id IN 
         <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
              #{id}

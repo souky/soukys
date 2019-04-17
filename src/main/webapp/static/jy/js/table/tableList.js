@@ -11,16 +11,40 @@ var tables = new Vue({
 		  phone:'',
 	  },
 	  tableData:[],
+	  page:{
+      	pageNum:1,
+      	pageSize:10,
+      	total:1
+      },
+  },
+  mounted:function(){
+	this.loadData();
   },
   methods:{
 	  loadData(){
-		  postHttp("auditionform/queryAuditionForms",this.query,res=>{
-			  console.log(res);
+		  var data = this.query;
+	      data['pageNum'] = this.page.pageNum;
+		  data['pageSize'] = this.page.pageSize;
+		  postHttp("auditionform/queryAuditionForms",data,res=>{
+			  this.tableData = res.result.list;
+			  this.page.pageNum = res.result.pageNum;
+			  this.page.total = res.result.total;
 		  })
 	  },
 	  formatDate(row,value){
 		  
-	  }
+	  },
+	  show(id){
+		  
+	  },
+	  pageSizeChange(val) {
+		  this.page.pageSize = val;
+		  this.loadData();
+	  },
+	  pageChange(val) {
+		  this.page.pageNum = val;
+		  this.loadData();
+	  },
   }
 })
 

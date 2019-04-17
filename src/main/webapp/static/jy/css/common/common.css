@@ -125,16 +125,29 @@ body {
 	position:fixed;
 	left:0;top:0;
 }
-.tableMain{
+.tables{
 	width:90%;
 	margin:auto;
 }
 .el-table__empty-block{
 	height:100px;
 }
-.el-table, .el-table__expanded-cell{
-	background:rgba(255,255,255,0)
+.el-pagination{
+	display: inline-block;
+	margin-top:10px;
 }
-.el-table th, .el-table tr{
-	background:rgba(255,255,255,0)
+.pages_so{
+	width:100%;
+	margin-top:20px;
+	display: flex;
+	justify-content:center;
+}
+.tables td.operations .cell{
+	width: 100%;
+	display: flex;
+	text-align: center;
+	justify-content:center;
+}
+.tables td.operations .cell .op_items{
+	margin:auto 3px;
 }

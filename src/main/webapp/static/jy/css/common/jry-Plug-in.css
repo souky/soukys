@@ -2,8 +2,6 @@ body{
 	margin: 0;
 }
 *{
-	box-sizing: content-box !important;
-	-webkit-box-sizing:content-box !impotant;
 }
 
 /*table*/

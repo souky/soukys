@@ -36,18 +36,28 @@
 	            <div class="titleMain ac">
 	                	奏折列表
 	            </div>
-	            <div class="tableMain">
+	            <div class="tables">
             		<el-table   :data="tableData"  style="width: 100%" >
 			            <el-table-column align="center" prop="reallyName" label="姓名" ></el-table-column>
 			            <el-table-column align="center" prop="phone" label="手机号" ></el-table-column>
-			            <el-table-column align="center" prop="createDate" label="答题时间"  :formatter="formatDate"></el-table-column>
-			            <el-table-column align="center" class-name="operations" label="操作" width="100">
+			            <el-table-column align="center" prop="createDate" label="答题时间" ></el-table-column>
+			            <el-table-column align="center" class-name="operations" label="操作" width="90">
 				            <template slot-scope="scope">
-				              <el-button type="primary" size="mini" >编辑</el-button>
+				             	<div class="op_items">
+			    					<el-button size="mini" @click="show(scope.row.id)">查看</el-button>
+			    				</div>
 				            </template>
 			            </el-table-column>
 	            	</el-table>
 	            </div>
+	            <div class="pages_so">
+	            	<el-pagination @size-change="pageSizeChange" @current-change="pageChange" :current-page.sync="page.pageNum"
+				      :page-sizes="[10, 20, 30, 40]"
+				      :page-size="page.pageSize"
+				      layout="sizes,prev, pager, next,jumper" :total="page.total">
+				    </el-pagination>
+	            </div>
+	            
         	</div>
         	
 		</div>

@@ -1,7 +1,6 @@
 package com.jy.common.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,25 +25,6 @@ public class BaseEntity implements Serializable {
 	@JsonProperty(value = "remark")
 	private String remark;
 
-	/**
-	 * 创建用户
-	 */
-	private String createUser;
-
-	/**
-	 * 修改用户
-	 */
-	private String updateUser;
-
-	/**
-	 * 创建日期
-	 */
-	private Date createDate;
-
-	/**
-	 * 修改日期
-	 */
-	private Date updateDate;
 	
 	private int pageNum;
 	private int pageSize;
@@ -89,38 +69,6 @@ public class BaseEntity implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	public String getCreateUser() {
-		return createUser;
-	}
-
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
-
-	public String getUpdateUser() {
-		return updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
 	}
 
 }

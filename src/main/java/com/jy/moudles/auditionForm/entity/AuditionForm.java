@@ -29,6 +29,9 @@ public class AuditionForm extends BaseEntity{
 	 */
 	private String idCard;
 	
+	private String createDate;
+	
+
 	/**
 	 * 
 	 */
@@ -260,6 +263,14 @@ public class AuditionForm extends BaseEntity{
 
 	public void setIdCard(String idCard) {
 		this.idCard = idCard;
+	}
+	
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 	
 	public String getC001() {
