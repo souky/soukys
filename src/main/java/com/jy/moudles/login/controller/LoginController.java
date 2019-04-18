@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -112,10 +111,6 @@ public class LoginController {
 			usernew.setUserImg(getUserImg(wxVO.getAvatarUrl(),wxVO.getOpenId()));
 			usernew.setUserName(wxVO.getNickName());
 			usernew.setUserSex(Integer.parseInt(wxVO.getGender()));
-			usernew.setCreateDate(new Date());
-			usernew.setUpdateDate(new Date());
-			usernew.setCreateUser("wx");
-			usernew.setUpdateUser("wx");
 			userService.insertUser(usernew);
 			request.getSession().setAttribute("user", usernew);
 		}else {

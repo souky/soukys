@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.userAnswer.dao.UserAnswerDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.userAnswer.entity.UserAnswer">
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="INT"/>
+		<result column="time" property="time" jdbcType="INT"/>
+		<result column="user_answer" property="userAnswer" jdbcType="VARCHAR"/>
+		
+		<result column="ablity" property="ablity" jdbcType="VARCHAR"/>
+		<result column="answer" property="answer" jdbcType="VARCHAR"/>
+		<result column="score" property="score" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, user_id, sort, time, user_answer,ablity,answer,score
+    </sql>
+    
+    <insert id="insertsUserAnswer" parameterType="java.util.List">
+        INSERT INTO JY_DEVICE_TAB
+            ( id, user_id, sort, time, user_answer)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.userId},
+            #{item.sort},
+            #{item.time},
+            #{item.userAnswer}
+            )
+        </foreach>
+    </insert>
+    
+    
+    <select id="getUserAnswerByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from USER_ANSWER u left join ANSWER a on u.sort = a.sort
+        WHERE u.user_id = #{userId}
+    </select>
+    
+    <select id="queryUserAnswersFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `USER_ANSWER`
+        WHERE 1 = 1
+			<if test="id != null and '' != id">
+				AND id = #{id}
+			</if>
+			<if test="userId != null and '' != userId">
+				AND user_id = #{userId}
+			</if>
+			<if test="sort != null and '' != sort">
+				AND sort = #{sort}
+			</if>
+			<if test="time != null and '' != time">
+				AND time = #{time}
+			</if>
+			<if test="answer != null and '' != answer">
+				AND answer = #{answer}
+			</if>
+    </select>
+    
+    <delete id="deleteUserAnswerById" parameterType="java.lang.String">
+        delete from `USER_ANSWER`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteUserAnswers" parameterType="java.lang.String">
+        delete from `USER_ANSWER`
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

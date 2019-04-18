@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.answer.dao.AnswerDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.answer.entity.Answer">
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="INTEGER"/>
+		<result column="ablity" property="ablity" jdbcType="VARCHAR"/>
+		<result column="answer" property="answer" jdbcType="VARCHAR"/>
+		<result column="score" property="score" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+         id, answer, score, ablity, sort
+    </sql>
+    
+    <insert id="insertsAnswer" parameterType="java.util.List">
+        INSERT INTO JY_DEVICE_TAB
+            ( id, answer, score, ablity, sort)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.answer},
+            #{item.score},
+            #{item.ablity},
+            #{item.sort}
+            )
+        </foreach>
+    </insert>
+    
+    <select id="queryAnswersFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from ANSWER
+        WHERE 1 = 1 order by sort
+    </select>
+    
+    <delete id="deletAll" parameterType="java.lang.String">
+        delete from ANSWER
+    </delete>
+</mapper>
