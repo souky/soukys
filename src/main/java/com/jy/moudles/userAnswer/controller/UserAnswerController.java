@@ -130,7 +130,6 @@ public class UserAnswerController {
 	public AsyncResponseData.ResultData getUserAnswerById(String userId) throws Exception{
 		logger.info("获取UserAnswer Start");
 		
-		
 		List<UserAnswer> useranswers = useranswerService.getUserAnswerByUserId(userId);
 		
 		logger.info("获取UserAnswer End");

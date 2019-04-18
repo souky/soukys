@@ -60,9 +60,21 @@
 	            
         	</div>
         	
+        	<el-dialog title="查看成绩" :visible.sync="dialogVisible" width="80%" >
+  				<div class="answer-body">
+  					<div id="randar"></div>
+  					<div class="table_right"></div>
+  				</div>
+  				
+				<span slot="footer" class="dialog-footer">
+				  <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+				</span>
+			</el-dialog>
+			
 		</div>
 	</div>
 </body>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
 <script  src="<%=basePath%>/static/jy/js/table/tableList.js<%=version%>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.1/echarts.min.js"></script>
 </html>

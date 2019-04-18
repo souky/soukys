@@ -16,6 +16,7 @@ var tables = new Vue({
       	pageSize:10,
       	total:1
       },
+      dialogVisible:false,
   },
   mounted:function(){
 	this.loadData();
@@ -35,7 +36,51 @@ var tables = new Vue({
 		  
 	  },
 	  show(id){
-		  
+		  this.dialogVisible = true;
+		  console.log(document.getElementById('randar'))
+		  var myChart = echarts.init(document.getElementById('randar'));
+		  option = {
+			title: {
+			     x: 'center',
+			    text: '多雷达图'
+			},
+			tooltip: {
+			    trigger: 'axis'
+			},
+			radar: [
+			    {
+			        indicator: [
+			            {text: '品牌', max: 100},
+			            {text: '内容', max: 100},
+			            {text: '可用性', max: 100},
+			            {text: '功能', max: 100}
+			        ],
+			        center: ['25%','40%'],
+			        radius: 80
+			    }
+			],
+			series: [
+			    {
+			        type: 'radar',
+			         tooltip: {
+			            trigger: 'item'
+			        },
+			        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+			        data: [
+			            {
+			                value: [60,73,85,40],
+			                name: '某软件'
+			                }
+			            ]
+			        }
+			    ]
+		  };
+		  myChart.setOption(option);
+		  return;
+		  postHttp("useranswer/queryUserAnswers",id,res=>{
+				console.log(res);
+				this.dialogVisible = true;
+		  })
 	  },
 	  pageSizeChange(val) {
 		  this.page.pageSize = val;

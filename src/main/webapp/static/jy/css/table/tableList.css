@@ -79,6 +79,20 @@ body{
 	font-size: 16px;
 }
 
+.answer-body{
+	width:90%;
+	margin:auto;
+	display:flex;
+}
+.answer-body #randar{
+	width:300px;
+	height:400px;
+}
+.answer-body .table_right{
+	width:calc(90%-300px);
+	margin-left:10%
+}
+
 #autoCode .formData .fomatInput:focus, textarea:focus, keygen:focus, select:focus {
     outline-offset: 0px;
     border-bottom-color:#ca2450
