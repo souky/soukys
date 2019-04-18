@@ -61,9 +61,17 @@
         	</div>
         	
         	<el-dialog title="查看成绩" :visible.sync="dialogVisible" width="80%" >
-  				<div class="answer-body">
+  				<div class="answer-body" v-loading="loading">
   					<div id="randar"></div>
-  					<div class="table_right"></div>
+  					<div class="table_right">
+  						<el-table   :data="tableData"  style="width: 100%" >
+			            <el-table-column align="center" prop="sort" label="题号" ></el-table-column>
+			            <el-table-column align="center" prop="answer" label="标准答案" ></el-table-column>
+			            <el-table-column align="center" prop="userAnswer" label="这货的答案" ></el-table-column>
+			            <el-table-column align="center" prop="time" label="答题时间" ></el-table-column>
+			            <el-table-column align="center" prop="ablity" label="能力属性" ></el-table-column>
+	            	</el-table>
+  					</div>
   				</div>
   				
 				<span slot="footer" class="dialog-footer">

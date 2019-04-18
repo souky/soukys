@@ -15,7 +15,7 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, user_id, sort, time, user_answer,ablity,answer,score
+        u.id, user_id, u.sort, time, user_answer,ablity,answer,score
     </sql>
     
     <insert id="insertsUserAnswer" parameterType="java.util.List">

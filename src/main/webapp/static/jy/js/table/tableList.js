@@ -17,6 +17,7 @@ var tables = new Vue({
       	total:1
       },
       dialogVisible:false,
+      loading:true,
   },
   mounted:function(){
 	this.loadData();
@@ -36,13 +37,21 @@ var tables = new Vue({
 		  
 	  },
 	  show(id){
+		  this.loading = true;
 		  this.dialogVisible = true;
-		  console.log(document.getElementById('randar'))
-		  var myChart = echarts.init(document.getElementById('randar'));
+		  postHttp("useranswer/getUserAnswerByUserId",id,res=>{
+				console.log(res);
+				this.randars(res);
+				
+		  })
+	  },
+	  randars(res){
+		  var docs = document.getElementById('randar');
+		  var myChart = echarts.init(docs);
 		  option = {
 			title: {
 			     x: 'center',
-			    text: '多雷达图'
+			    text: '能力值'
 			},
 			tooltip: {
 			    trigger: 'axis'
@@ -50,13 +59,14 @@ var tables = new Vue({
 			radar: [
 			    {
 			        indicator: [
-			            {text: '品牌', max: 100},
-			            {text: '内容', max: 100},
-			            {text: '可用性', max: 100},
-			            {text: '功能', max: 100}
+			            {text: '能力值1', max: 100},
+			            {text: '能力值2', max: 100},
+			            {text: '能力值3', max: 100},
+			            {text: '能力值4', max: 100},
+			            {text: '能力值5', max: 100}
 			        ],
-			        center: ['25%','40%'],
-			        radius: 80
+			        center: ['50%','40%'],
+			        radius: 50
 			    }
 			],
 			series: [
@@ -68,7 +78,7 @@ var tables = new Vue({
 			        itemStyle: {normal: {areaStyle: {type: 'default'}}},
 			        data: [
 			            {
-			                value: [60,73,85,40],
+			                value: [60,73,85,40,99],
 			                name: '某软件'
 			                }
 			            ]
@@ -76,11 +86,7 @@ var tables = new Vue({
 			    ]
 		  };
 		  myChart.setOption(option);
-		  return;
-		  postHttp("useranswer/queryUserAnswers",id,res=>{
-				console.log(res);
-				this.dialogVisible = true;
-		  })
+		  this.loading = false;
 	  },
 	  pageSizeChange(val) {
 		  this.page.pageSize = val;

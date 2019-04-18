@@ -80,7 +80,7 @@ body{
 }
 
 .answer-body{
-	width:90%;
+	width:95%;
 	margin:auto;
 	display:flex;
 }
@@ -89,8 +89,8 @@ body{
 	height:400px;
 }
 .answer-body .table_right{
-	width:calc(90%-300px);
-	margin-left:10%
+	width:calc(100% - 320px);
+	margin-left:20px;
 }
 
 #autoCode .formData .fomatInput:focus, textarea:focus, keygen:focus, select:focus {

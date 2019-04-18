@@ -319,13 +319,13 @@
 				AND id = #{id}
 			</if>
 			<if test="reallyName != null and '' != reallyName">
-				AND really_name = LIKE CONCAT('%',#{really_name},'%')
+				AND really_name  LIKE CONCAT('%',#{really_name},'%')
 			</if>
 			<if test="phone != null and '' != phone">
-				AND phone = LIKE CONCAT('%',#{phone},'%')
+				AND phone  LIKE CONCAT('%',#{phone},'%')
 			</if>
 			<if test="idCard != null and '' != idCard">
-				AND id_card = LIKE CONCAT('%',#{id_card},'%')
+				AND id_card LIKE CONCAT('%',#{id_card},'%')
 			</if>
     </select>
     
