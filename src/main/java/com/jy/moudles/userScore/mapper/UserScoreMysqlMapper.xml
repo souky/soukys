@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.userScore.dao.UserScoreDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.userScore.entity.UserScore">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+		<result column="user_score" property="userScore" jdbcType="INTEGER"/>
+		<result column="user_time" property="userTime" jdbcType="INTEGER"/>
+		<result column="user_flag" property="userFlag" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, id, user_name, user_phone, user_score, user_time, user_flag
+    </sql>
+    
+    <insert id="insertUserScore">
+        INSERT INTO USER_SCORE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+			<if test="id != null">id,</if>
+			<if test="userName != null">user_name,</if>
+			<if test="userPhone != null">user_phone,</if>
+			<if test="userScore != null">user_score,</if>
+			<if test="userTime != null">user_time,</if>
+			<if test="userFlag != null">user_flag,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="id != null">#{id},</if>
+			<if test="userName != null">#{userName},</if>
+			<if test="userPhone != null">#{userPhone},</if>
+			<if test="userScore != null">#{userScore},</if>
+			<if test="userTime != null">#{userTime},</if>
+			<if test="userFlag != null">#{userFlag},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateUserScore">
+        update USER_SCORE
+        <set>
+			<if test="id != null and '' != id">
+				id = #{id},
+			</if>
+			<if test="userName != null and '' != userName">
+				user_name = #{userName},
+			</if>
+			<if test="userPhone != null and '' != userPhone">
+				user_phone = #{userPhone},
+			</if>
+			<if test="userScore != null and '' != userScore">
+				user_score = #{userScore},
+			</if>
+			<if test="userTime != null and '' != userTime">
+				user_time = #{userTime},
+			</if>
+			<if test="userFlag != null and '' != userFlag">
+				user_flag = #{userFlag},
+			</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getUserScoreById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `USER_SCORE`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryUserScoresFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `USER_SCORE`
+        WHERE 1 = 1
+			<if test="id != null and '' != id">
+				AND id = #{id}
+			</if>
+			<if test="userName != null and '' != userName">
+				AND user_name = #{userName}
+			</if>
+			<if test="userPhone != null and '' != userPhone">
+				AND user_phone = #{userPhone}
+			</if>
+			<if test="userScore != null and '' != userScore">
+				AND user_score = #{userScore}
+			</if>
+			<if test="userTime != null and '' != userTime">
+				AND user_time = #{userTime}
+			</if>
+			<if test="userFlag != null and '' != userFlag">
+				AND user_flag = #{userFlag}
+			</if>
+    </select>
+    
+    <delete id="deleteUserScoreById" parameterType="java.lang.String">
+        delete from `USER_SCORE`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteUserScores" parameterType="java.lang.String">
+        delete from `USER_SCORE`
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

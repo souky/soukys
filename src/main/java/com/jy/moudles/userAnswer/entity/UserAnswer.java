@@ -19,6 +19,8 @@ public class UserAnswer extends BaseEntity{
 	 */
 	private String userId;
 	
+	private String questionId;
+	
 	/**
 	 * 
 	 */
@@ -101,6 +103,14 @@ public class UserAnswer extends BaseEntity{
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	public String getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(String questionId) {
+		this.questionId = questionId;
 	}
 	
 	

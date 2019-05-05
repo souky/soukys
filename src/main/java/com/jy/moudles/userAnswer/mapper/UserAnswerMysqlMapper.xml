@@ -5,6 +5,7 @@
 	<resultMap id="BaseResultMap" type="com.jy.moudles.userAnswer.entity.UserAnswer">
 		<result column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="user_id" property="userId" jdbcType="VARCHAR"/>
+		<result column="question_id" property="questionId" jdbcType="VARCHAR"/>
 		<result column="sort" property="sort" jdbcType="INTEGER"/>
 		<result column="time" property="time" jdbcType="INTEGER"/>
 		<result column="user_answer" property="userAnswer" jdbcType="VARCHAR"/>
@@ -15,17 +16,18 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        u.id, user_id, u.sort, time, user_answer,ablity,answer,score
+        u.id, user_id,question_id, u.sort, time, user_answer,ablity,answer,score
     </sql>
     
     <insert id="insertsUserAnswer" parameterType="java.util.List">
         INSERT INTO JY_DEVICE_TAB
-            ( id, user_id, sort, time, user_answer)
+            ( id, user_id,question_id, sort, time, user_answer)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (
             #{item.id},
             #{item.userId},
+            #{item.questionId},
             #{item.sort},
             #{item.time},
             #{item.userAnswer}

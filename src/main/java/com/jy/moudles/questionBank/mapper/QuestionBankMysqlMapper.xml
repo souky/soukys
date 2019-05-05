@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.moudles.questionBank.dao.QuestionBankDao">
+
+	<resultMap id="BaseResultMap" type="com.jy.moudles.questionBank.entity.QuestionBank">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="question" property="question" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="INTEGER"/>
+		<result column="score" property="score" jdbcType="INTEGER"/>
+		<result column="ablity" property="ablity" jdbcType="VARCHAR"/>
+		<result column="answer" property="answer" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+       id, question, sort, score, ablity, answer
+    </sql>
+    
+    <insert id="insertQuestionBank">
+        INSERT INTO QUESTION_BANK
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="question != null">question,</if>
+			<if test="sort != null">sort,</if>
+			<if test="score != null">score,</if>
+			<if test="ablity != null">ablity,</if>
+			<if test="answer != null">answer,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="question != null">#{question},</if>
+			<if test="sort != null">#{sort},</if>
+			<if test="score != null">#{score},</if>
+			<if test="ablity != null">#{ablity},</if>
+			<if test="answer != null">#{answer},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateQuestionBank">
+        update QUESTION_BANK
+        <set>
+			<if test="question != null and '' != question">
+				question = #{question},
+			</if>
+			<if test="sort != null and '' != sort">
+				sort = #{sort},
+			</if>
+			<if test="score != null and '' != score">
+				score = #{score},
+			</if>
+			<if test="ablity != null and '' != ablity">
+				ablity = #{ablity},
+			</if>
+			<if test="answer != null and '' != answer">
+				answer = #{answer},
+			</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+            </choose>
+        </where>
+    </update>
+    
+    <select id="getQuestionBankById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `QUESTION_BANK`
+        WHERE id = #{id}
+    </select>
+    
+    <select id="queryQuestionBanksFilter" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from `QUESTION_BANK`
+        WHERE 1 = 1
+			<if test="id != null and '' != id">
+				AND id = #{id}
+			</if>
+			<if test="question != null and '' != question">
+				AND question = #{question}
+			</if>
+			<if test="sort != null and '' != sort">
+				AND sort = #{sort}
+			</if>
+			<if test="score != null and '' != score">
+				AND score = #{score}
+			</if>
+			<if test="ablity != null and '' != ablity">
+				AND ablity = #{ablity}
+			</if>
+			<if test="answer != null and '' != answer">
+				AND answer = #{answer}
+			</if>
+    </select>
+    
+    <delete id="deleteQuestionBankById" parameterType="java.lang.String">
+        delete from `QUESTION_BANK`
+        where id = #{id}
+    </delete>
+    
+    <delete id="deleteQuestionBanks" parameterType="java.lang.String">
+        delete from `QUESTION_BANK`
+        where id IN 
+        <foreach collection="list" item="id" index="index" separator="," open="(" close=")">
+             #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
