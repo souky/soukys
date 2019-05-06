@@ -36,6 +36,15 @@ public interface UserScoreDao {
 	public UserScore getUserScoreById(String id);
 	
 	/**
+	 * 根据ID获取userScore对象
+	 *
+	 * @param id
+	 */
+	public UserScore getUserScoreByUserPhone(String userPhone);
+	
+	
+	
+	/**
 	 * 根据过滤条件获取userScore列表对象
 	 *
 	 * @param filter

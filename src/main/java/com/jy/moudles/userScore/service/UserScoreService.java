@@ -1,5 +1,6 @@
 package com.jy.moudles.userScore.service;
 
+import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.moudles.userScore.entity.UserScore;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,13 @@ public interface UserScoreService {
 	 * @param id
 	 */
 	public UserScore getUserScoreById(String id);
+	
+	/**
+	 * 根据ID获取userScore对象
+	 *
+	 * @param id
+	 */
+	public AsyncResponseData.ResultData getUserScoreByUserPhone(UserScore userScore);
 	
 	/**
 	 * 根据过滤条件获取userScore列表对象

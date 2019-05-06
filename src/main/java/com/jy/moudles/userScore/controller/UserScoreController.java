@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +25,7 @@ import com.jy.moudles.userScore.service.UserScoreService;
  * 创建时间：2019-05-05
  */
 @Controller
+@CrossOrigin
 @RequestMapping(value="/userscore")
 public class UserScoreController {
 	
@@ -95,11 +98,12 @@ public class UserScoreController {
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
 		
-		List<UserScore> userscores= userscoreService.queryUserScoresFilter(filter);
+		List<UserScore> userscores = userscoreService.queryUserScoresFilter(filter);
 		logger.info("获取UserScore End");
 		
 		return AsyncResponseData.getSuccess(userscores);
 	}
+	
 	
 	/**
 	 * 根据ID获取userscore对象
@@ -121,4 +125,16 @@ public class UserScoreController {
 		return AsyncResponseData.getSuccess(userscore);
 	}
 	
+	/**
+	 * 获取userscore对象
+	 * 
+	 * @param userscore
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getUserScoreByUserPhone", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData getUserScoreByUserPhone(@RequestBody UserScore userscore) throws Exception{
+		return userscoreService.getUserScoreByUserPhone(userscore);
+	}
+
 }

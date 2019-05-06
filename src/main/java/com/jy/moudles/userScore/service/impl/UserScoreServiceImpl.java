@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.UUIDUtil;
 import com.jy.moudles.userScore.dao.UserScoreDao;
 import com.jy.moudles.userScore.entity.UserScore;
@@ -51,6 +52,23 @@ public class UserScoreServiceImpl implements UserScoreService {
 	@Override
 	public void deleteUserScores(List<String> ids){
 		userScoreDao.deleteUserScores(ids);
+	}
+
+	@Override
+	public AsyncResponseData.ResultData getUserScoreByUserPhone(UserScore userScore) {
+		
+		UserScore userscore = userScoreDao.getUserScoreByUserPhone(userScore.getUserPhone());
+		if(null == userscore) {
+			userScore.setId(UUIDUtil.get32UUID());
+			userScore.setUserFlag(0);
+			userScore.setUserScore(0);
+			userScore.setUserTime(0);
+			insertUserScore(userScore);
+		}else {
+			userScore = userscore;
+		}
+		
+		return AsyncResponseData.getSuccess(userScore);
 	}
 	
 }
