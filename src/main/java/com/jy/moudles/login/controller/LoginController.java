@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +36,7 @@ import com.jy.moudles.user.service.UserService;
 
 
 @Controller
+@CrossOrigin
 @RequestMapping(value="/login")
 public class LoginController {
 	
@@ -46,10 +49,11 @@ public class LoginController {
 	@RequestMapping(value = "/loginIn",  method = RequestMethod.POST)
 	@ResponseBody
 	public AsyncResponseData.ResultData login(HttpServletRequest request,
-			HttpServletResponse response,User user) {
+			HttpServletResponse response,@RequestBody User user) {
 		
 		String username = user.getUserName();
 		String password = user.getPasswrod();
+		System.out.println(username+"---"+password);
 		if("lvyadi".equals(username) && "zhenhaokan".equals(password)) {
 			LOGGER.info("用户登录成功");
 			request.getSession().setAttribute("user", user);

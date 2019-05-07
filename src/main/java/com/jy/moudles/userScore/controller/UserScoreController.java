@@ -1,7 +1,6 @@
 package com.jy.moudles.userScore.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.moudles.userScore.entity.UserScore;
 import com.jy.moudles.userScore.service.UserScoreService;
@@ -93,12 +94,14 @@ public class UserScoreController {
 	 */
 	@RequestMapping(value = "/queryUserScores", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData queryUserScores(UserScore userscore) throws Exception{
+	public AsyncResponseData.ResultData queryUserScores(@RequestBody UserScore userscore) throws Exception{
 		logger.info("获取UserScore Start");
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
 		
-		List<UserScore> userscores = userscoreService.queryUserScoresFilter(filter);
+		PageHelper.startPage(userscore.getPageNum(), userscore.getPageSize());
+    	PageInfo<UserScore> userscores = new PageInfo<UserScore>(userscoreService.queryUserScoresFilter(filter));
+		
 		logger.info("获取UserScore End");
 		
 		return AsyncResponseData.getSuccess(userscores);
