@@ -52,6 +52,20 @@ public class UserAnswerController {
 	}
 	
 	/**
+	 * 查询useranswer对象 附带题目
+	 * 
+	 * @param useranswer
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getUserAnswerByUserIdWithData", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData getUserAnswerByUserIdWithData(@RequestBody UserAnswer useranswer) throws Exception{
+		return useranswerService.getUserAnswerByUserIdWithData(useranswer.getId());
+	}
+	
+	
+	
+	/**
 	 * 新增useranswer对象
 	 * 
 	 * @param useranswer

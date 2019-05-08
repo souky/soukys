@@ -1,8 +1,10 @@
 package com.jy.moudles.questionBank.service;
 
-import com.jy.moudles.questionBank.entity.QuestionBank;
 import java.util.List;
-import java.util.Map;
+
+import com.jy.common.jsonadpter.AsyncResponseData;
+import com.jy.moudles.questionBank.VO.QuestionBankVO;
+import com.jy.moudles.questionBank.entity.QuestionBank;
 
 /** 
  * questionBank业务接口
@@ -11,12 +13,6 @@ import java.util.Map;
  */
 public interface QuestionBankService {
 
-	/**
-	 * 新增questionBank对象
-	 *
-	 * @param questionBank
-	 */
-	public void insertQuestionBank(QuestionBank questionBank);
 	
 	/**
 	 * 更新questionBank对象
@@ -37,7 +33,14 @@ public interface QuestionBankService {
 	 *
 	 * @param filter
 	 */
-	public List<QuestionBank> queryQuestionBanksFilter(Map<String, Object> filter);
+	public AsyncResponseData.ResultData queryQuestionBanksFilter(QuestionBank questionbank);
+	
+	/**
+	 * 新增questionBank列表对象
+	 *
+	 * @param filter
+	 */
+	public AsyncResponseData.ResultData saveOrUpdate(QuestionBankVO questionbankVO);
 	
 	/**
 	 * 根据Id删除questionBank列表对象

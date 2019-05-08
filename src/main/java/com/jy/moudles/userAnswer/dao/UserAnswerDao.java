@@ -3,8 +3,11 @@ package com.jy.moudles.userAnswer.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.jy.moudles.userAnswer.entity.UserAnswer;
+import org.apache.ibatis.annotations.Param;
+
 import com.jy.common.persistence.annotation.MyBatisDao;
+import com.jy.moudles.userAnswer.VO.UserAnswerVO;
+import com.jy.moudles.userAnswer.entity.UserAnswer;
 
 /** 
  * UserAnswer数据接口
@@ -62,6 +65,14 @@ public interface UserAnswerDao {
 	 * @param ids
 	 */
 	public void deleteUserAnswers(List<String> ids);
+	
+	/**
+	 * 根据ID获取UserAnswerVO对象 附带题目
+	 *
+	 * @param id
+	 */
+	public List<UserAnswerVO> getUserAnswerByUserIdWithData(@Param("userId")String userId);
+	
 	
 }
 

@@ -1,8 +1,10 @@
 package com.jy.moudles.userAnswer.service;
 
-import com.jy.moudles.userAnswer.entity.UserAnswer;
 import java.util.List;
 import java.util.Map;
+
+import com.jy.common.jsonadpter.AsyncResponseData;
+import com.jy.moudles.userAnswer.entity.UserAnswer;
 
 /** 
  * UserAnswer业务接口
@@ -59,6 +61,13 @@ public interface UserAnswerService {
 	 * @param ids
 	 */
 	public void deleteUserAnswers(List<String> ids);
+	
+	/**
+	 * 根据ID获取UserAnswerVO对象 附带题目
+	 *
+	 * @param id
+	 */
+	public AsyncResponseData.ResultData getUserAnswerByUserIdWithData(String userId);
 	
 }
 

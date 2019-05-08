@@ -3,6 +3,7 @@ package com.jy.moudles.userScore.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,12 @@ public class UserScoreController {
 		logger.info("获取UserScore Start");
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
+		if(StringUtils.isNotBlank(userscore.getUserName())) {
+			filter.put("userName", userscore.getUserName());
+		}
+		if(StringUtils.isNotBlank(userscore.getUserPhone())) {
+			filter.put("userPhone", userscore.getUserPhone());
+		}
 		
 		PageHelper.startPage(userscore.getPageNum(), userscore.getPageSize());
     	PageInfo<UserScore> userscores = new PageInfo<UserScore>(userscoreService.queryUserScoresFilter(filter));

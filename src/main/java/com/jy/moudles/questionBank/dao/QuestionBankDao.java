@@ -1,10 +1,10 @@
 package com.jy.moudles.questionBank.dao;
 
 import java.util.List;
-import java.util.Map;
 
-import com.jy.moudles.questionBank.entity.QuestionBank;
 import com.jy.common.persistence.annotation.MyBatisDao;
+import com.jy.moudles.questionBank.VO.QuestionBankVO;
+import com.jy.moudles.questionBank.entity.QuestionBank;
 
 /** 
  * questionBank数据接口
@@ -19,7 +19,7 @@ public interface QuestionBankDao {
 	 *
 	 * @param questionBank
 	 */
-	public void insertQuestionBank(QuestionBank questionBank);
+	public void insertQuestionBank(QuestionBankVO questionBankVO);
 	
 	/**
 	 * 更新questionBank对象
@@ -40,7 +40,7 @@ public interface QuestionBankDao {
 	 *
 	 * @param filter
 	 */
-	public List<QuestionBank> queryQuestionBanksFilter(Map<String, Object> filter);
+	public List<QuestionBankVO> queryQuestionBanksFilter(QuestionBank questionbank);
 	
 	/**
 	 * 根据Id删除questionBank列表对象

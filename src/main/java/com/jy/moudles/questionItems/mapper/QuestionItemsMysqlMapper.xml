@@ -4,7 +4,6 @@
 
 	<resultMap id="BaseResultMap" type="com.jy.moudles.questionItems.entity.QuestionItems">
         <id column="id" property="id" jdbcType="VARCHAR"/>
-		<result column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="question_id" property="questionId" jdbcType="VARCHAR"/>
 		<result column="sort" property="sort" jdbcType="INTEGER"/>
 		<result column="answer_item" property="answerItem" jdbcType="VARCHAR"/>
@@ -12,21 +11,19 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, id, question_id, sort, answer_item, answer_key
+        id, question_id, sort, answer_item, answer_key
     </sql>
     
     <insert id="insertQuestionItems">
         INSERT INTO QUESTION_ITEMS
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-			<if test="id != null">id,</if>
 			<if test="questionId != null">question_id,</if>
 			<if test="sort != null">sort,</if>
 			<if test="answerItem != null">answer_item,</if>
 			<if test="answerKey != null">answer_key,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id,jdbcType=VARCHAR},</if>
 			<if test="id != null">#{id},</if>
 			<if test="questionId != null">#{questionId},</if>
 			<if test="sort != null">#{sort},</if>
@@ -38,9 +35,6 @@
     <update id="updateQuestionItems">
         update QUESTION_ITEMS
         <set>
-			<if test="id != null and '' != id">
-				id = #{id},
-			</if>
 			<if test="questionId != null and '' != questionId">
 				question_id = #{questionId},
 			</if>
@@ -75,9 +69,6 @@
         <include refid="Base_Column_List"/>
         from `QUESTION_ITEMS`
         WHERE 1 = 1
-			<if test="id != null and '' != id">
-				AND id = #{id}
-			</if>
 			<if test="questionId != null and '' != questionId">
 				AND question_id = #{questionId}
 			</if>

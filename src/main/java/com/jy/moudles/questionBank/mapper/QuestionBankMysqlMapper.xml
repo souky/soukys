@@ -4,7 +4,6 @@
 
 	<resultMap id="BaseResultMap" type="com.jy.moudles.questionBank.entity.QuestionBank">
         <id column="id" property="id" jdbcType="VARCHAR"/>
-		<result column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="question" property="question" jdbcType="VARCHAR"/>
 		<result column="sort" property="sort" jdbcType="INTEGER"/>
 		<result column="score" property="score" jdbcType="INTEGER"/>
@@ -12,8 +11,26 @@
 		<result column="answer" property="answer" jdbcType="VARCHAR"/>
     </resultMap>
     
+    <resultMap id="BaseResultMapVO" type="com.jy.moudles.questionBank.VO.QuestionBankVO">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="question" property="question" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="INTEGER"/>
+		<result column="score" property="score" jdbcType="INTEGER"/>
+		<result column="ablity" property="ablity" jdbcType="VARCHAR"/>
+		<result column="answer" property="answer" jdbcType="VARCHAR"/>
+		<collection property="questionItems" javaType="list" ofType="com.jy.moudles.questionItems.entity.QuestionItems">
+			<result column="id_q" property="id" jdbcType="VARCHAR"/>
+			<result column="answer_item" property="answerItem" jdbcType="VARCHAR"/>
+			<result column="answer_key" property="answerKey" jdbcType="VARCHAR"/>
+	    </collection>
+    </resultMap>
+    
     <sql id="Base_Column_List">
        id, question, sort, score, ablity, answer
+    </sql>
+    
+    <sql id="Base_Column_List_items">
+       b.id, b.question, b.sort, b.score, b.ablity, b.answer,answer_item,answer_key,q.id as id_q
     </sql>
     
     <insert id="insertQuestionBank">
@@ -71,29 +88,19 @@
         WHERE id = #{id}
     </select>
     
-    <select id="queryQuestionBanksFilter" resultMap="BaseResultMap">
+    <select id="queryQuestionBanksFilter" resultMap="BaseResultMapVO">
         SELECT
-        <include refid="Base_Column_List"/>
-        from `QUESTION_BANK`
+        <include refid="Base_Column_List_items"/>
+        from `QUESTION_BANK` b 
+        left join QUESTION_ITEMS q on b.id = q.question_id 
         WHERE 1 = 1
-			<if test="id != null and '' != id">
-				AND id = #{id}
-			</if>
 			<if test="question != null and '' != question">
-				AND question = #{question}
-			</if>
-			<if test="sort != null and '' != sort">
-				AND sort = #{sort}
-			</if>
-			<if test="score != null and '' != score">
-				AND score = #{score}
+				AND question LIKE CONCAT('%',#{question},'%')
 			</if>
 			<if test="ablity != null and '' != ablity">
 				AND ablity = #{ablity}
 			</if>
-			<if test="answer != null and '' != answer">
-				AND answer = #{answer}
-			</if>
+		order by b.sort,q.sort
     </select>
     
     <delete id="deleteQuestionBankById" parameterType="java.lang.String">

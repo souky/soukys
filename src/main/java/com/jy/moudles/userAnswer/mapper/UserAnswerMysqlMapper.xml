@@ -10,14 +10,36 @@
 		<result column="time" property="time" jdbcType="INTEGER"/>
 		<result column="user_answer" property="userAnswer" jdbcType="VARCHAR"/>
 		
-		<result column="ablity" property="ablity" jdbcType="VARCHAR"/>
-		<result column="answer" property="answer" jdbcType="VARCHAR"/>
-		<result column="score" property="score" jdbcType="INTEGER"/>
+		<association property="questionBankVO" javaType="com.jy.moudles.questionBank.VO.QuestionBankVO">
+            <result column="question" property="question" jdbcType="VARCHAR"/>
+			<result column="score" property="score" jdbcType="INTEGER"/>
+			<result column="ablity" property="ablity" jdbcType="VARCHAR"/>
+			<result column="answer" property="answer" jdbcType="VARCHAR"/>
+			<collection property="questionItems" javaType="list" ofType="com.jy.moudles.questionItems.entity.QuestionItems">
+				<result column="answer_item" property="answerItem" jdbcType="VARCHAR"/>
+				<result column="answer_key" property="answerKey" jdbcType="VARCHAR"/>
+		    </collection>
+        </association>
     </resultMap>
     
     <sql id="Base_Column_List">
-        u.id, user_id,question_id, u.sort, time, user_answer,ablity,answer,score
+        u.id, user_id,question_id, u.sort, time, user_answer
     </sql>
+    <sql id="Base_Column_List_data">
+        u.id, user_id,question_id, u.sort, time, user_answer,
+        question, score, ablity, answer,
+        answer_item,answer_key
+    </sql>
+    
+    <select id="getUserAnswerByUserIdWithData" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from USER_ANSWER u 
+        left join QUESTION_BANK b on b.id = u.question_id
+        left join QUESTION_ITEMS q on b.id = q.question_id
+        WHERE u.user_id = #{userId}
+        order by u.sort
+    </select>
     
     <insert id="insertsUserAnswer" parameterType="java.util.List">
         INSERT INTO JY_DEVICE_TAB
@@ -39,9 +61,11 @@
     <select id="getUserAnswerByUserId" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        from USER_ANSWER u left join ANSWER a on u.sort = a.sort
+        from USER_ANSWER u 
         WHERE u.user_id = #{userId}
     </select>
+    
+    
     
     <select id="queryUserAnswersFilter" resultMap="BaseResultMap">
         SELECT

@@ -1,18 +1,17 @@
 package com.jy.moudles.questionBank.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jy.common.jsonadpter.AsyncResponseData;
+import com.jy.moudles.questionBank.VO.QuestionBankVO;
 import com.jy.moudles.questionBank.entity.QuestionBank;
 import com.jy.moudles.questionBank.service.QuestionBankService;
 
@@ -23,6 +22,7 @@ import com.jy.moudles.questionBank.service.QuestionBankService;
  * 创建时间：2019-05-05
  */
 @Controller
+@CrossOrigin
 @RequestMapping(value="/questionbank")
 public class QuestionBankController {
 	
@@ -32,38 +32,18 @@ public class QuestionBankController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionBankController.class);
 	
 	/**
-	 * 新增questionbank对象
+	 * 新增或更新questionbank对象
 	 * 
 	 * @param questionbank
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/saveQuestionBank", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData saveQuestionBank(QuestionBank questionbank) throws Exception{
+	public AsyncResponseData.ResultData saveOrUpdate(@RequestBody QuestionBankVO questionBankVO) throws Exception{
 		logger.info("新增QuestionBank Start");
-		
-		questionbankService.insertQuestionBank(questionbank);
-		
-		logger.info("新增QuestionBank End");
-		return AsyncResponseData.getSuccess();
+		return questionbankService.saveOrUpdate(questionBankVO);
 	}
 	
-	/**
-	 * 修改questionbank对象
-	 * 
-	 * @param questionbank
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/updateQuestionBank", method = RequestMethod.POST)
-	@ResponseBody
-	public AsyncResponseData.ResultData updateQuestionBank(QuestionBank questionbank) throws Exception{
-		logger.info("修改QuestionBank Start");
-		
-		questionbankService.updateQuestionBank(questionbank);
-		
-		logger.info("修改QuestionBank End");
-		return AsyncResponseData.getSuccess();
-	}
 	
 	/**
 	 * 删除questionbank对象
@@ -90,15 +70,10 @@ public class QuestionBankController {
 	 */
 	@RequestMapping(value = "/queryQuestionBanks", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData queryQuestionBanks(QuestionBank questionbank) throws Exception{
+	public AsyncResponseData.ResultData queryQuestionBanks(@RequestBody QuestionBank questionbank) throws Exception{
 		logger.info("获取QuestionBank Start");
 		
-		Map<String, Object> filter = new HashMap<String, Object>();
-		
-		List<QuestionBank> questionbanks= questionbankService.queryQuestionBanksFilter(filter);
-		logger.info("获取QuestionBank End");
-		
-		return AsyncResponseData.getSuccess(questionbanks);
+		return questionbankService.queryQuestionBanksFilter(questionbank);
 	}
 	
 	/**

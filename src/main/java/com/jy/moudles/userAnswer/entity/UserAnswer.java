@@ -36,9 +36,6 @@ public class UserAnswer extends BaseEntity{
 	 */
 	private String userAnswer;
 	
-	private String ablity;
-	private String answer;
-	private int score;
 	
 	
 	public String getId() {
@@ -81,29 +78,6 @@ public class UserAnswer extends BaseEntity{
 		this.userAnswer = userAnswer;
 	}
 
-	public String getAblity() {
-		return ablity;
-	}
-
-	public void setAblity(String ablity) {
-		this.ablity = ablity;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-	}
 
 	public String getQuestionId() {
 		return questionId;
