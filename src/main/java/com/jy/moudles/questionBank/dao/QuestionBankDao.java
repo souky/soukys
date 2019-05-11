@@ -43,6 +43,13 @@ public interface QuestionBankDao {
 	public List<QuestionBankVO> queryQuestionBanksFilter(QuestionBank questionbank);
 	
 	/**
+	 * 获取questionBank全部列表对象
+	 *
+	 * @param filter
+	 */
+	public List<QuestionBankVO> getAllQuestion();
+	
+	/**
 	 * 根据Id删除questionBank列表对象
 	 *
 	 * @param id

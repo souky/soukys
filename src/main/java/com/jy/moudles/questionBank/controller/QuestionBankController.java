@@ -44,6 +44,19 @@ public class QuestionBankController {
 		return questionbankService.saveOrUpdate(questionBankVO);
 	}
 	
+	/**
+	 * questionbank all back
+	 * 
+	 * @param questionbank
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getAllQuestion", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData getAllQuestion() throws Exception{
+		logger.info("新增QuestionBank Start");
+		return questionbankService.getAllQuestion();
+	}
+	
 	
 	/**
 	 * 删除questionbank对象

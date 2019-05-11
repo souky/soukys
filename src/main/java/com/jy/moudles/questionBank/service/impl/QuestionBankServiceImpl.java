@@ -87,6 +87,12 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 		List<QuestionBankVO> list  = questionBankDao.queryQuestionBanksFilter(questionbank);
 		return AsyncResponseData.getSuccess(list);
 	}
+
+	@Override
+	public ResultData getAllQuestion() {
+		List<QuestionBankVO> list  = questionBankDao.getAllQuestion();
+		return AsyncResponseData.getSuccess(list);
+	}
 	
 }
 

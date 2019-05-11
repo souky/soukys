@@ -43,6 +43,13 @@ public interface QuestionBankService {
 	public AsyncResponseData.ResultData saveOrUpdate(QuestionBankVO questionbankVO);
 	
 	/**
+	 * 获取questionBank全部列表对象
+	 *
+	 * @param filter
+	 */
+	public AsyncResponseData.ResultData getAllQuestion();
+	
+	/**
 	 * 根据Id删除questionBank列表对象
 	 *
 	 * @param id

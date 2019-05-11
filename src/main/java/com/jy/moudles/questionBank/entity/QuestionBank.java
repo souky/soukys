@@ -29,6 +29,10 @@ public class QuestionBank extends BaseEntity{
 	 */
 	private int score;
 	
+	private int type;
+	
+	private String imgUrl;
+	
 	/**
 	 * 
 	 */
@@ -40,6 +44,24 @@ public class QuestionBank extends BaseEntity{
 	private String answer;
 	
 	
+	
+	
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 	public String getId() {
 		return id;
 	}
