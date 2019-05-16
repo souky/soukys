@@ -50,6 +50,22 @@ public class UserAnswerController {
 		logger.info("新增UserAnswer End");
 		return AsyncResponseData.getSuccess();
 	}
+	/**
+	 * 新增useranswer对象
+	 * 
+	 * @param useranswer
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/saveUserAnswers", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData saveUserAnswers(@RequestBody List<UserAnswer> useranswer) throws Exception{
+		logger.info("新增UserAnswer Start");
+		
+		useranswerService.insertsUserAnswer(useranswer);
+		
+		logger.info("新增UserAnswer End");
+		return AsyncResponseData.getSuccess();
+	}
 	
 	/**
 	 * 查询useranswer对象 附带题目
@@ -60,7 +76,7 @@ public class UserAnswerController {
 	@RequestMapping(value = "/getUserAnswerByUserIdWithData", method = RequestMethod.POST)
 	@ResponseBody
 	public AsyncResponseData.ResultData getUserAnswerByUserIdWithData(@RequestBody UserAnswer useranswer) throws Exception{
-		return useranswerService.getUserAnswerByUserIdWithData(useranswer.getId());
+		return useranswerService.getUserAnswerByUserIdWithData(useranswer.getUserId());
 	}
 	
 	

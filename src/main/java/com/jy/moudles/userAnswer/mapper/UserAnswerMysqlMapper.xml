@@ -42,7 +42,7 @@
     </select>
     
     <insert id="insertsUserAnswer" parameterType="java.util.List">
-        INSERT INTO JY_DEVICE_TAB
+        INSERT INTO USER_ANSWER
             ( id, user_id,question_id, sort, time, user_answer)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">

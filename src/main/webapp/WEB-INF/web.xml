@@ -6,7 +6,7 @@
     <display-name>com.jy</display-name>
 
     <welcome-file-list>
-        <welcome-file>/loginHtml</welcome-file>
+        <welcome-file>/WEB-INF/index.html</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>contextConfigLocation</param-name>

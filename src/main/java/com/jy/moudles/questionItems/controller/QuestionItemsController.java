@@ -48,6 +48,17 @@ public class QuestionItemsController {
 		return AsyncResponseData.getSuccess();
 	}
 	
+//	@RequestMapping(value = "/test", method = RequestMethod.GET)
+//	@ResponseBody
+//	public AsyncResponseData.ResultData test() throws Exception{
+//		logger.info("新增QuestionItems Start");
+//		
+//		questionitemsService.test();
+//		
+//		logger.info("新增QuestionItems End");
+//		return AsyncResponseData.getSuccess();
+//	}
+	
 	/**
 	 * 修改questionitems对象
 	 * 

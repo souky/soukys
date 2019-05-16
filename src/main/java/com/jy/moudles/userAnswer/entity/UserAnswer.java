@@ -1,6 +1,7 @@
 package com.jy.moudles.userAnswer.entity;
 
 import com.jy.common.entity.BaseEntity;
+import com.jy.moudles.questionBank.VO.QuestionBankVO;
 /**
 *
 */
@@ -36,8 +37,18 @@ public class UserAnswer extends BaseEntity{
 	 */
 	private String userAnswer;
 	
+	private QuestionBankVO questionBankVO;
 	
 	
+	
+	public QuestionBankVO getQuestionBankVO() {
+		return questionBankVO;
+	}
+
+	public void setQuestionBankVO(QuestionBankVO questionBankVO) {
+		this.questionBankVO = questionBankVO;
+	}
+
 	public String getId() {
 		return id;
 	}

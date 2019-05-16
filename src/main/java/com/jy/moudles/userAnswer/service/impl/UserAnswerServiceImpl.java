@@ -1,7 +1,6 @@
 package com.jy.moudles.userAnswer.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +11,12 @@ import org.springframework.stereotype.Service;
 import com.jy.common.jsonadpter.AsyncResponseData;
 import com.jy.common.utils.UUIDUtil;
 import com.jy.moudles.questionBank.VO.QuestionBankVO;
-import com.jy.moudles.userAnswer.VO.AblityVO;
 import com.jy.moudles.userAnswer.VO.UserAnswerVO;
 import com.jy.moudles.userAnswer.dao.UserAnswerDao;
 import com.jy.moudles.userAnswer.entity.UserAnswer;
 import com.jy.moudles.userAnswer.service.UserAnswerService;
+import com.jy.moudles.userScore.dao.UserScoreDao;
+import com.jy.moudles.userScore.entity.UserScore;
 
 /** 
  * UserAnswer业务实现类
@@ -28,6 +28,8 @@ public class UserAnswerServiceImpl implements UserAnswerService {
 
 	@Autowired
 	private UserAnswerDao UserAnswerDao;
+	@Autowired
+	private UserScoreDao userScoreDao;
 	
 	@Override
 	public void insertUserAnswer(UserAnswer UserAnswer){
@@ -58,10 +60,21 @@ public class UserAnswerServiceImpl implements UserAnswerService {
 
 	@Override
 	public void insertsUserAnswer(List<UserAnswer> UserAnswers) {
+		String userId = "";
+		int times = 0;
 		for(UserAnswer e :UserAnswers) {
 			e.setId(UUIDUtil.get32UUID());
+			userId = e.getUserId();
+			times += e.getTime();
 		}
 		UserAnswerDao.insertsUserAnswer(UserAnswers);
+		
+		UserScore userScore = new UserScore();
+		userScore.setUserFlag(1);
+		userScore.setId(userId);
+		userScore.setUserTime(times);
+		userScore.setUserDate(new Date());
+		userScoreDao.updateUserScore(userScore);
 	}
 
 	@Override
@@ -75,57 +88,57 @@ public class UserAnswerServiceImpl implements UserAnswerService {
 	public AsyncResponseData.ResultData getUserAnswerByUserIdWithData(String userId) {
 		
 		List<UserAnswerVO> list = UserAnswerDao.getUserAnswerByUserIdWithData(userId);
-		// ablity map
-		Map<String,AblityMap> map_ablity = new HashMap<>();
-		
-		// ablity list
-		List<AblityVO> listAblity = new ArrayList<>();
-		
-		// ablity value
-		List<Integer> ablityValue = new ArrayList<>();
-		
-		// 处理能力值
-		if(null != list && list.size() > 0) {
-			for(UserAnswerVO u : list) {
-				
-				QuestionBankVO questionBankVO = u.getQuestionBankVO();
-				
-				String ablity = questionBankVO.getAblity();
-				AblityMap ablityMap = map_ablity.get(ablity);
-				
-				if(null == ablityMap) {
-					ablityMap = new AblityMap(questionBankVO,u);
-					map_ablity.put(ablity, ablityMap);
-				}else {
-					ablityMap.setTotal(ablityMap.getTotal() + 1);
-					if(questionBankVO.getAnswer().equals(u.getUserAnswer())) {
-						ablityMap.setRight(ablityMap.getRight() + 1);
-					}
-					map_ablity.put(ablity, ablityMap);
-				}
-				
-			}
-			
-			// 处理map
-			for(Map.Entry<String, AblityMap> e : map_ablity.entrySet()) {
-				AblityVO ablityVO = new AblityVO();
-				ablityVO.setText(e.getKey());
-				ablityVO.setMax(100);
-				listAblity.add(ablityVO);
-				AblityMap abmap = e.getValue();
-				BigDecimal right = new BigDecimal(abmap.getRight());
-				BigDecimal total = new BigDecimal(abmap.getTotal());
-				BigDecimal value = right.divide(total,2,BigDecimal.ROUND_HALF_UP);
-				value = value.multiply(new BigDecimal(100));
-				ablityValue.add(value.intValue());
-			}
-		}
+//		// ablity map
+//		Map<String,AblityMap> map_ablity = new HashMap<>();
+//		
+//		// ablity list
+//		List<AblityVO> listAblity = new ArrayList<>();
+//		
+//		// ablity value
+//		List<Integer> ablityValue = new ArrayList<>();
+//		
+//		// 处理能力值
+//		if(null != list && list.size() > 0) {
+//			for(UserAnswerVO u : list) {
+//				
+//				QuestionBankVO questionBankVO = u.getQuestionBankVO();
+//				
+//				String ablity = questionBankVO.getAblity();
+//				AblityMap ablityMap = map_ablity.get(ablity);
+//				
+//				if(null == ablityMap) {
+//					ablityMap = new AblityMap(questionBankVO,u);
+//					map_ablity.put(ablity, ablityMap);
+//				}else {
+//					ablityMap.setTotal(ablityMap.getTotal() + 1);
+//					if(questionBankVO.getAnswer().equals(u.getUserAnswer())) {
+//						ablityMap.setRight(ablityMap.getRight() + 1);
+//					}
+//					map_ablity.put(ablity, ablityMap);
+//				}
+//				
+//			}
+//			
+//			// 处理map
+//			for(Map.Entry<String, AblityMap> e : map_ablity.entrySet()) {
+//				AblityVO ablityVO = new AblityVO();
+//				ablityVO.setText(e.getKey());
+//				ablityVO.setMax(100);
+//				listAblity.add(ablityVO);
+//				AblityMap abmap = e.getValue();
+//				BigDecimal right = new BigDecimal(abmap.getRight());
+//				BigDecimal total = new BigDecimal(abmap.getTotal());
+//				BigDecimal value = right.divide(total,2,BigDecimal.ROUND_HALF_UP);
+//				value = value.multiply(new BigDecimal(100));
+//				ablityValue.add(value.intValue());
+//			}
+//		}
 		
 		Map<String,Object> resultMap = new HashMap<>();
 		
 		resultMap.put("list", list);
-		resultMap.put("listAblity", listAblity);
-		resultMap.put("ablityValue", ablityValue);
+//		resultMap.put("listAblity", listAblity);
+//		resultMap.put("ablityValue", ablityValue);
 		
 		return AsyncResponseData.getSuccess(resultMap);
 	}

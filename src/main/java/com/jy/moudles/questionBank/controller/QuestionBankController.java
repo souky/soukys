@@ -89,6 +89,7 @@ public class QuestionBankController {
 		return questionbankService.queryQuestionBanksFilter(questionbank);
 	}
 	
+	
 	/**
 	 * 根据ID获取questionbank对象
 	 * 

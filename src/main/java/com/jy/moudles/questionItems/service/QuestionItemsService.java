@@ -1,8 +1,9 @@
 package com.jy.moudles.questionItems.service;
 
-import com.jy.moudles.questionItems.entity.QuestionItems;
 import java.util.List;
 import java.util.Map;
+
+import com.jy.moudles.questionItems.entity.QuestionItems;
 
 /** 
  * questionItems业务接口
@@ -52,6 +53,8 @@ public interface QuestionItemsService {
 	 * @param ids
 	 */
 	public void deleteQuestionItemss(List<String> ids);
+	
+	public void test();
 	
 }
 

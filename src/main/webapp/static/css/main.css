@@ -1,0 +1,134 @@
+/* gloab css*/
+a{text-decoration: none;}
+html{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+body{
+	margin: 0px;
+	font-size: 20px;
+	height: 100%;
+}
+.el-message{
+	top: 6em;
+	height: 6em;
+	font-size: 1em!important;
+}
+.el-message__content{
+	font-size:2em;
+}
+.el-message .el-icon-error{
+	font-size:2em;
+}
+
+
+.ac{
+	text-align: center;
+}
+.title_fixed{
+	width: 100%;
+	height: 60px;
+	line-height: 60px;
+	background: rgba(255,255,255,0.7);
+	color: #666;
+	font-size: 28px;
+	position:fixed;
+	left:0;top:0;
+}
+
+
+/* tables*/
+.tables{
+	width:90%;
+	margin:auto;
+	position: relative;
+	text-align: center;
+}
+.tables td.operations .cell{
+	width: 100%;
+	display: flex;
+	text-align: center;
+}
+.tables td.operations .cell .op_items{
+	margin:auto 3px;
+}
+.tables .deleteRows{
+	position: absolute;
+	width:100px;
+	left:0px;
+	top:-32px;
+}
+.formData .el-button{
+	width: 100%;
+}
+
+.moblie-body{
+  max-width:1000px;
+  height:100%;
+  font-size:20px;
+	position:relative;
+}
+.moblie-body .background{
+  max-width:1000px;
+  height:100%;
+  position:absolute;
+  left:0px;
+  top:0px;
+  z-index:-1;
+}
+.moblie-body .main{
+  width:90%;
+  height:90%;
+  background:#fff;
+  position:absolute;
+  left:5%;
+  top:5%;
+  box-sizing: border-box;
+  margin: auto;
+  padding: 10em 0 13em 0;
+  border-radius:0.5em;
+}
+
+
+/*滚动条*/
+::-webkit-scrollbar{width: 10px;position: absolute;right: 0px;top: 0px;z-index: 9999;}
+::-webkit-scrollbar-track{background-color:#E0E0E0;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius:5px;}
+::-webkit-scrollbar-thumb{background-color:#868686;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius:5px;}
+
+.pages_so{
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+}
+.el-pagination{
+	display: inline-block;
+	margin-top:10px;
+}
+.el-select{
+	width:100%;
+}
+/*element 元素修改*/
+/* .el-menu-item.is-active{
+	color:#fff!important;
+	background: #e33b3b!important;
+}
+.menuIcon{
+	font-size:12px!important;
+}
+.el-button{
+	width: 100%;
+}
+.el-select{
+	width:100%;
+}
+.el-pagination{
+	display: inline-block;
+	margin-top:10px;
+}
+.el-message-box .el-button{
+	width:auto!important;
+}
+.el-notification{
+	z-index:99999!important;
+} */

@@ -1,5 +1,7 @@
 package com.jy.moudles.userScore.entity;
 
+import java.util.Date;
+
 import com.jy.common.entity.BaseEntity;
 /**
 *
@@ -24,6 +26,8 @@ public class UserScore extends BaseEntity{
 	 */
 	private String userPhone;
 	
+	private int userAge;
+	
 	/**
 	 * 
 	 */
@@ -34,12 +38,23 @@ public class UserScore extends BaseEntity{
 	 */
 	private int userTime;
 	
+	private Date userDate;
+	
 	/**
 	 * 
 	 */
 	private int userFlag;
 	
 	
+	
+	public Date getUserDate() {
+		return userDate;
+	}
+
+	public void setUserDate(Date userDate) {
+		this.userDate = userDate;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -87,6 +102,20 @@ public class UserScore extends BaseEntity{
 	public void setUserFlag(int userFlag) {
 		this.userFlag = userFlag;
 	}
+
+	public int getUserAge() {
+		return userAge;
+	}
+
+	public void setUserAge(int userAge) {
+		this.userAge = userAge;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 	
 }
 

@@ -1,6 +1,8 @@
 package com.jy.moudles.userScore.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -123,7 +125,7 @@ public class UserScoreController {
 	 */
 	@RequestMapping(value = "/getUserScoreById", method = RequestMethod.POST)
 	@ResponseBody
-	public AsyncResponseData.ResultData getUserScoreById(String id) throws Exception{
+	public AsyncResponseData.ResultData getUserScoreById(@RequestBody String id) throws Exception{
 		logger.info("获取UserScore Start");
 		
 		UserScore userscore = new UserScore();
@@ -133,6 +135,50 @@ public class UserScoreController {
 		logger.info("获取UserScore End");
 		
 		return AsyncResponseData.getSuccess(userscore);
+	}
+	
+	/**
+	 * 根据ID获取userscore对象
+	 * 
+	 * @param userscore
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getUserScoreByIdCount", method = RequestMethod.POST)
+	@ResponseBody
+	public AsyncResponseData.ResultData getUserScoreByIdCount(@RequestBody String id) throws Exception{
+		logger.info("获取UserScore Start");
+		
+		UserScore userscore = userscoreService.getUserScoreById(id);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("times", userscore.getUserTime());
+		
+		Map<String,Object> queryMap = new HashMap<>();
+		queryMap.put("userFlag", 1);
+		List<UserScore> list = userscoreService.queryUserScoresFilter(queryMap);
+		
+		String beyoned = "100%";
+		
+		if(null != list && list.size() > 0) {
+			
+			BigDecimal right = new BigDecimal(0);
+			for(UserScore e:list) {
+				if(userscore.getUserTime() <= e.getUserTime()) {
+					right = right.add(new BigDecimal(1));
+				}
+			}
+			
+			BigDecimal total = new BigDecimal(list.size());
+			BigDecimal value = right.divide(total,2,BigDecimal.ROUND_HALF_UP);
+			value = value.multiply(new BigDecimal(100));
+			beyoned = value.intValue()+"%";
+		}
+		
+		map.put("beyoned", beyoned);
+		
+		logger.info("获取UserScore End");
+		
+		return AsyncResponseData.getSuccess(map);
 	}
 	
 	/**
