@@ -960,8 +960,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$axios = __WEBPACK_IMPORT
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$timeF = __webpack_require__(1);
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$timeF.locale('zh-cn');
 
-var baseUrl = "http://localhost:8088/";
-//var baseUrl = "http://audition.soukys.com/"
+//var baseUrl = "http://localhost:8088/"
+var baseUrl = "http://audition.soukys.com/";
 /*
  * 封装ajax
  * data : ajax传入后台data数据
