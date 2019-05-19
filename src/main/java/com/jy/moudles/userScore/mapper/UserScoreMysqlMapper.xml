@@ -96,7 +96,7 @@
 			AND user_name  LIKE CONCAT('%',#{userName},'%')
 		</if>
 		<if test="userPhone != null and '' != userPhone">
-			AND userPhone  LIKE CONCAT('%',#{userPhone},'%')
+			AND user_phone  LIKE CONCAT('%',#{userPhone},'%')
 		</if>
 		<if test="userFlag != null and '' != userFlag">
 			AND user_flag = #{userFlag}
