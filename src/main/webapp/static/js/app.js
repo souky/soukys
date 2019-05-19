@@ -280,7 +280,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.loading = false;
 			});
 		},
-		nextQuestion() {
+		nextQuestion(id) {
+			this.questionId = id;
 			var len = this.questionList.length;
 			if (!this.done) {
 				var obj = new Object();
@@ -290,6 +291,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				obj.questionId = this.$unbind(this.questionId);
 				obj.userAnswer = this.$unbind(this.chioce_);
 				this.answerList.push(obj);
+				console.log(obj);
 			}
 			if (len == this.sort) {
 				// 答题结束
@@ -434,7 +436,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.$message({ message: '请填写正确手机号', type: 'error', center: true });
 				return;
 			}
-			this.$confim_jy('	为了便于您接收通知,请确保以上信息真实准确', '', data => {
+			this.$confim_jy('	为了便于您接收面试通知,请确保以上信息真实准确', '', data => {
 				this.$postHttpForMb("userscore/getUserScoreByUserPhone", { userName: this.userName, userPhone: this.userPhone, userAge: this.userAge }, res => {
 					var flag = res.result.userFlag;
 					if (flag == '0') {
@@ -821,7 +823,8 @@ var echarts = __webpack_require__(485);
       },
       dialogVisible: false,
       loading: true,
-      tableData_info: []
+      tableData_info: [],
+      myChart: {}
     };
   },
   mounted: function () {
@@ -856,19 +859,19 @@ var echarts = __webpack_require__(485);
       this.dialogVisible = true;
       this.$postHttp("useranswer/getUserAnswerByUserIdWithData", { userId: id }, res => {
         this.tableData_info = res.result.list;
-        // if(res.result.listAblity.length != 0){
-        //   setTimeout(data=>{
-        //     this.randars(res);
-        //   },100);
-        // }else{
-        //   this.loading = false;
-        // }
-        this.loading = false;
+        if (res.result.listAblity.length != 0) {
+          setTimeout(data => {
+            this.randars(res);
+          }, 100);
+        } else {
+          this.myChart.clear();
+          this.loading = false;
+        }
       });
     },
     randars(res) {
       var docs = document.getElementById('randar');
-      var myChart = echarts.init(docs);
+      this.myChart = echarts.init(docs);
       var listAblity = res.result.listAblity;
       var ablityValue = res.result.ablityValue;
       var option = {
@@ -881,7 +884,7 @@ var echarts = __webpack_require__(485);
         },
         radar: [{
           indicator: listAblity,
-          center: ['50%', '40%'],
+          center: ['50%', '50%'],
           radius: 50
         }],
         series: [{
@@ -896,7 +899,7 @@ var echarts = __webpack_require__(485);
           }]
         }]
       };
-      myChart.setOption(option);
+      this.myChart.setOption(option);
       this.loading = false;
     },
     pageSizeChange(val) {
@@ -960,8 +963,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$axios = __WEBPACK_IMPORT
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$timeF = __webpack_require__(1);
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$timeF.locale('zh-cn');
 
-//var baseUrl = "http://localhost:8088/"
-var baseUrl = "http://audition.soukys.com/";
+var baseUrl = "http://localhost:8088/";
+//var baseUrl = "http://audition.soukys.com/"
 /*
  * 封装ajax
  * data : ajax传入后台data数据
@@ -1776,6 +1779,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "main"
   }, [_c('div', {
+    attrs: {
+      "id": "randar"
+    }
+  }), _vm._v(" "), _c('div', {
     staticClass: "table_right"
   }, [_c('el-table', {
     staticStyle: {
@@ -1783,7 +1790,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     attrs: {
       "data": _vm.tableData_info,
-      "height": "600"
+      "height": "400"
     }
   }, [_c('el-table-column', {
     attrs: {
@@ -1794,7 +1801,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
       "align": "center",
-      "prop": "answer",
+      "prop": "questionBankVO.answer",
       "label": "标准答案"
     }
   }), _vm._v(" "), _c('el-table-column', {
@@ -1812,7 +1819,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
       "align": "center",
-      "prop": "ablity",
+      "prop": "questionBankVO.ablity",
       "label": "能力属性"
     }
   })], 1)], 1), _vm._v(" "), _c('div', {
@@ -1894,7 +1901,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })], 1) : _vm._e(), _vm._v(" "), _c('div', {
       staticClass: "answerBtn",
       on: {
-        "click": _vm.nextQuestion
+        "click": function($event) {
+          return _vm.nextQuestion(e.id)
+        }
       }
     }, [_vm._v("\n\t\t\t\t\t下 一 题\n\t\t\t\t")])], 2)
   }), _vm._v(" "), _c('div', {

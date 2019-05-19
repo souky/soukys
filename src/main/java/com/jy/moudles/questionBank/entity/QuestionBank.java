@@ -28,7 +28,7 @@ public class QuestionBank extends BaseEntity{
 	 * 
 	 */
 	private int score;
-	
+	// 1 选择  2 填空  3 自我测评
 	private int type;
 	
 	private String imgUrl;
@@ -43,9 +43,23 @@ public class QuestionBank extends BaseEntity{
 	 */
 	private String answer;
 	
+	private int revers;
 	
 	
 	
+	
+	public int getRevers() {
+		return revers;
+	}
+
+	public void setRevers(int revers) {
+		this.revers = revers;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public int getType() {
 		return type;
 	}

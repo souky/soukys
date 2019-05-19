@@ -11,6 +11,7 @@
 		<result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
 		<result column="ablity" property="ablity" jdbcType="VARCHAR"/>
 		<result column="answer" property="answer" jdbcType="VARCHAR"/>
+		<result column="revers" property="revers" jdbcType="INTEGER"/>
     </resultMap>
     
     <resultMap id="BaseResultMapVO" type="com.jy.moudles.questionBank.VO.QuestionBankVO">
@@ -22,6 +23,7 @@
 		<result column="type" property="type" jdbcType="INTEGER"/>
 		<result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
 		<result column="answer" property="answer" jdbcType="VARCHAR"/>
+		<result column="revers" property="revers" jdbcType="INTEGER"/>
 		<collection property="questionItems" javaType="list" ofType="com.jy.moudles.questionItems.entity.QuestionItems">
 			<result column="id_q" property="id" jdbcType="VARCHAR"/>
 			<result column="answer_item" property="answerItem" jdbcType="VARCHAR"/>
@@ -34,7 +36,7 @@
     </sql>
     
     <sql id="Base_Column_List_items">
-       b.id, b.question, b.sort,b.type,b.img_url, b.score, b.ablity, b.answer,answer_item,answer_key,q.id as id_q
+       b.id, b.question, b.sort,b.type,b.img_url, b.score, b.ablity, b.answer,revers,answer_item,answer_key,q.id as id_q
     </sql>
     
     <sql id="Base_Column_List_items_no_answer">
