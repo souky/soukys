@@ -101,6 +101,7 @@
 		<if test="userFlag != null and '' != userFlag">
 			AND user_flag = #{userFlag}
 		</if>
+		order by user_date desc
     </select>
     
     <delete id="deleteUserScoreById" parameterType="java.lang.String">

@@ -114,11 +114,45 @@ public class UserAnswerServiceImpl implements UserAnswerService {
 		selfMap_rever.put("D",2);
 		selfMap_rever.put("E",1);
 		
+		int total = 0;
+		int score = 0;
+		
 		// 处理能力值
 		if(null != list && list.size() > 0) {
 			for(UserAnswerVO u : list) {
 				
 				QuestionBankVO questionBankVO = u.getQuestionBankVO();
+				
+				// 总分统计
+				total += questionBankVO.getScore();
+				
+				// 分数统计
+				if(questionBankVO.getType() == 1) {
+					if(questionBankVO.getAnswer().equals(u.getUserAnswer())) {
+						score += questionBankVO.getScore();
+						u.setScore(questionBankVO.getScore());
+					}
+				}
+				
+				if(questionBankVO.getType() == 2) {
+					if(!u.getUserAnswer().equals("")) {
+						score += questionBankVO.getScore();
+						u.setScore(questionBankVO.getScore());
+					}
+				}
+				
+				if(questionBankVO.getType() == 3 && StringUtils.isNotBlank(u.getUserAnswer())) {
+					Integer i = 0;
+					if(questionBankVO.getRevers() == 1) {
+						i = selfMap_rever.get(u.getUserAnswer());
+					}else {
+						i = selfMaps.get(u.getUserAnswer());
+					}
+					if(null != i) {
+						score += i;
+						u.setScore(i);
+					}
+				}
 				
 				String[] ablity = questionBankVO.getAblity().split(",");
 				
@@ -138,7 +172,7 @@ public class UserAnswerServiceImpl implements UserAnswerService {
 					}
 					
 					if(questionBankVO.getType() == 2) {
-						if(!questionBankVO.getAnswer().equals("")) {
+						if(!u.getUserAnswer().equals("")) {
 							ablityMap.addValue(questionBankVO.getScore());
 						}
 					}
@@ -175,6 +209,8 @@ public class UserAnswerServiceImpl implements UserAnswerService {
 		resultMap.put("list", list);
 		resultMap.put("listAblity", listAblity);
 		resultMap.put("ablityValue", ablityValue);
+		resultMap.put("total", total);
+		resultMap.put("score", score);
 		
 		return AsyncResponseData.getSuccess(resultMap);
 	}

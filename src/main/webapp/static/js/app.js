@@ -806,6 +806,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var echarts = __webpack_require__(485);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -824,7 +833,11 @@ var echarts = __webpack_require__(485);
       dialogVisible: false,
       loading: true,
       tableData_info: [],
-      myChart: {}
+      myChart: {},
+
+      score: 0,
+      total: 0,
+      name: ''
     };
   },
   mounted: function () {
@@ -854,11 +867,14 @@ var echarts = __webpack_require__(485);
         return '否';
       }
     },
-    show(id) {
+    show(id, name) {
       this.loading = true;
       this.dialogVisible = true;
+      this.name = name;
       this.$postHttp("useranswer/getUserAnswerByUserIdWithData", { userId: id }, res => {
         this.tableData_info = res.result.list;
+        this.score = res.result.score;
+        this.total = res.result.total;
         if (res.result.listAblity.length != 0) {
           setTimeout(data => {
             this.randars(res);
@@ -904,6 +920,7 @@ var echarts = __webpack_require__(485);
     },
     pageSizeChange(val) {
       this.page.pageSize = val;
+      this.page.pageNum = 1;
       this.loadData();
     },
     pageChange(val) {
@@ -963,8 +980,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$axios = __WEBPACK_IMPORT
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$timeF = __webpack_require__(1);
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].prototype.$timeF.locale('zh-cn');
 
-var baseUrl = "http://localhost:8088/";
-//var baseUrl = "http://audition.soukys.com/"
+//var baseUrl = "http://localhost:8088/"
+var baseUrl = "http://audition.soukys.com/";
 /*
  * 封装ajax
  * data : ajax传入后台data数据
@@ -1731,7 +1748,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     scopedSlots: _vm._u([{
       key: "default",
       fn: function(scope) {
-        return [_c('div', {
+        return (scope.row.userFlag == 1) ? [_c('div', {
           staticClass: "op_items"
         }, [_c('el-button', {
           attrs: {
@@ -1739,12 +1756,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           },
           on: {
             "click": function($event) {
-              return _vm.show(scope.row.id)
+              return _vm.show(scope.row.id, scope.row.userName)
             }
           }
-        }, [_vm._v("查看")])], 1)]
+        }, [_vm._v("查看")])], 1)] : undefined
       }
-    }])
+    }], null, true)
   })], 1)], 1), _vm._v(" "), _c('div', {
     staticClass: "pages_so"
   }, [_c('el-pagination', {
@@ -1779,12 +1796,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "main"
   }, [_c('div', {
+    staticClass: "bodys"
+  }, [_c('div', {
+    staticStyle: {
+      "width": "100%",
+      "height": "40px",
+      "line-height": "40px",
+      "text-align": "center"
+    }
+  }, [_vm._v("\n                " + _vm._s(_vm.name) + "的成绩单\n              ")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "randar"
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "table_right"
-  }, [_c('el-table', {
+  }, [_c('div', {
+    staticStyle: {
+      "text-align": "right",
+      "padding-right": "20px"
+    }
+  }, [_vm._v("\n                  分数: " + _vm._s(_vm.score) + " / " + _vm._s(_vm.total) + "\n                ")]), _vm._v(" "), _c('el-table', {
     staticStyle: {
       "width": "100%"
     },
@@ -1796,12 +1827,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "align": "center",
       "prop": "sort",
+      "width": "60",
       "label": "题号"
     }
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
       "align": "center",
       "prop": "questionBankVO.answer",
+      "width": "120",
       "label": "标准答案"
     }
   }), _vm._v(" "), _c('el-table-column', {
@@ -1814,15 +1847,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "align": "center",
       "prop": "time",
+      "width": "120",
       "label": "答题时间"
     }
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
       "align": "center",
+      "prop": "score",
+      "width": "60",
+      "label": "得分"
+    }
+  }), _vm._v(" "), _c('el-table-column', {
+    attrs: {
+      "align": "center",
       "prop": "questionBankVO.ablity",
+      "width": "200",
       "label": "能力属性"
     }
-  })], 1)], 1), _vm._v(" "), _c('div', {
+  })], 1)], 1)]), _vm._v(" "), _c('div', {
     staticClass: "btn",
     on: {
       "click": function($event) {

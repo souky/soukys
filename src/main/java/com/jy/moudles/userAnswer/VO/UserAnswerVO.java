@@ -13,6 +13,8 @@ public class UserAnswerVO extends UserAnswer{
 	
 	private QuestionBankVO questionBankVO;
 	
+	private int score;
+	
 
 	public QuestionBankVO getQuestionBankVO() {
 		return questionBankVO;
@@ -21,6 +23,16 @@ public class UserAnswerVO extends UserAnswer{
 
 	public void setQuestionBankVO(QuestionBankVO questionBankVO) {
 		this.questionBankVO = questionBankVO;
+	}
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 	
