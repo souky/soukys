@@ -408,6 +408,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data() {
@@ -415,7 +418,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			msg: 'index',
 			userName: "",
 			userPhone: "",
-			userAge: ''
+			userAge: '',
+			userAddress: ''
 		};
 	},
 	mounted: function () {},
@@ -436,8 +440,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.$message({ message: '请填写正确手机号', type: 'error', center: true });
 				return;
 			}
+			if (!userNames.test(this.userAddress)) {
+				this.$message({ message: '请填写正确城市', type: 'error', center: true });
+				return;
+			}
 			this.$confim_jy('	为了便于您接收面试通知,请确保以上信息真实准确', '', data => {
-				this.$postHttpForMb("userscore/getUserScoreByUserPhone", { userName: this.userName, userPhone: this.userPhone, userAge: this.userAge }, res => {
+				this.$postHttpForMb("userscore/getUserScoreByUserPhone", { userName: this.userName, userPhone: this.userPhone, userAge: this.userAge, userAddress: this.userAddress }, res => {
 					var flag = res.result.userFlag;
 					if (flag == '0') {
 						this.$router.push("/answer");
@@ -709,6 +717,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -1719,6 +1728,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
       "align": "center",
+      "prop": "userAddress",
+      "width": "200",
+      "label": "所在地"
+    }
+  }), _vm._v(" "), _c('el-table-column', {
+    attrs: {
+      "align": "center",
       "prop": "userFlag",
       "width": "90",
       "formatter": _vm.flagFormat,
@@ -1841,7 +1857,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "align": "center",
       "prop": "userAnswer",
-      "label": "这货的答案"
+      "label": "选手答案"
     }
   }), _vm._v(" "), _c('el-table-column', {
     attrs: {
@@ -2583,6 +2599,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.userPhone = $$v
       },
       expression: "userPhone"
+    }
+  })], 1), _vm._v(" "), _c('div', {
+    staticClass: "main_items"
+  }, [_c('el-input', {
+    attrs: {
+      "placeholder": "所在城市"
+    },
+    model: {
+      value: (_vm.userAddress),
+      callback: function($$v) {
+        _vm.userAddress = $$v
+      },
+      expression: "userAddress"
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "main_items"
