@@ -28,6 +28,8 @@ public class UserScore extends BaseEntity{
 	
 	private int userAge;
 	
+	
+	private String userAddress;
 	/**
 	 * 
 	 */
@@ -113,6 +115,14 @@ public class UserScore extends BaseEntity{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
 	}
 	
 	

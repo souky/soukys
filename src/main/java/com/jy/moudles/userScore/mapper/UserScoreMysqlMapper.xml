@@ -6,6 +6,7 @@
         <id column="id" property="id" jdbcType="VARCHAR"/>
 		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
 		<result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+		<result column="user_address" property="userAddress" jdbcType="VARCHAR"/>
 		<result column="user_age" property="userAge" jdbcType="INTEGER"/>
 		<result column="user_score" property="userScore" jdbcType="INTEGER"/>
 		<result column="user_time" property="userTime" jdbcType="INTEGER"/>
@@ -14,7 +15,7 @@
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, id, user_name, user_phone, user_age,user_score, user_time,user_date, user_flag
+        id, id, user_name, user_phone, user_age,user_score, user_time,user_date, user_flag,user_address
     </sql>
     
     <insert id="insertUserScore">
@@ -27,6 +28,7 @@
 			<if test="userScore != null">user_age,</if>
 			<if test="userTime != null">user_time,</if>
 			<if test="userFlag != null">user_flag,</if>
+			<if test="userFlag != null">user_address,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">#{id},</if>
@@ -36,6 +38,7 @@
 			<if test="userPhone != null">#{userAge},</if>
 			<if test="userTime != null">#{userTime},</if>
 			<if test="userFlag != null">#{userFlag},</if>
+			<if test="userFlag != null">#{userAddress},</if>
         </trim>
     </insert>
     
