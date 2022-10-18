@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  
         <spring.version>4.3.2.RELEASE</spring.version>  
         <hibernate.version>4.3.8.Final</hibernate.version>  
-        <jackson.version>2.5.0</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <freemarker-version>2.3.23</freemarker-version>  
     </properties>
   
